@@ -1,5 +1,5 @@
 
-import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 
 const benefits = [
   {
@@ -34,82 +34,125 @@ const benefits = [
   },
 ];
 
+const smoothEase = [0.22, 1, 0.36, 1];
+
 function Section5() {
-  const [visible, setVisible] = useState([]);
-  const itemsRef = useRef([]);
+  const reduceMotion = useReducedMotion();
 
-  useEffect(() => {
-    if (!("IntersectionObserver" in window)) {
-      setVisible(benefits.map((_, index) => index));
-      return;
-    }
+  // Section heading animation
+  const headingReveal = (delay = 0) => ({
+    initial: reduceMotion
+      ? false
+      : {
+          opacity: 0,
+          y: 30,
+          filter: "blur(5px)",
+        },
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          const index = Number(entry.target.dataset.index);
+    whileInView: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+    },
 
-          if (entry.isIntersecting) {
-            // Show when entering the viewport
-            setVisible((prev) =>
-              prev.includes(index)
-                ? prev
-                : [...prev, index]
-            );
-          } else {
-            // Hide when leaving the viewport
-            setVisible((prev) =>
-              prev.includes(index)
-                ? prev.filter((item) => item !== index)
-                : prev
-            );
-          }
-        });
+    viewport: {
+      once: false,
+      amount: 0.3,
+    },
+
+    transition: {
+      duration: reduceMotion ? 0 : 0.8,
+      delay: reduceMotion ? 0 : delay,
+      ease: smoothEase,
+    },
+  });
+
+  // Alternating timeline text animation
+  const textReveal = (isLeft) => ({
+    hidden: {
+      opacity: 0,
+      x: isLeft ? -55 : 55,
+      filter: "blur(6px)",
+    },
+
+    visible: {
+      opacity: 1,
+      x: 0,
+      filter: "blur(0px)",
+
+      transition: {
+        duration: 0.85,
+        ease: smoothEase,
+        staggerChildren: 0.12,
       },
-      {
-        threshold: 0.25,
-        rootMargin: "0px 0px -10% 0px",
-      }
-    );
+    },
+  });
 
-    itemsRef.current.forEach((item) => {
-      if (item) observer.observe(item);
-    });
+  // Title and description appear one after another
+  const childReveal = {
+    hidden: {
+      opacity: 0,
+      y: 15,
+    },
 
-    return () => observer.disconnect();
-  }, []);
+    visible: {
+      opacity: 1,
+      y: 0,
+
+      transition: {
+        duration: 0.65,
+        ease: smoothEase,
+      },
+    },
+  };
 
   return (
     <section
       id="why-choose-us"
-      className="overflow-hidden bg-[#F4F7FB] px-5 py-10 h-auto pb-10"
+      className="h-auto overflow-hidden bg-[#F4F7FB] px-5 pb-10 pt-10"
     >
       <div className="mx-auto max-w-6xl">
 
-        {/* SECTION HEADING */}
-<div className="w-full max-w-[1200px] mx-auto px-5 pt-8  ">
+        {/* =============================== */}
+        {/* ANIMATED SECTION HEADING        */}
+        {/* =============================== */}
 
-  {/* SMALL SECTION HEADING */}
-  <p className="text-[#0C9B97] font-bold text-[12px] md:text-[14px] tracking-[0.25em] uppercase text-center mb-4">
-    WHY CHOOSE US
-  </p>
+        <div className="mx-auto w-full max-w-[1200px] px-5 pt-8">
 
-  {/* MAIN HEADING */}
-  <h2 className="text-[#102A43] text-[30px] sm:text-[36px] md:text-[45px] font-extrabold leading-[1.15] tracking-[-0.03em] text-center max-w-[950px] mx-auto mb-5">
-   Why Healthcare Organizations Choose Maximum Care
-  </h2>
+          {/* SMALL HEADING */}
+          <motion.p
+            {...headingReveal(0)}
+            className="mb-4 text-center text-[12px] font-bold uppercase tracking-[0.25em] text-[#0C9B97] md:text-[14px]"
+          >
+            WHY CHOOSE US
+          </motion.p>
 
-  {/* DESCRIPTION */}
-  <p className="text-[#526579] text-[15px] md:text-[16px] leading-[1.8] text-center max-w-[720px] mx-auto">
-  We go beyond delivery we're a trusted partner in your healthcare mission.
-  </p>
+          {/* MAIN HEADING */}
+          <motion.h2
+            {...headingReveal(0.12)}
+            className="mx-auto mb-5 max-w-[950px] text-center text-[30px] font-extrabold leading-[1.15] tracking-[-0.03em] text-[#102A43] sm:text-[36px] md:text-[45px]"
+          >
+            Why Healthcare Organizations Choose Maximum Care
+          </motion.h2>
 
-</div>
+          {/* DESCRIPTION */}
+          <motion.p
+            {...headingReveal(0.25)}
+            className="mx-auto max-w-[720px] text-center text-[15px] leading-[1.8] text-[#526579] md:text-[16px]"
+          >
+            We go beyond delivery we're a trusted partner in
+            your healthcare mission.
+          </motion.p>
 
-        {/* TIMELINE */}
-        <div className="relative mx-auto max-w-[900px] mt-10">
+        </div>
 
-          {/* VERTICAL CENTER LINE */}
+        {/* =============================== */}
+        {/* TIMELINE                        */}
+        {/* =============================== */}
+
+        <div className="relative mx-auto mt-10 max-w-[900px]">
+
+          {/* VERTICAL LINE - NO ANIMATION */}
           <div
             aria-hidden="true"
             className="absolute bottom-9 top-9 left-[36px] w-[2px] -translate-x-1/2 bg-[#23B5C6] md:left-1/2"
@@ -117,73 +160,85 @@ function Section5() {
 
           {benefits.map((item, index) => {
             const isLeft = index % 2 === 0;
-            const isVisible = visible.includes(index);
 
             return (
               <div
                 key={item.number}
-                ref={(el) => {
-                  itemsRef.current[index] = el;
-                }}
-                data-index={index}
                 className="relative grid min-h-[155px] grid-cols-[72px_minmax(0,1fr)] items-center gap-x-5 pb-10 last:pb-0 md:grid-cols-[minmax(0,1fr)_90px_minmax(0,1fr)] md:gap-x-6 md:pb-12"
               >
 
-                {/* ANIMATED TEXT */}
-                <div
+                {/* =============================== */}
+                {/* ANIMATED TEXT ONLY              */}
+                {/* =============================== */}
+
+                <motion.div
+                  variants={
+                    reduceMotion
+                      ? undefined
+                      : textReveal(isLeft)
+                  }
+                  initial={
+                    reduceMotion ? undefined : "hidden"
+                  }
+                  whileInView={
+                    reduceMotion ? undefined : "visible"
+                  }
+                  viewport={{
+                    once: false,
+                    amount: 0.35,
+                  }}
                   className={`
-                    col-start-2 row-start-1 max-w-[350px]
-                    transition-all duration-700 ease-out
-                    motion-reduce:transform-none
-                    motion-reduce:opacity-100
+                    col-start-2 row-start-1
+                    max-w-[350px]
 
                     ${
                       isLeft
                         ? "md:col-start-1 md:justify-self-end md:text-right"
                         : "md:col-start-3 md:justify-self-start md:text-left"
                     }
-
-                    ${
-                      isVisible
-                        ? "translate-x-0 opacity-100"
-                        : isLeft
-                        ? "-translate-x-10 opacity-0"
-                        : "translate-x-10 opacity-0"
-                    }
                   `}
                 >
-                  <h3 className="mb-2 text-[20px] font-extrabold text-[#0D223B]">
+
+                  {/* ANIMATED BENEFIT TITLE */}
+                  <motion.h3
+                    variants={
+                      reduceMotion
+                        ? undefined
+                        : childReveal
+                    }
+                    className="mb-2 text-[20px] font-extrabold text-[#0D223B]"
+                  >
                     {item.title}
-                  </h3>
+                  </motion.h3>
 
-                  <p className="text-[14px] leading-[1.8] text-[#496178]">
-                    {item.description}
-                  </p>
-                </div>
-
-                {/* ANIMATED NUMBER CIRCLE */}
-                <div
-                  className={`
-                    relative z-10 col-start-1 row-start-1
-                    flex justify-self-center
-                    transition-all duration-700 ease-out
-                    motion-reduce:transform-none
-                    motion-reduce:opacity-100
-                    md:col-start-2
-
-                    ${
-                      isVisible
-                        ? "scale-100 opacity-100"
-                        : "scale-50 opacity-0"
+                  {/* ANIMATED BENEFIT DESCRIPTION */}
+                  <motion.p
+                    variants={
+                      reduceMotion
+                        ? undefined
+                        : childReveal
                     }
-                  `}
-                >
+                    className="text-[14px] leading-[1.8] text-[#496178]"
+                  >
+                    {item.description}
+                  </motion.p>
+
+                </motion.div>
+
+                {/* =============================== */}
+                {/* NUMBER CIRCLE - NO ANIMATION    */}
+                {/* =============================== */}
+
+                <div className="relative z-10 col-start-1 row-start-1 flex justify-self-center md:col-start-2">
+
                   <div
                     className={`
                       flex h-[72px] w-[72px]
                       items-center justify-center
-                      rounded-full border-[5px] border-white
-                      text-[20px] font-extrabold text-white
+                      rounded-full border-[5px]
+                      border-white
+                      text-[20px] font-extrabold
+                      text-white
                       shadow-[0_10px_24px_rgba(13,34,59,0.13)]
 
                       ${
@@ -195,11 +250,13 @@ function Section5() {
                   >
                     {item.number}
                   </div>
+
                 </div>
 
               </div>
             );
           })}
+
         </div>
       </div>
     </section>

@@ -1,4 +1,10 @@
 
+import { motion, useReducedMotion } from "motion/react";
+
+// ===============================
+// SERVICES DATA + ORIGINAL ICONS
+// ===============================
+
 const services = [
   {
     title: "Laboratory Specimen Transportation",
@@ -23,7 +29,6 @@ const services = [
       </>
     ),
   },
-
   {
     title: "Prescription & Pharmacy Deliveries",
     description:
@@ -52,7 +57,6 @@ const services = [
       </>
     ),
   },
-
   {
     title: "Medical Supplies & Equipment Delivery",
     description:
@@ -82,7 +86,6 @@ const services = [
       </>
     ),
   },
-
   {
     title: "Confidential Medical Document Transportation",
     description:
@@ -124,7 +127,6 @@ const services = [
       </>
     ),
   },
-
   {
     title: "Scheduled & Routine Courier Services",
     description:
@@ -161,7 +163,6 @@ const services = [
       </>
     ),
   },
-
   {
     title: "Time-Sensitive & STAT Deliveries",
     description:
@@ -193,7 +194,10 @@ const services = [
   },
 ];
 
-// REUSABLE SVG WRAPPER
+// ===============================
+// REUSABLE SVG ICON COMPONENT
+// ===============================
+
 function ServiceIcon({ children }) {
   return (
     <svg
@@ -211,28 +215,79 @@ function ServiceIcon({ children }) {
   );
 }
 
+// ===============================
+// ANIMATED SERVICES SECTION
+// ===============================
+
 function Section3() {
+  const reduceMotion = useReducedMotion();
+
+  // Premium animation easing
+  const smoothEase = [0.22, 1, 0.36, 1];
+
+  // Reusable animation for headings and text
+  const fadeUp = (delay = 0) => ({
+    initial: reduceMotion
+      ? false
+      : {
+          opacity: 0,
+          y: 35,
+          filter: "blur(5px)",
+        },
+
+    whileInView: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+    },
+
+    viewport: {
+      once: false,
+      amount: 0.2,
+    },
+
+    transition: {
+      duration: reduceMotion ? 0 : 0.8,
+      delay: reduceMotion ? 0 : delay,
+      ease: smoothEase,
+    },
+  });
+
   return (
     <section
       id="services"
       className="
-        w-full bg-[#F3F7F9]
+        relative w-full overflow-hidden
+        bg-[#F3F7F9]
         px-5 py-16
         sm:px-8 sm:py-20
         lg:px-12 lg:py-24
         xl:px-16
       "
     >
-      <div className="mx-auto max-w-[1300px]">
+      {/* BACKGROUND DECORATION */}
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute
+          -right-[180px] -top-[150px]
+          h-[450px] w-[450px]
+          rounded-full bg-[#0C9B97]/[0.05]
+          blur-[100px]
+        "
+      />
 
-        {/* ========================== */}
-        {/* SECTION HEADING            */}
-        {/* ========================== */}
+      <div className="relative z-10 mx-auto max-w-[1300px]">
+
+        {/* ============================== */}
+        {/* ANIMATED SECTION HEADING       */}
+        {/* ============================== */}
 
         <div className="mx-auto max-w-[950px] text-center">
 
           {/* SMALL HEADING */}
-          <p
+          <motion.p
+            {...fadeUp(0)}
             className="
               mb-4 text-[12px] font-bold
               uppercase tracking-[0.25em]
@@ -241,10 +296,11 @@ function Section3() {
             "
           >
             OUR SERVICES
-          </p>
+          </motion.p>
 
           {/* MAIN HEADING */}
-          <h2
+          <motion.h2
+            {...fadeUp(0.12)}
             className="
               mx-auto max-w-[950px]
               text-[30px] font-extrabold
@@ -257,12 +313,44 @@ function Section3() {
             "
           >
             Comprehensive Medical Courier Services
-          </h2>
+          </motion.h2>
+
+          {/* ANIMATED TEAL UNDERLINE */}
+          <motion.div
+            initial={
+              reduceMotion
+                ? false
+                : {
+                    scaleX: 0,
+                    opacity: 0,
+                  }
+            }
+            whileInView={{
+              scaleX: 1,
+              opacity: 1,
+            }}
+            viewport={{
+              once: false,
+              amount: 0.5,
+            }}
+            transition={{
+              duration: reduceMotion ? 0 : 0.9,
+              delay: reduceMotion ? 0 : 0.3,
+              ease: smoothEase,
+            }}
+            className="
+              mx-auto mt-6
+              h-[3px] w-[75px]
+              origin-center rounded-full
+              bg-[#0C9B97]
+            "
+          />
 
           {/* DESCRIPTION */}
-          <p
+          <motion.p
+            {...fadeUp(0.25)}
             className="
-              mx-auto mt-5 max-w-[720px]
+              mx-auto mt-6 max-w-[720px]
               text-[15px] leading-[1.85]
               text-[#526579]
 
@@ -274,13 +362,13 @@ function Section3() {
             professional medical courier solutions designed
             to support the daily operations of healthcare
             organizations.
-          </p>
+          </motion.p>
 
         </div>
 
-        {/* ========================== */}
-        {/* RESPONSIVE SERVICES GRID   */}
-        {/* ========================== */}
+        {/* ============================== */}
+        {/* ANIMATED SERVICES GRID         */}
+        {/* ============================== */}
 
         <div
           className="
@@ -295,30 +383,78 @@ function Section3() {
           "
         >
           {services.map((service, index) => (
-            <article
-              key={index}
+
+            <motion.article
+              key={service.title}
+
+              // CARD STARTING POSITION
+              initial={
+                reduceMotion
+                  ? false
+                  : {
+                      opacity: 0,
+                      y: 55,
+                      scale: 0.94,
+                    }
+              }
+
+              // CARD ENTERS THE SCREEN
+              whileInView={{
+                opacity: 1,
+                y: 0,
+                scale: 1,
+              }}
+
+              // REPLAY WHEN SCROLLING BACK
+              viewport={{
+                once: false,
+                amount: 0.2,
+              }}
+
+              // SMOOTH STAGGERED ENTRY
+              transition={{
+                duration: reduceMotion ? 0 : 0.75,
+                delay: reduceMotion
+                  ? 0
+                  : (index % 3) * 0.12,
+                ease: smoothEase,
+              }}
+
+              // PREMIUM HOVER EFFECT
+              whileHover={
+                reduceMotion
+                  ? undefined
+                  : {
+                      y: -9,
+                      scale: 1.02,
+                      transition: {
+                        type: "spring",
+                        stiffness: 280,
+                        damping: 20,
+                      },
+                    }
+              }
+
               className="
                 group relative flex h-full
-                items-start gap-4
+                min-w-0 items-start gap-4
                 overflow-hidden rounded-[18px]
                 border border-[#E3EDF2]
                 bg-white p-5
 
                 shadow-[0_8px_24px_rgba(0,27,59,0.05)]
 
-                transition-all duration-300
-                ease-out
+                transition-[border-color,box-shadow,background-color]
+                duration-300 ease-out
 
-                hover:-translate-y-1.5
                 hover:border-[#0C9B97]/40
-                hover:shadow-[0_18px_40px_rgba(0,27,59,0.10)]
+                hover:shadow-[0_20px_45px_rgba(0,27,59,0.13)]
 
                 sm:gap-5 sm:p-6
-                lg:gap-5
               "
             >
 
-              {/* LEFT TEAL ACCENT */}
+              {/* ANIMATED LEFT TEAL BORDER */}
               <div
                 className="
                   absolute left-0 top-0
@@ -326,13 +462,43 @@ function Section3() {
                   origin-bottom scale-y-0
                   bg-[#0C9B97]
 
-                  transition-transform duration-300
-                  group-hover:scale-y-100
+                  transition-transform duration-500
+                  ease-out group-hover:scale-y-100
                 "
               />
 
-              {/* SERVICE ICON */}
+              {/* HOVER TOP ACCENT */}
               <div
+                className="
+                  absolute left-5 right-5 top-0
+                  h-[2px] origin-center
+                  scale-x-0 bg-gradient-to-r
+                  from-transparent via-[#0C9B97]
+                  to-transparent
+
+                  transition-transform duration-500
+                  group-hover:scale-x-100
+                "
+              />
+
+              {/* ============================== */}
+              {/* ANIMATED SERVICE ICON          */}
+              {/* ============================== */}
+
+              <motion.div
+                whileHover={
+                  reduceMotion
+                    ? undefined
+                    : {
+                        rotate: -6,
+                        scale: 1.1,
+                      }
+                }
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 17,
+                }}
                 className="
                   flex h-[58px] w-[58px]
                   shrink-0 items-center justify-center
@@ -348,16 +514,22 @@ function Section3() {
                 <ServiceIcon>
                   {service.icon}
                 </ServiceIcon>
-              </div>
+              </motion.div>
 
-              {/* SERVICE CONTENT */}
+              {/* ============================== */}
+              {/* SERVICE CONTENT                */}
+              {/* ============================== */}
+
               <div className="min-w-0 flex-1">
 
-                {/* CARD HEADING */}
+                {/* SERVICE TITLE */}
                 <h3
                   className="
                     text-[17px] font-extrabold
                     leading-[1.35] text-[#102A43]
+
+                    transition-colors duration-300
+                    group-hover:text-[#0C9B97]
 
                     sm:text-[18px]
                     lg:text-[19px]
@@ -367,14 +539,12 @@ function Section3() {
                   {service.title}
                 </h3>
 
-                {/* CARD DESCRIPTION */}
+                {/* SERVICE DESCRIPTION */}
                 <p
                   className="
                     mt-3 text-[14px]
                     leading-[1.75] text-[#526579]
-
                     sm:text-[15px]
-                    lg:text-[15px]
                   "
                 >
                   {service.description}
@@ -382,22 +552,24 @@ function Section3() {
 
               </div>
 
-            </article>
+            </motion.article>
           ))}
         </div>
 
-        {/* ========================== */}
-        {/* BOTTOM SUPPORT TEXT        */}
-        {/* ========================== */}
+        {/* ============================== */}
+        {/* ANIMATED BOTTOM CTA            */}
+        {/* ============================== */}
 
-        <div className="mt-12 text-center md:mt-14">
-
+        <motion.div
+          {...fadeUp(0.1)}
+          className="mt-12 text-center md:mt-14"
+        >
+          {/* SUPPORT TEXT */}
           <p
             className="
               mx-auto max-w-[650px]
               text-[14px] leading-[1.8]
               text-[#526579]
-
               sm:text-[15px]
             "
           >
@@ -405,9 +577,33 @@ function Section3() {
             organization's needs? We're here to help.
           </p>
 
-          {/* CONTACT BUTTON */}
-          <a
+          {/* CTA BUTTON */}
+          <motion.a
             href="mailto:maximumcaree@gmail.com?subject=Medical%20Courier%20Service%20Inquiry"
+
+            whileHover={
+              reduceMotion
+                ? undefined
+                : {
+                    y: -5,
+                    scale: 1.04,
+                  }
+            }
+
+            whileTap={
+              reduceMotion
+                ? undefined
+                : {
+                    scale: 0.96,
+                  }
+            }
+
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+            }}
+
             className="
               group mt-6 inline-flex
               min-h-[52px] items-center
@@ -416,8 +612,7 @@ function Section3() {
               px-7 py-3
               text-[14px] font-bold text-white
 
-              transition-all duration-300
-              hover:-translate-y-1
+              transition-colors duration-300
               hover:bg-[#0C9B97]
               hover:shadow-[0_12px_30px_rgba(12,155,151,0.20)]
             "
@@ -434,14 +629,17 @@ function Section3() {
               strokeLinecap="round"
               strokeLinejoin="round"
               aria-hidden="true"
-              className="transition-transform duration-300 group-hover:translate-x-1"
+              className="
+                transition-transform duration-300
+                group-hover:translate-x-1
+              "
             >
               <path d="M5 12h14" />
               <path d="m12 5 7 7-7 7" />
             </svg>
 
-          </a>
-        </div>
+          </motion.a>
+        </motion.div>
 
       </div>
     </section>

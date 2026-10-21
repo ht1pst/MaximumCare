@@ -1,6 +1,11 @@
 
 import { useState } from "react";
-import img from "../assets/faqimg.jpg";
+import { motion, useReducedMotion } from "motion/react";
+import img from "../assets/faqimg.webp";
+
+// =======================================
+// FAQ DATA
+// =======================================
 
 const faqs = [
   {
@@ -35,88 +40,343 @@ const faqs = [
   },
 ];
 
+const smoothEase = [0.22, 1, 0.36, 1];
+
+// =======================================
+// FAQ SECTION
+// =======================================
+
 function Section8() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const reduceMotion = useReducedMotion();
 
+  // Open one FAQ at a time.
   const toggleFAQ = (index) => {
     setActiveIndex((current) =>
       current === index ? null : index
     );
   };
 
+  // Reusable scroll animation.
+  const reveal = (direction = "up", delay = 0) => ({
+    initial: reduceMotion
+      ? false
+      : {
+          opacity: 0,
+          x:
+            direction === "left"
+              ? -35
+              : direction === "right"
+              ? 35
+              : 0,
+          y: direction === "up" ? 30 : 0,
+          filter: "blur(5px)",
+        },
+
+    whileInView: {
+      opacity: 1,
+      x: 0,
+      y: 0,
+      filter: "blur(0px)",
+    },
+
+    viewport: {
+      once: false,
+      amount: 0.15,
+    },
+
+    transition: {
+      duration: reduceMotion ? 0 : 0.8,
+      delay: reduceMotion ? 0 : delay,
+      ease: smoothEase,
+    },
+  });
+
   return (
     <section
       id="faq"
-      className="w-full bg-[#F3F8FB] px-5 py-16 sm:px-8 lg:px-12 lg:py-24"
+      className="
+        relative w-full overflow-hidden
+        bg-[#F3F8FB]
+        px-5 py-16
+        sm:px-8
+        lg:px-12 lg:py-24
+      "
     >
-      <div className="mx-auto grid max-w-[1250px] items-start gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+      {/* SOFT BACKGROUND DECORATION */}
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute
+          -left-[150px] -top-[150px]
+          h-[450px] w-[450px]
+          rounded-full bg-[#0C9B97]/[0.05]
+          blur-[100px]
+        "
+      />
 
-        {/* LEFT CONTENT */}
+      <div
+        className="
+          relative z-10 mx-auto grid
+          max-w-[1250px] items-start
+          gap-12 lg:grid-cols-[0.9fr_1.1fr]
+          lg:gap-16
+        "
+      >
+        {/* ======================================= */}
+        {/* LEFT CONTENT                           */}
+        {/* ======================================= */}
+
         <div className="w-full">
 
           {/* SMALL HEADING */}
-          <div className="mb-5 flex items-center gap-3">
-            <span className="h-[2px] w-8 bg-[#008C96]" />
+          <motion.div
+            {...reveal("left", 0)}
+            className="mb-5 flex items-center gap-3"
+          >
+            <motion.span
+              initial={
+                reduceMotion
+                  ? false
+                  : { scaleX: 0 }
+              }
+              whileInView={{ scaleX: 1 }}
+              viewport={{
+                once: false,
+                amount: 0.5,
+              }}
+              transition={{
+                duration: reduceMotion ? 0 : 0.65,
+                ease: smoothEase,
+              }}
+              className="
+                h-[2px] w-8 shrink-0
+                origin-left bg-[#008C96]
+              "
+            />
 
-            <p className="text-[12px] font-bold uppercase tracking-[0.25em] text-[#008C96]">
+            <p
+              className="
+                text-[12px] font-bold
+                uppercase tracking-[0.25em]
+                text-[#008C96]
+              "
+            >
               FREQUENTLY ASKED QUESTIONS
             </p>
-          </div>
+          </motion.div>
 
-          {/* MAIN HEADING */}
-          <h2 className="max-w-[480px] text-[34px] font-extrabold leading-[1.15] tracking-[-0.03em] text-[#102A43] sm:text-[40px] lg:text-[46px]">
-            Got Questions?
-            <span className="mt-2 block text-[#008C96]">
+          {/* ANIMATED MAIN HEADING */}
+          <h2
+            className="
+              max-w-[480px]
+              text-[34px] font-extrabold
+              leading-[1.15] tracking-[-0.03em]
+              text-[#102A43]
+              sm:text-[40px]
+              lg:text-[46px]
+            "
+          >
+            <motion.span
+              {...reveal("left", 0.1)}
+              className="block"
+            >
+              Got Questions?
+            </motion.span>
+
+            <motion.span
+              {...reveal("left", 0.22)}
+              className="mt-2 block text-[#008C96]"
+            >
               We've Got Answers.
-            </span>
+            </motion.span>
           </h2>
 
           {/* DESCRIPTION */}
-          <p className="mt-6 max-w-[460px] text-[15px] leading-[1.9] text-[#526579] sm:text-[16px]">
+          <motion.p
+            {...reveal("up", 0.3)}
+            className="
+              mt-6 max-w-[460px]
+              text-[15px] leading-[1.9]
+              text-[#526579]
+              sm:text-[16px]
+            "
+          >
             Have questions about our medical courier services?
             We've answered some of the most common questions
             about Maximum Care LLC, our delivery solutions,
             and the areas we serve.
-          </p>
+          </motion.p>
 
-          <p className="mt-4 max-w-[460px] text-[15px] leading-[1.9] text-[#526579]">
+          <motion.p
+            {...reveal("up", 0.4)}
+            className="
+              mt-4 max-w-[460px]
+              text-[15px] leading-[1.9]
+              text-[#526579]
+            "
+          >
             Can't find the answer you're looking for?
             Our team is happy to discuss your organization's
             transportation needs.
-          </p>
+          </motion.p>
 
-          {/* CONTACT BUTTON */}
-          <a
+          {/* ======================================= */}
+          {/* ANIMATED CONTACT BUTTON                 */}
+          {/* ======================================= */}
+
+          <motion.a
+            {...reveal("up", 0.45)}
             href="mailto:maximumcaree@gmail.com"
-            className="mt-8 inline-flex min-h-[48px] items-center justify-center gap-3 rounded-xl bg-[#102A43] px-7 text-[14px] font-bold text-white transition-colors duration-300 hover:bg-[#173B5B]"
+            whileHover={
+              reduceMotion
+                ? undefined
+                : {
+                    y: -4,
+                    scale: 1.04,
+                  }
+            }
+            whileTap={
+              reduceMotion
+                ? undefined
+                : { scale: 0.97 }
+            }
+            className="
+              group mt-8 inline-flex min-h-[48px]
+              items-center justify-center
+              gap-3 rounded-xl
+              bg-[#102A43] px-7
+              text-[14px] font-bold text-white
+
+              transition-colors duration-300
+              hover:bg-[#0C9B97]
+            "
           >
             Contact Our Team
-            <span aria-hidden="true">→</span>
-          </a>
 
-          {/* IMAGE */}
-          <div className="relative mt-10 h-[250px] w-full overflow-hidden rounded-[20px] bg-[#DCECF3] sm:h-[320px]">
-            <img
+            <span
+              aria-hidden="true"
+              className="
+                transition-transform duration-300
+                group-hover:translate-x-1
+              "
+            >
+              →
+            </span>
+          </motion.a>
+
+          {/* ======================================= */}
+          {/* ANIMATED IMAGE                         */}
+          {/* ======================================= */}
+
+          <motion.div
+            initial={
+              reduceMotion
+                ? false
+                : {
+                    opacity: 0,
+                    x: -45,
+                    scale: 0.96,
+                  }
+            }
+            whileInView={{
+              opacity: 1,
+              x: 0,
+              scale: 1,
+            }}
+            viewport={{
+              once: false,
+              amount: 0.2,
+            }}
+            transition={{
+              duration: reduceMotion ? 0 : 0.95,
+              delay: reduceMotion ? 0 : 0.1,
+              ease: smoothEase,
+            }}
+            className="
+              group relative mt-10 h-[250px]
+              w-full overflow-hidden rounded-[20px]
+              bg-[#DCECF3]
+              shadow-[0_18px_45px_rgba(16,42,67,0.12)]
+
+              sm:h-[320px]
+            "
+          >
+            {/* IMAGE WITH HOVER ZOOM */}
+            <motion.img
               src={img}
               alt="Healthcare and medical courier services"
+              loading="lazy"
               className="h-full w-full object-cover"
+              whileHover={
+                reduceMotion
+                  ? undefined
+                  : { scale: 1.08 }
+              }
+              transition={{
+                duration: 0.8,
+                ease: smoothEase,
+              }}
             />
 
-            <div className="absolute inset-0 bg-gradient-to-t from-[#102A43]/80 via-transparent to-transparent" />
+            {/* GRADIENT OVERLAY */}
+            <div
+              className="
+                pointer-events-none absolute inset-0
+                bg-gradient-to-t
+                from-[#102A43]/80
+                via-transparent
+                to-transparent
+              "
+            />
 
-            <div className="absolute bottom-6 left-6 right-6">
-              <h3 className="text-[20px] font-bold text-white sm:text-[23px]">
+            {/* IMAGE BOTTOM CONTENT */}
+            <motion.div
+              initial={
+                reduceMotion
+                  ? false
+                  : {
+                      opacity: 0,
+                      y: 25,
+                    }
+              }
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: false,
+                amount: 0.4,
+              }}
+              transition={{
+                duration: reduceMotion ? 0 : 0.7,
+                delay: reduceMotion ? 0 : 0.3,
+                ease: smoothEase,
+              }}
+              className="
+                absolute bottom-6 left-6 right-6
+              "
+            >
+              <h3
+                className="
+                  text-[20px] font-bold text-white
+                  sm:text-[23px]
+                "
+              >
                 Delivering Care With Precision.
               </h3>
 
               <p className="mt-2 text-[13px] text-white/85">
                 Fast. Secure. Reliable.
               </p>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
 
-        {/* RIGHT SIDE - SMOOTH ACCORDION */}
+        {/* ======================================= */}
+        {/* RIGHT SIDE — ANIMATED ACCORDION         */}
+        {/* ======================================= */}
+
         <div className="w-full space-y-4">
 
           {faqs.map((faq, index) => {
@@ -125,14 +385,42 @@ function Section8() {
             const questionId = `faq-question-${index}`;
 
             return (
-              <div
+              <motion.div
                 key={faq.question}
+
+                // CARD SCROLL REVEAL
+                initial={
+                  reduceMotion
+                    ? false
+                    : {
+                        opacity: 0,
+                        x: 35,
+                        y: 20,
+                      }
+                }
+                whileInView={{
+                  opacity: 1,
+                  x: 0,
+                  y: 0,
+                }}
+                viewport={{
+                  once: false,
+                  amount: 0.2,
+                }}
+                transition={{
+                  duration: reduceMotion ? 0 : 0.65,
+                  delay: reduceMotion
+                    ? 0
+                    : index * 0.08,
+                  ease: smoothEase,
+                }}
                 className={`
-                  overflow-hidden rounded-[16px]
+                  group overflow-hidden
+                  rounded-[16px]
                   border bg-white
 
                   transition-[border-color,box-shadow]
-                  duration-500 ease-in-out
+                  duration-300
 
                   ${
                     isActive
@@ -141,7 +429,6 @@ function Section8() {
                   }
                 `}
               >
-
                 {/* QUESTION BUTTON */}
                 <h3>
                   <button
@@ -151,29 +438,33 @@ function Section8() {
                     aria-controls={answerId}
                     onClick={() => toggleFAQ(index)}
                     className="
-                      group flex min-h-[76px] w-full
-                      items-center justify-between gap-4
-                      px-5 py-5 text-left
-                      transition-colors duration-300
+                      flex min-h-[76px] w-full
+                      items-center justify-between
+                      gap-4 px-5 py-5 text-left
                       sm:px-6
                     "
                   >
-                    <span className="flex items-center gap-4">
+                    <span className="flex min-w-0 items-center gap-4">
 
-                      {/* QUESTION ICON */}
-                      <span
+                      {/* ANIMATED QUESTION ICON */}
+                      <motion.span
+                        animate={{
+                          scale: isActive ? 1.06 : 1,
+                        }}
+                        transition={{
+                          duration: reduceMotion ? 0 : 0.25,
+                        }}
                         className={`
                           flex h-10 w-10 shrink-0
                           items-center justify-center
                           rounded-full
 
-                          transition-all duration-500
-                          ease-in-out
+                          transition-colors duration-300
 
                           ${
                             isActive
-                              ? "scale-105 bg-[#0C9B97] text-white"
-                              : "scale-100 bg-[#E6F6F5] text-[#0C9B97]"
+                              ? "bg-[#0C9B97] text-white"
+                              : "bg-[#E6F6F5] text-[#0C9B97]"
                           }
                         `}
                       >
@@ -192,7 +483,7 @@ function Section8() {
                           <path d="M9.5 9a2.5 2.5 0 0 1 5 0c0 2-2.5 2-2.5 4" />
                           <path d="M12 17h.01" />
                         </svg>
-                      </span>
+                      </motion.span>
 
                       {/* QUESTION TEXT */}
                       <span
@@ -213,108 +504,178 @@ function Section8() {
                       </span>
                     </span>
 
-                    {/* ANIMATED PLUS / MINUS ICON */}
-                    <span
+                    {/* ======================================= */}
+                    {/* ANIMATED PLUS / MINUS BUTTON             */}
+                    {/* ======================================= */}
+
+                    <motion.span
+                      animate={{
+                        rotate: isActive ? 180 : 0,
+                      }}
+                      transition={{
+                        duration: reduceMotion ? 0 : 0.4,
+                        ease: smoothEase,
+                      }}
                       className={`
-                        relative flex h-9 w-9 shrink-0
-                        items-center justify-center
+                        relative flex h-9 w-9
+                        shrink-0 items-center justify-center
                         rounded-full
 
-                        transition-all duration-500
-                        ease-in-out
+                        transition-colors duration-300
 
                         ${
                           isActive
-                            ? "rotate-180 bg-[#E6F6F5] text-[#0C9B97]"
-                            : "rotate-0 bg-[#F3F7F9] text-[#102A43]"
+                            ? "bg-[#E6F6F5] text-[#0C9B97]"
+                            : "bg-[#F3F7F9] text-[#102A43]"
                         }
                       `}
                     >
                       {/* HORIZONTAL LINE */}
-                      <span className="absolute h-[2px] w-3.5 rounded-full bg-current" />
+                      <span
+                        className="
+                          absolute h-[2px] w-3.5
+                          rounded-full bg-current
+                        "
+                      />
 
                       {/* VERTICAL LINE */}
-                      <span
-                        className={`
+                      <motion.span
+                        animate={{
+                          rotate: isActive ? 90 : 0,
+                          opacity: isActive ? 0 : 1,
+                        }}
+                        transition={{
+                          duration: reduceMotion ? 0 : 0.3,
+                        }}
+                        className="
                           absolute h-3.5 w-[2px]
                           rounded-full bg-current
-
-                          transition-all duration-300
-                          ease-in-out
-
-                          ${
-                            isActive
-                              ? "rotate-90 opacity-0"
-                              : "rotate-0 opacity-100"
-                          }
-                        `}
+                        "
                       />
-                    </span>
+                    </motion.span>
                   </button>
                 </h3>
 
-                {/* SMOOTH EXPANDING ANSWER */}
-                <div
+                {/* ======================================= */}
+                {/* SMOOTH MOTION ACCORDION ANSWER           */}
+                {/* ======================================= */}
+
+                <motion.div
                   id={answerId}
                   role="region"
                   aria-labelledby={questionId}
                   aria-hidden={!isActive}
-                  className={`
-                    grid
 
-                    transition-[grid-template-rows]
-                    duration-[550ms]
-                    ease-[cubic-bezier(0.22,1,0.36,1)]
-                    motion-reduce:transition-none
+                  // Avoid an opening animation on first load
+                  initial={false}
 
-                    ${
-                      isActive
-                        ? "grid-rows-[1fr]"
-                        : "grid-rows-[0fr]"
-                    }
-                  `}
+                  animate={{
+                    height: isActive ? "auto" : 0,
+                    opacity: isActive ? 1 : 0,
+                  }}
+
+                  transition={{
+                    height: {
+                      duration: reduceMotion ? 0 : 0.5,
+                      ease: smoothEase,
+                    },
+                    opacity: {
+                      duration: reduceMotion ? 0 : 0.3,
+                    },
+                  }}
+
+                  className="overflow-hidden"
                 >
-                  <div className="min-h-0 overflow-hidden">
+                  <div
+                    className="
+                      px-5 pb-6
+                      sm:pl-[80px] sm:pr-7
+                    "
+                  >
+                    {/* DIVIDER */}
+                    <div className="mb-4 h-px w-full bg-[#E3EDF2]" />
 
-                    <div
-                      className={`
-                        px-5 pb-6
-                        sm:pl-[80px] sm:pr-7
-
-                        transition-[opacity,transform]
-                        duration-[450ms]
-                        ease-out
-                        motion-reduce:transition-none
-
-                        ${
-                          isActive
-                            ? "translate-y-0 opacity-100"
-                            : "-translate-y-2 opacity-0"
-                        }
-                      `}
+                    {/* ANSWER */}
+                    <motion.p
+                      animate={{
+                        y: isActive ? 0 : -8,
+                      }}
+                      transition={{
+                        duration: reduceMotion ? 0 : 0.35,
+                        ease: smoothEase,
+                      }}
+                      className="
+                        text-[14px] leading-[1.9]
+                        text-[#526579]
+                        sm:text-[15px]
+                      "
                     >
-                      {/* DIVIDER */}
-                      <div className="mb-4 h-[1px] w-full bg-[#E3EDF2]" />
-
-                      {/* ANSWER */}
-                      <p className="text-[14px] leading-[1.9] text-[#526579] sm:text-[15px]">
-                        {faq.answer}
-                      </p>
-                    </div>
-
+                      {faq.answer}
+                    </motion.p>
                   </div>
-                </div>
-
-              </div>
+                </motion.div>
+              </motion.div>
             );
           })}
 
-          {/* BOTTOM CONTACT STRIP */}
-          <div className="mt-7 rounded-[16px] border border-[#CBE7E6] bg-[#E6F6F5] p-6 sm:p-7">
+          {/* ======================================= */}
+          {/* ANIMATED BOTTOM CONTACT STRIP          */}
+          {/* ======================================= */}
 
+          <motion.div
+            initial={
+              reduceMotion
+                ? false
+                : {
+                    opacity: 0,
+                    y: 35,
+                    scale: 0.97,
+                  }
+            }
+            whileInView={{
+              opacity: 1,
+              y: 0,
+              scale: 1,
+            }}
+            viewport={{
+              once: false,
+              amount: 0.2,
+            }}
+            transition={{
+              duration: reduceMotion ? 0 : 0.8,
+              ease: smoothEase,
+            }}
+            className="
+              mt-7 rounded-[16px]
+              border border-[#CBE7E6]
+              bg-[#E6F6F5]
+              p-6 sm:p-7
+            "
+          >
             <div className="flex items-start gap-4">
 
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white text-[#0C9B97]">
+              {/* PHONE ICON */}
+              <motion.div
+                whileHover={
+                  reduceMotion
+                    ? undefined
+                    : {
+                        rotate: -8,
+                        scale: 1.1,
+                      }
+                }
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 18,
+                }}
+                className="
+                  flex h-12 w-12 shrink-0
+                  items-center justify-center
+                  rounded-xl bg-white
+                  text-[#0C9B97]
+                "
+              >
                 <svg
                   width="23"
                   height="23"
@@ -328,28 +689,53 @@ function Section8() {
                 >
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-17.64-17.64A2 2 0 0 1 4.18 2h3a2 2 0 0 1 2 1.72l.5 3a2 2 0 0 1-.57 1.79L7.8 9.8a16 16 0 0 0 6.4 6.4l1.29-1.31a2 2 0 0 1 1.79-.57l3 .5A2 2 0 0 1 22 16.92Z" />
                 </svg>
-              </div>
+              </motion.div>
 
               <div>
-                <h3 className="text-[18px] font-extrabold text-[#102A43]">
+                <h3
+                  className="
+                    text-[18px] font-extrabold
+                    text-[#102A43]
+                  "
+                >
                   Need More Information?
                 </h3>
 
-                <p className="mt-2 text-[14px] leading-7 text-[#526579]">
+                <p
+                  className="
+                    mt-2 text-[14px]
+                    leading-7 text-[#526579]
+                  "
+                >
                   Speak with Maximum Care LLC about your
                   medical courier requirements.
                 </p>
 
                 <a
                   href="tel:+17087330065"
-                  className="mt-3 inline-block text-[15px] font-bold text-[#0C9B97] transition-colors duration-300 hover:text-[#087F7C]"
+                  className="
+                    group mt-3 inline-flex
+                    items-center gap-2
+                    text-[15px] font-bold
+                    text-[#0C9B97]
+                    transition-colors duration-300
+                    hover:text-[#087F7C]
+                  "
                 >
-                  Call 708-733-0065 →
+                  Call 708-733-0065
+
+                  <span
+                    className="
+                      transition-transform duration-300
+                      group-hover:translate-x-1
+                    "
+                  >
+                    →
+                  </span>
                 </a>
               </div>
             </div>
-          </div>
-
+          </motion.div>
         </div>
       </div>
     </section>
