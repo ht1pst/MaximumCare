@@ -320,7 +320,7 @@ function RequestQuote() {
           }
         `}
       >
-        <div className="mx-auto flex h-[80px] max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:h-[92px] lg:px-12">
+        <div className="mx-auto flex h-[120px] max-w-[1400px] items-center justify-between px-5 sm:px-8 lg:h-[120px] lg:px-12">
 
           {/* LOGO */}
           <Link
@@ -331,7 +331,7 @@ function RequestQuote() {
             <img
               src={logo}
               alt="Maximum Care LLC"
-              className="h-[54px] w-auto object-contain sm:h-[63px]"
+              className="h-[90px] lg:h-[90px] w-auto object-contain sm:h-[63px]"
             />
           </Link>
 

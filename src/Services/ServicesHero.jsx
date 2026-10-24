@@ -100,7 +100,7 @@ function ServicesHero() {
       {/* ===================================== */}
 
       <header
-        className={`fixed left-0 h-20 top-0 z-50 w-full transition-all duration-500 ${
+        className={`fixed left-0 top-0 z-50 w-full transition-all duration-500 ${
           solidHeader
             ? "bg-white/95 shadow-[0_5px_30px_rgba(16,42,67,0.10)] backdrop-blur-xl"
             : "bg-transparent"
@@ -109,8 +109,8 @@ function ServicesHero() {
         <div
           className={`mx-auto flex max-w-[1500px] items-center justify-between gap-5 px-5 transition-all duration-500 sm:px-8 lg:px-10 xl:px-[75px] ${
             scrolled
-              ? "h-[72px] lg:h-[78px]"
-              : "h-[80px] lg:h-[95px]"
+              ? "h-[120px] lg:h-[110px]"
+              : "h-[120px] lg:h-[110px]"
           }`}
         >
           {/* LOGO */}
@@ -146,9 +146,9 @@ function ServicesHero() {
                   stiffness: 300,
                   damping: 20,
                 }}
-                className={`w-[135px] object-contain transition-[width] duration-500 sm:w-[150px] ${
+                className={`w-[175px] object-contain transition-[width] duration-500 sm:w-[150px] ${
                   scrolled
-                    ? "lg:w-[150px]"
+                    ? "lg:w-[170px]"
                     : "lg:w-[170px]"
                 }`}
               />
