@@ -1,4 +1,4 @@
-
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import {
   motion,
@@ -137,242 +137,349 @@ function Hero() {
   return (
     <>
       {/* HEADER */}
-      <header
-        className={`fixed left-0 top-0 z-50 w-full transition-all duration-500 ${
-          solidHeader
-            ? "bg-white/95 shadow-[0_5px_30px_rgba(16,42,67,0.10)] backdrop-blur-xl"
-            : "bg-transparent"
-        }`}
+      
+<header
+  className={`fixed left-0 top-0 z-50 w-full transition-all duration-500 ${
+    solidHeader
+      ? "bg-white/95 shadow-[0_5px_30px_rgba(16,42,67,0.10)] backdrop-blur-xl"
+      : "bg-transparent"
+  }`}
+>
+  <div
+    className={`mx-auto flex max-w-[1500px] items-center justify-between gap-5 px-5 transition-all duration-500 sm:px-8 lg:px-10 xl:px-[75px] ${
+      scrolled
+        ? "h-[72px] lg:h-[78px]"
+        : "h-[80px] lg:h-[95px]"
+    }`}
+  >
+    {/* LOGO */}
+    <motion.div
+      initial={reduceMotion ? false : { opacity: 0, x: -25 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.7, ease: smoothEase }}
+      className="relative z-10 shrink-0"
+    >
+      <Link
+        to="/"
+        aria-label="Maximum Care LLC Home"
+        onClick={() => setMenuOpen(false)}
       >
-        <div
-          className={`mx-auto flex max-w-[1500px] items-center justify-between gap-5 px-5 transition-all duration-500 sm:px-8 lg:px-10 xl:px-[75px] ${
-            scrolled
-              ? "h-[72px] lg:h-[78px]"
-              : "h-[80px] lg:h-[95px]"
+        <motion.img
+          src={logo}
+          alt="Maximum Care LLC"
+          whileHover={reduceMotion ? undefined : { scale: 1.05 }}
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 20,
+          }}
+          className={`w-[135px] object-contain transition-[width] duration-500 sm:w-[150px] ${
+            scrolled ? "lg:w-[150px]" : "lg:w-[170px]"
+          }`}
+        />
+      </Link>
+    </motion.div>
+
+    {/* DESKTOP NAVIGATION */}
+    <nav
+      aria-label="Main navigation"
+      className="hidden items-center gap-7 xl:flex xl:gap-9"
+    >
+      {/* HOME */}
+      <motion.div
+        initial={reduceMotion ? false : { opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, delay: 0.15, ease: smoothEase }}
+      >
+        <Link
+          to="/"
+          className={`group relative block whitespace-nowrap py-3 text-[15px] font-semibold transition-colors duration-300 ${
+            solidHeader
+              ? "text-[#102A43] hover:text-[#0C9B97]"
+              : "text-white hover:text-[#6DE0D3]"
           }`}
         >
-          {/* LOGO */}
-          <motion.a
-            href="#home"
-            aria-label="Maximum Care LLC Home"
-            onClick={() => setMenuOpen(false)}
-            initial={reduceMotion ? false : { opacity: 0, x: -25 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, ease: smoothEase }}
-            className="relative z-10 shrink-0"
-          >
-            <motion.img
-              src={logo}
-              alt="Maximum Care LLC"
-              whileHover={reduceMotion ? undefined : { scale: 1.05 }}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 20,
-              }}
-              className={`w-[135px] object-contain transition-[width] duration-500 sm:w-[150px] ${
-                scrolled ? "lg:w-[150px]" : "lg:w-[170px]"
-              }`}
-            />
-          </motion.a>
+          Home
+          <span className="absolute bottom-[5px] left-0 h-[2px] w-full origin-left scale-x-0 rounded-full bg-[#0C9B97] transition-transform duration-300 group-hover:scale-x-100" />
+        </Link>
+      </motion.div>
 
-          {/* DESKTOP NAVIGATION */}
-          <nav
-            aria-label="Main navigation"
-            className="hidden items-center gap-7 xl:flex xl:gap-9"
-          >
-            {navLinks.map((link, index) => (
-              <motion.a
-                key={link.name}
-                href={link.href}
-                initial={reduceMotion ? false : { opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: reduceMotion ? 0 : 0.55,
-                  delay: reduceMotion ? 0 : 0.15 + index * 0.09,
-                  ease: smoothEase,
-                }}
-                className={`group relative whitespace-nowrap py-3 text-[15px] font-semibold transition-colors duration-300 ${
-                  solidHeader
-                    ? "text-[#102A43] hover:text-[#0C9B97]"
-                    : "text-white hover:text-[#6DE0D3]"
-                }`}
-              >
-                {link.name}
-
-                <span className="absolute bottom-[5px] left-0 h-[2px] w-full origin-left scale-x-0 rounded-full bg-[#0C9B97] transition-transform duration-300 group-hover:scale-x-100" />
-              </motion.a>
-            ))}
-          </nav>
-
-          {/* RIGHT SIDE */}
-          <div className="flex items-center gap-4">
-
-            {/* DESKTOP CTA */}
-            <motion.a
-              href="mailto:maximumcaree@gmail.com?subject=Medical%20Courier%20Quote%20Request"
-              initial={reduceMotion ? false : { opacity: 0, x: 25 }}
-              animate={{ opacity: 1, x: 0 }}
-              whileHover={
-                reduceMotion ? undefined : { y: -3, scale: 1.03 }
-              }
-              whileTap={
-                reduceMotion ? undefined : { scale: 0.96 }
-              }
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 22,
-              }}
-              className="group hidden min-h-[48px] items-center justify-center gap-3 whitespace-nowrap rounded-xl bg-[#0C9B97] px-6 text-[13px] font-bold text-white shadow-[0_6px_20px_rgba(12,155,151,0.15)] hover:bg-[#087F7C] xl:inline-flex"
-            >
-              Request a Quote
-
-              <svg
-                width="17"
-                height="17"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              >
-                <path d="M5 12h14" />
-                <path d="m12 5 7 7-7 7" />
-              </svg>
-            </motion.a>
-
-            {/* MOBILE MENU BUTTON */}
-            <button
-              type="button"
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={menuOpen}
-              aria-controls="mobile-navigation"
-              onClick={() => setMenuOpen((prev) => !prev)}
-              className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-xl transition-all duration-300 xl:hidden ${
-                solidHeader
-                  ? "bg-[#F0F8FC] text-[#102A43]"
-                  : "bg-white/15 text-white"
-              }`}
-            >
-              <motion.svg
-                width="25"
-                height="25"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                animate={
-                  reduceMotion
-                    ? undefined
-                    : { rotate: menuOpen ? 90 : 0 }
-                }
-                transition={{ duration: 0.25 }}
-                aria-hidden="true"
-              >
-                {menuOpen ? (
-                  <path d="M18 6 6 18M6 6l12 12" />
-                ) : (
-                  <path d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </motion.svg>
-            </button>
-          </div>
-        </div>
-
-        {/* ANIMATED MOBILE NAVIGATION */}
-        <AnimatePresence initial={false}>
-          {menuOpen && (
-            <motion.div
-              id="mobile-navigation"
-              initial={
-                reduceMotion ? false : { height: 0, opacity: 0 }
-              }
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{
-                duration: reduceMotion ? 0 : 0.38,
-                ease: smoothEase,
-              }}
-              className="overflow-hidden bg-white xl:hidden"
-            >
-              <nav
-                aria-label="Mobile navigation"
-                className="max-h-[calc(100svh-80px)] overflow-y-auto border-t border-[#E3EDF2] px-6 pb-8 pt-3 sm:px-8"
-              >
-                {navLinks.map((link, index) => (
-                  <motion.a
-                    key={link.name}
-                    href={link.href}
-                    onClick={() => setMenuOpen(false)}
-                    initial={
-                      reduceMotion
-                        ? false
-                        : { opacity: 0, x: -15 }
-                    }
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{
-                      duration: reduceMotion ? 0 : 0.3,
-                      delay: reduceMotion
-                        ? 0
-                        : 0.09 + index * 0.05,
-                    }}
-                    className="flex items-center justify-between border-b border-[#E3EDF2] py-4 text-[16px] font-semibold text-[#102A43] transition-colors duration-300 hover:text-[#0C9B97]"
-                  >
-                    <span>{link.name}</span>
-
-                    <span className="text-[12px] font-semibold text-[#0C9B97]">
-                      0{index + 1}
-                    </span>
-                  </motion.a>
-                ))}
-
-                <a
-                  href="mailto:maximumcaree@gmail.com?subject=Medical%20Courier%20Quote%20Request"
-                  onClick={() => setMenuOpen(false)}
-                  className="mt-6 flex min-h-[52px] items-center justify-center gap-3 rounded-xl bg-[#0C9B97] px-6 text-[15px] font-bold text-white transition-colors hover:bg-[#087F7C]"
-                >
-                  Request a Quote
-                  <span aria-hidden="true">→</span>
-                </a>
-
-                <a
-                  href="tel:+17087330065"
-                  className="mt-6 block text-center text-[14px] font-medium text-[#526579]"
-                >
-                  Call Us:{" "}
-                  <span className="font-bold text-[#0C9B97]">
-                    708-733-0065
-                  </span>
-                </a>
-              </nav>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* HEADER BORDER */}
-        <div
-          className={`h-px w-full ${
-            solidHeader ? "bg-[#E3EDF2]" : "bg-white/15"
+      {/* ABOUT US */}
+      <motion.div
+        initial={reduceMotion ? false : { opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, delay: 0.24, ease: smoothEase }}
+      >
+        <Link
+          to="/about"
+          className={`group relative block whitespace-nowrap py-3 text-[15px] font-semibold transition-colors duration-300 ${
+            solidHeader
+              ? "text-[#102A43] hover:text-[#0C9B97]"
+              : "text-white hover:text-[#6DE0D3]"
           }`}
-        />
+        >
+          About Us
+          <span className="absolute bottom-[5px] left-0 h-[2px] w-full origin-left scale-x-0 rounded-full bg-[#0C9B97] transition-transform duration-300 group-hover:scale-x-100" />
+        </Link>
+      </motion.div>
 
-        {/* ANIMATED SCROLL PROGRESS BAR */}
-        <motion.div
+      {/* SERVICES */}
+      <motion.div
+        initial={reduceMotion ? false : { opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, delay: 0.33, ease: smoothEase }}
+      >
+        <Link
+          to="/services"
+          className={`group relative block whitespace-nowrap py-3 text-[15px] font-semibold transition-colors duration-300 ${
+            solidHeader
+              ? "text-[#102A43] hover:text-[#0C9B97]"
+              : "text-white hover:text-[#6DE0D3]"
+          }`}
+        >
+          Services
+          <span className="absolute bottom-[5px] left-0 h-[2px] w-full origin-left scale-x-0 rounded-full bg-[#0C9B97] transition-transform duration-300 group-hover:scale-x-100" />
+        </Link>
+      </motion.div>
+
+      {/* SERVICE AREAS */}
+      <motion.div
+        initial={reduceMotion ? false : { opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, delay: 0.42, ease: smoothEase }}
+      >
+        <Link
+          to="/service-areas"
+          className={`group relative block whitespace-nowrap py-3 text-[15px] font-semibold transition-colors duration-300 ${
+            solidHeader
+              ? "text-[#102A43] hover:text-[#0C9B97]"
+              : "text-white hover:text-[#6DE0D3]"
+          }`}
+        >
+          Service Areas
+          <span className="absolute bottom-[5px] left-0 h-[2px] w-full origin-left scale-x-0 rounded-full bg-[#0C9B97] transition-transform duration-300 group-hover:scale-x-100" />
+        </Link>
+      </motion.div>
+
+      {/* CONTACT US */}
+      <motion.div
+        initial={reduceMotion ? false : { opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, delay: 0.51, ease: smoothEase }}
+      >
+        <Link
+          to="/contact"
+          className={`group relative block whitespace-nowrap py-3 text-[15px] font-semibold transition-colors duration-300 ${
+            solidHeader
+              ? "text-[#102A43] hover:text-[#0C9B97]"
+              : "text-white hover:text-[#6DE0D3]"
+          }`}
+        >
+          Contact Us
+          <span className="absolute bottom-[5px] left-0 h-[2px] w-full origin-left scale-x-0 rounded-full bg-[#0C9B97] transition-transform duration-300 group-hover:scale-x-100" />
+        </Link>
+      </motion.div>
+    </nav>
+
+    {/* RIGHT SIDE */}
+    <div className="flex items-center gap-4">
+
+      {/* DESKTOP REQUEST QUOTE */}
+      <motion.div
+        initial={reduceMotion ? false : { opacity: 0, x: 25 }}
+        animate={{ opacity: 1, x: 0 }}
+        whileHover={
+          reduceMotion ? undefined : { y: -3, scale: 1.03 }
+        }
+        whileTap={
+          reduceMotion ? undefined : { scale: 0.96 }
+        }
+        transition={{
+          type: "spring",
+          stiffness: 300,
+          damping: 22,
+        }}
+        className="hidden xl:block"
+      >
+        <Link
+          to="/request-quote"
+          className="group inline-flex min-h-[48px] items-center justify-center gap-3 whitespace-nowrap rounded-xl bg-[#0C9B97] px-6 text-[13px] font-bold text-white shadow-[0_6px_20px_rgba(12,155,151,0.15)] transition-colors duration-300 hover:bg-[#087F7C]"
+        >
+          Request a Quote
+
+          <svg
+            width="17"
+            height="17"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+            className="transition-transform duration-300 group-hover:translate-x-1"
+          >
+            <path d="M5 12h14" />
+            <path d="m12 5 7 7-7 7" />
+          </svg>
+        </Link>
+      </motion.div>
+
+      {/* MOBILE MENU BUTTON */}
+      <button
+        type="button"
+        aria-label={menuOpen ? "Close menu" : "Open menu"}
+        aria-expanded={menuOpen}
+        aria-controls="mobile-navigation"
+        onClick={() => setMenuOpen((prev) => !prev)}
+        className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-xl transition-all duration-300 xl:hidden ${
+          solidHeader
+            ? "bg-[#F0F8FC] text-[#102A43]"
+            : "bg-white/15 text-white"
+        }`}
+      >
+        <motion.svg
+          width="25"
+          height="25"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          animate={
+            reduceMotion
+              ? undefined
+              : { rotate: menuOpen ? 90 : 0 }
+          }
+          transition={{ duration: 0.25 }}
           aria-hidden="true"
-          className="absolute bottom-0 left-0 h-[3px] w-full origin-left bg-[#0C9B97]"
-          style={{
-            scaleX: reduceMotion
-              ? scrollYProgress
-              : smoothProgress,
-          }}
-        />
-      </header>
+        >
+          {menuOpen ? (
+            <path d="M18 6 6 18M6 6l12 12" />
+          ) : (
+            <path d="M4 6h16M4 12h16M4 18h16" />
+          )}
+        </motion.svg>
+      </button>
+    </div>
+  </div>
+
+  {/* ANIMATED MOBILE NAVIGATION */}
+  <AnimatePresence initial={false}>
+    {menuOpen && (
+      <motion.div
+        id="mobile-navigation"
+        initial={
+          reduceMotion ? false : { height: 0, opacity: 0 }
+        }
+        animate={{ height: "auto", opacity: 1 }}
+        exit={{ height: 0, opacity: 0 }}
+        transition={{
+          duration: reduceMotion ? 0 : 0.38,
+          ease: smoothEase,
+        }}
+        className="overflow-hidden bg-white xl:hidden"
+      >
+        <nav
+          aria-label="Mobile navigation"
+          className="max-h-[calc(100svh-80px)] overflow-y-auto border-t border-[#E3EDF2] px-6 pb-8 pt-3 sm:px-8"
+        >
+          {/* HOME */}
+          <Link
+            to="/"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center justify-between border-b border-[#E3EDF2] py-4 text-[16px] font-semibold text-[#102A43] hover:text-[#0C9B97]"
+          >
+            <span>Home</span>
+            <span className="text-[12px] text-[#0C9B97]">01</span>
+          </Link>
+
+          {/* ABOUT US */}
+          <Link
+            to="/about"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center justify-between border-b border-[#E3EDF2] py-4 text-[16px] font-semibold text-[#102A43] hover:text-[#0C9B97]"
+          >
+            <span>About Us</span>
+            <span className="text-[12px] text-[#0C9B97]">02</span>
+          </Link>
+
+          {/* SERVICES */}
+          <Link
+            to="/services"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center justify-between border-b border-[#E3EDF2] py-4 text-[16px] font-semibold text-[#102A43] hover:text-[#0C9B97]"
+          >
+            <span>Services</span>
+            <span className="text-[12px] text-[#0C9B97]">03</span>
+          </Link>
+
+          {/* SERVICE AREAS */}
+          <Link
+            to="/service-areas"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center justify-between border-b border-[#E3EDF2] py-4 text-[16px] font-semibold text-[#102A43] hover:text-[#0C9B97]"
+          >
+            <span>Service Areas</span>
+            <span className="text-[12px] text-[#0C9B97]">04</span>
+          </Link>
+
+          {/* CONTACT US */}
+          <Link
+            to="/contact"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center justify-between border-b border-[#E3EDF2] py-4 text-[16px] font-semibold text-[#102A43] hover:text-[#0C9B97]"
+          >
+            <span>Contact Us</span>
+            <span className="text-[12px] text-[#0C9B97]">05</span>
+          </Link>
+
+          {/* MOBILE REQUEST QUOTE */}
+          <Link
+            to="/request-quote"
+            onClick={() => setMenuOpen(false)}
+            className="mt-6 flex min-h-[52px] items-center justify-center gap-3 rounded-xl bg-[#0C9B97] px-6 text-[15px] font-bold text-white transition-colors hover:bg-[#087F7C]"
+          >
+            Request a Quote
+            <span aria-hidden="true">→</span>
+          </Link>
+
+          {/* PHONE NUMBER */}
+          <a
+            href="tel:+17087330065"
+            onClick={() => setMenuOpen(false)}
+            className="mt-6 block text-center text-[14px] font-medium text-[#526579]"
+          >
+            Call Us:{" "}
+            <span className="font-bold text-[#0C9B97]">
+              708-733-0065
+            </span>
+          </a>
+        </nav>
+      </motion.div>
+    )}
+  </AnimatePresence>
+
+  {/* HEADER BORDER */}
+  <div
+    className={`h-px w-full ${
+      solidHeader ? "bg-[#E3EDF2]" : "bg-white/15"
+    }`}
+  />
+
+  {/* ANIMATED SCROLL PROGRESS BAR */}
+  <motion.div
+    aria-hidden="true"
+    className="absolute bottom-0 left-0 h-[3px] w-full origin-left bg-[#0C9B97]"
+    style={{
+      scaleX: reduceMotion
+        ? scrollYProgress
+        : smoothProgress,
+    }}
+  />
+</header>
+
 
       {/* HERO SECTION */}
       <section
@@ -535,7 +642,7 @@ function Hero() {
 </motion.a>
 
             <motion.a
-              href="#services"
+              href="/services"
               whileHover={
                 reduceMotion
                   ? undefined

@@ -227,7 +227,7 @@ function Section8() {
 
           <motion.a
             {...reveal("up", 0.45)}
-            href="mailto:maximumcaree@gmail.com"
+             href="/contact"
             whileHover={
               reduceMotion
                 ? undefined

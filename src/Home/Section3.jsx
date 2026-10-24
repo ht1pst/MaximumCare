@@ -579,7 +579,7 @@ function Section3() {
 
           {/* CTA BUTTON */}
           <motion.a
-            href="mailto:maximumcaree@gmail.com?subject=Medical%20Courier%20Service%20Inquiry"
+             href="/request-quote"
 
             whileHover={
               reduceMotion

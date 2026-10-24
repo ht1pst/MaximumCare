@@ -1064,7 +1064,7 @@ function Footer() {
                       group-hover:text-[#6DE0D3]
                     "
                   >
-                    maximumcaree@gmail.com
+                    info@maximumcare.net
                   </span>
                 </span>
               </a>
