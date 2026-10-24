@@ -484,7 +484,7 @@ function Hero() {
       {/* HERO SECTION */}
       <section
         id="home"
-        className="relative isolate flex min-h-[100svh] w-full flex-col overflow-hidden bg-[#071E34]"
+        className="relative isolate flex min-h-[100svh] w-full flex-col overflow-hidden bg-[#071E34] pt-7 lg:pt-0"
       >
         {/* VIDEO BACKGROUND */}
         <video

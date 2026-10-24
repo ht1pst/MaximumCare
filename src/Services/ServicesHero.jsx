@@ -498,7 +498,7 @@ function ServicesHero() {
       {/* MAIN HERO CONTENT                     */}
       {/* ===================================== */}
 
-      <div className="relative z-10 mx-auto grid max-w-[1280px] items-center gap-14 px-5 pb-20 pt-[135px] sm:px-8 sm:pb-24 sm:pt-[155px] lg:min-h-[680px] lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-12 lg:pb-28 lg:pt-[160px]">
+      <div className="relative z-10 mx-auto grid max-w-[1280px] items-center gap-14 px-5 pb-20 pt-[165px] sm:px-8 sm:pb-24 sm:pt-[155px] lg:min-h-[680px] lg:grid-cols-[1.05fr_0.95fr] lg:gap-16 lg:px-12 lg:pb-28 lg:pt-[160px]">
         {/* LEFT SIDE */}
 
         <div className="relative z-10">
