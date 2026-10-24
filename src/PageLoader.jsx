@@ -85,7 +85,12 @@ function PageLoader() {
             duration: reduceMotion ? 0 : 0.35,
             ease,
           }}
-          className="fixed inset-0 z-[9999] flex min-h-screen w-full items-center justify-center overflow-hidden bg-[#071E34] px-5"
+          className="
+  fixed inset-0 z-[9999]
+  flex h-screen h-[100dvh]
+  w-full items-center justify-center
+  overflow-hidden bg-[#071E34] px-5
+"
         >
           {/* ====================================== */}
           {/* BACKGROUND EFFECTS                     */}
@@ -141,9 +146,9 @@ function PageLoader() {
                 duration: reduceMotion ? 0 : 0.55,
                 ease,
               }}
-              className="mb-8"
+              className="mb-8 bg-transparent"
             >
-              <div className="flex min-h-[105px] items-center justify-center rounded-[24px] border border-white/15 bg-white/10 px-8 py-5 shadow-[0_20px_60px_rgba(0,0,0,0.18)] backdrop-blur-md">
+              <div className="flex min-h-[105px] items-center justify-center rounded-[24px] border border-white/15 bg-transparent px-8 py-5 shadow-[0_20px_60px_rgba(0,0,0,0.18)] backdrop-blur-md">
 
                 <img
                   src={logo}
@@ -354,6 +359,9 @@ function PageLoader() {
                 duration: reduceMotion ? 0 : 0.55,
                 delay: reduceMotion ? 0 : 0.15,
               }}
+
+              className="bg-transparent"
+
             >
               <h2 className="text-[27px] font-extrabold tracking-[0.12em] text-white sm:text-[32px]">
                 MAXIMUM CARE
