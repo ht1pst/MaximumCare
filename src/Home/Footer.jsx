@@ -396,7 +396,7 @@ function Footer() {
             >
               {/* REQUEST QUOTE */}
               <motion.a
-                href="mailto:maximumcaree@gmail.com?subject=Medical%20Courier%20Quote%20Request"
+                  href="/request-quote"
                 whileHover={
                   reduceMotion
                     ? undefined
