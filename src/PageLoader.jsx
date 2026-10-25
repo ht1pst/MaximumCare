@@ -7,7 +7,7 @@ import {
 } from "motion/react";
 import { useLocation } from "react-router-dom";
 
-import logo from "./assets/maximumcarelogo.webp";
+import logo from "./assets/MaximumCarelogooriginal.webp";
 
 const ease = [0.22, 1, 0.36, 1];
 
@@ -148,12 +148,12 @@ function PageLoader() {
               }}
               className="mb-8 bg-transparent"
             >
-              <div className="flex min-h-[105px] items-center justify-center rounded-[24px] border border-white/15 bg-transparent px-8 py-5 shadow-[0_20px_60px_rgba(0,0,0,0.18)] backdrop-blur-md">
+              <div className="flex min-h-[105px] items-center justify-center rounded-[24px] bg-transparent  shadow-[0_20px_60px_rgba(0,0,0,0.18)] backdrop-blur-md">
 
                 <img
                   src={logo}
                   alt="Maximum Care LLC"
-                  className="max-h-[85px] w-auto max-w-[210px] object-contain"
+                  className="max-h-[85px] w-auto max-w-[210px] object-contain rounded-xl"
                 />
               </div>
             </motion.div>
