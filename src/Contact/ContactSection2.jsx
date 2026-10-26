@@ -12,7 +12,6 @@ const initialForm = {
   organization: "",
   subject: "",
   message: "",
-  website: "",
 };
 
 const inputStyle =
@@ -44,6 +43,7 @@ function ContactSection2() {
     },
   });
 
+  // HANDLE FORM INPUT
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -57,29 +57,26 @@ function ContactSection2() {
     }
   };
 
+  // SEND FORM TO SUPABASE
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (submitting) return;
 
-    // Honeypot: ignore automated spam submissions.
-    if (form.website) return;
-
-    const endpoint = import.meta.env.VITE_CONTACT_ENDPOINT;
-
-    if (!endpoint) {
-      setStatus({
-        type: "error",
-        message:
-          "The contact form is not connected yet. Please use the email or phone contact details shown on this page.",
-      });
-      return;
-    }
-
     setSubmitting(true);
     setStatus({ type: "", message: "" });
 
     try {
+      const endpoint = import.meta.env.VITE_CONTACT_ENDPOINT;
+
+      if (!endpoint) {
+        throw new Error(
+          "Missing VITE_CONTACT_ENDPOINT in .env"
+        );
+      }
+
+      console.log("Sending contact message to Supabase...");
+
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
@@ -92,12 +89,29 @@ function ContactSection2() {
           organization: form.organization.trim(),
           subject: form.subject,
           message: form.message.trim(),
-          website: form.website,
+          website: "",
         }),
       });
 
-      if (!response.ok) {
-        throw new Error("Message submission failed.");
+      const responseText = await response.text();
+
+      let result;
+
+      try {
+        result = JSON.parse(responseText);
+      } catch {
+        throw new Error(
+          `Unexpected server response (${response.status}): ${responseText}`
+        );
+      }
+
+      console.log("Supabase response status:", response.status);
+      console.log("Supabase result:", result);
+
+      if (!response.ok || result.success !== true) {
+        throw new Error(
+          result.error || `Request failed (${response.status})`
+        );
       }
 
       setStatus({
@@ -107,12 +121,19 @@ function ContactSection2() {
       });
 
       setForm(initialForm);
+
     } catch (error) {
+      console.error(
+        "Maximum Care contact submission failed:",
+        error
+      );
+
       setStatus({
         type: "error",
         message:
           "We couldn't submit your message. Please try again or contact us directly by email or phone.",
       });
+
     } finally {
       setSubmitting(false);
     }
@@ -152,6 +173,7 @@ function ContactSection2() {
             className="text-[35px] font-extrabold leading-[1.15] tracking-[-0.035em] text-[#071E34] sm:text-[44px] lg:text-[52px]"
           >
             Get in Touch.
+
             <span className="mt-2 block text-[#0C9B97]">
               Start the Conversation.
             </span>
@@ -183,6 +205,7 @@ function ContactSection2() {
 
               <h3 className="text-[29px] font-extrabold leading-[1.2] text-[#071E34] sm:text-[36px]">
                 We're Here to
+
                 <span className="block text-[#0C9B97]">
                   Connect With You.
                 </span>
@@ -221,9 +244,11 @@ function ContactSection2() {
                 <span className="block text-[11px] font-bold uppercase tracking-wide text-[#0C9B97]">
                   Call Maximum Care
                 </span>
+
                 <span className="mt-1 block text-[17px] font-extrabold text-[#071E34]">
                   708-733-0065
                 </span>
+
                 <span className="mt-1 block text-[12px] text-[#718398]">
                   Call to discuss your inquiry
                 </span>
@@ -232,7 +257,7 @@ function ContactSection2() {
 
             {/* EMAIL CARD */}
             <a
-              href="mailto:maximumcaree@gmail.com"
+              href="mailto:info@maximumcare.net"
               className="group flex items-center gap-4 rounded-2xl border border-[#DFEAEF] bg-[#F8FBFC] p-5 transition-all duration-300 hover:border-[#0C9B97]/40 hover:shadow-lg"
             >
               <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-[#E2F5F2] text-[#0C9B97]">
@@ -256,9 +281,11 @@ function ContactSection2() {
                 <span className="block text-[11px] font-bold uppercase tracking-wide text-[#0C9B97]">
                   Email Maximum Care
                 </span>
+
                 <span className="mt-1 block break-all text-[15px] font-extrabold text-[#071E34] sm:text-[17px]">
-                 info@maximumcare.net
+                  info@maximumcare.net
                 </span>
+
                 <span className="mt-1 block text-[12px] text-[#718398]">
                   Send a general inquiry
                 </span>
@@ -267,6 +294,7 @@ function ContactSection2() {
 
             {/* LOCATION CARD */}
             <div className="flex items-center gap-4 rounded-2xl border border-[#DFEAEF] bg-[#F8FBFC] p-5">
+
               <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-[#E2F5F2] text-[#0C9B97]">
                 <svg
                   width="26"
@@ -288,9 +316,11 @@ function ContactSection2() {
                 <p className="text-[11px] font-bold uppercase tracking-wide text-[#0C9B97]">
                   Our Location
                 </p>
+
                 <p className="mt-1 text-[17px] font-extrabold text-[#071E34]">
                   Moorhead, Minnesota
                 </p>
+
                 <p className="mt-1 text-[12px] text-[#718398]">
                   Fargo–Moorhead regional focus
                 </p>
@@ -306,12 +336,14 @@ function ContactSection2() {
               />
 
               <div className="relative z-10">
+
                 <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#6DE0D3]">
                   REQUESTING COURIER SERVICE?
                 </p>
 
                 <h4 className="mt-4 text-[22px] font-extrabold leading-[1.3]">
                   Need Transportation
+
                   <span className="block text-[#6DE0D3]">
                     for a Specific Shipment?
                   </span>
@@ -340,9 +372,11 @@ function ContactSection2() {
             {...reveal(0.2)}
             className="relative overflow-hidden rounded-[28px] border border-[#E0EBF0] bg-white p-6 shadow-[0_20px_60px_rgba(7,30,52,0.08)] sm:p-9 lg:p-10"
           >
+
             <div className="absolute left-0 top-0 h-[5px] w-full bg-gradient-to-r from-[#0C9B97] via-[#6DE0D3] to-transparent" />
 
             <div className="mb-9">
+
               <p className="text-[11px] font-extrabold uppercase tracking-[0.15em] text-[#0C9B97]">
                 SEND A MESSAGE
               </p>
@@ -357,33 +391,22 @@ function ContactSection2() {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-
-              {/* SPAM PROTECTION */}
-              <div
-                className="absolute -left-[9999px]"
-                aria-hidden="true"
-              >
-                <label htmlFor="contact-website">
-                  Leave this field empty
-                </label>
-                <input
-                  id="contact-website"
-                  type="text"
-                  name="website"
-                  autoComplete="off"
-                  tabIndex={-1}
-                  value={form.website}
-                  onChange={handleChange}
-                />
-              </div>
+            {/* CONTACT FORM */}
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-6"
+            >
 
               {/* NAME AND EMAIL */}
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
 
                 <div>
-                  <label htmlFor="contact-fullName" className={labelStyle}>
-                    Full Name <span className="text-[#0C9B97]">*</span>
+                  <label
+                    htmlFor="contact-fullName"
+                    className={labelStyle}
+                  >
+                    Full Name
+                    <span className="ml-1 text-[#0C9B97]">*</span>
                   </label>
 
                   <input
@@ -401,8 +424,12 @@ function ContactSection2() {
                 </div>
 
                 <div>
-                  <label htmlFor="contact-email" className={labelStyle}>
-                    Email Address <span className="text-[#0C9B97]">*</span>
+                  <label
+                    htmlFor="contact-email"
+                    className={labelStyle}
+                  >
+                    Email Address
+                    <span className="ml-1 text-[#0C9B97]">*</span>
                   </label>
 
                   <input
@@ -424,7 +451,10 @@ function ContactSection2() {
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
 
                 <div>
-                  <label htmlFor="contact-phone" className={labelStyle}>
+                  <label
+                    htmlFor="contact-phone"
+                    className={labelStyle}
+                  >
                     Phone Number
                   </label>
 
@@ -442,7 +472,10 @@ function ContactSection2() {
                 </div>
 
                 <div>
-                  <label htmlFor="contact-organization" className={labelStyle}>
+                  <label
+                    htmlFor="contact-organization"
+                    className={labelStyle}
+                  >
                     Organization
                   </label>
 
@@ -462,8 +495,12 @@ function ContactSection2() {
 
               {/* SUBJECT */}
               <div>
-                <label htmlFor="contact-subject" className={labelStyle}>
-                  Subject <span className="text-[#0C9B97]">*</span>
+                <label
+                  htmlFor="contact-subject"
+                  className={labelStyle}
+                >
+                  Subject
+                  <span className="ml-1 text-[#0C9B97]">*</span>
                 </label>
 
                 <select
@@ -474,22 +511,30 @@ function ContactSection2() {
                   onChange={handleChange}
                   className={inputStyle}
                 >
-                  <option value="">Select an inquiry type</option>
+                  <option value="">
+                    Select an inquiry type
+                  </option>
+
                   <option value="General Inquiry">
                     General Inquiry
                   </option>
+
                   <option value="Medical Courier Services">
                     Medical Courier Services
                   </option>
+
                   <option value="Service Area Question">
                     Service Area Question
                   </option>
+
                   <option value="Scheduling Inquiry">
                     Scheduling Inquiry
                   </option>
+
                   <option value="Partnership Inquiry">
                     Partnership Inquiry
                   </option>
+
                   <option value="Other">
                     Other
                   </option>
@@ -498,8 +543,12 @@ function ContactSection2() {
 
               {/* MESSAGE */}
               <div>
-                <label htmlFor="contact-message" className={labelStyle}>
-                  Your Message <span className="text-[#0C9B97]">*</span>
+                <label
+                  htmlFor="contact-message"
+                  className={labelStyle}
+                >
+                  Your Message
+                  <span className="ml-1 text-[#0C9B97]">*</span>
                 </label>
 
                 <textarea
@@ -516,8 +565,9 @@ function ContactSection2() {
                 />
               </div>
 
-              {/* PRIVACY NOTE */}
+              {/* PRIVACY NOTICE */}
               <div className="rounded-xl border border-[#DCECE8] bg-[#F0F9F7] p-4">
+
                 <p className="text-[12px] leading-[1.85] text-[#526579]">
                   Please do not include patient names,
                   medical records, protected health
@@ -529,7 +579,11 @@ function ContactSection2() {
               {/* STATUS MESSAGE */}
               {status.message && (
                 <div
-                  role={status.type === "error" ? "alert" : "status"}
+                  role={
+                    status.type === "error"
+                      ? "alert"
+                      : "status"
+                  }
                   aria-live="polite"
                   className={`rounded-xl border p-4 text-[13px] leading-[1.8] ${
                     status.type === "success"
@@ -541,13 +595,15 @@ function ContactSection2() {
                 </div>
               )}
 
-              {/* SUBMIT */}
+              {/* SUBMIT BUTTON */}
               <button
                 type="submit"
                 disabled={submitting}
                 className="group flex w-full items-center justify-center gap-3 rounded-xl bg-[#0C9B97] px-7 py-4 text-[14px] font-extrabold text-white shadow-[0_12px_30px_rgba(12,155,151,0.2)] transition-all duration-300 hover:bg-[#087F7B] disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {submitting ? "Sending Message..." : "Send Your Message"}
+                {submitting
+                  ? "Sending Message..."
+                  : "Send Your Message"}
 
                 {!submitting && (
                   <svg

@@ -51,7 +51,6 @@ const initialForm = {
   frequency: "",
   preferredDate: "",
   details: "",
-  "bot-field": "",
 };
 
 // ==========================================
@@ -187,15 +186,11 @@ function RequestQuote() {
     });
 
     return () => {
-      window.removeEventListener(
-        "scroll",
-        handleScroll
-      );
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
   const solidHeader = scrolled || menuOpen;
-
   const closeMenu = () => setMenuOpen(false);
 
   // ==========================================
@@ -204,14 +199,11 @@ function RequestQuote() {
 
   const { scrollYProgress } = useScroll();
 
-  const smoothProgress = useSpring(
-    scrollYProgress,
-    {
-      stiffness: 120,
-      damping: 30,
-      restDelta: 0.001,
-    }
-  );
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
   // ==========================================
   // ANIMATIONS
@@ -250,10 +242,14 @@ function RequestQuote() {
       ...previous,
       [name]: value,
     }));
+
+    if (error) {
+      setError("");
+    }
   };
 
   // ==========================================
-  // NETLIFY FORM SUBMISSION
+  // SUPABASE QUOTE FORM SUBMISSION
   // ==========================================
 
   const handleSubmit = async (event) => {
@@ -264,39 +260,76 @@ function RequestQuote() {
     setSubmitting(true);
     setError("");
 
-    const formData = new URLSearchParams();
-
-    formData.append(
-      "form-name",
-      "quote-request"
-    );
-
-    Object.entries(form).forEach(
-      ([key, value]) => {
-        formData.append(key, value);
-      }
-    );
-
     try {
-      const response = await fetch("/", {
+      const endpoint = import.meta.env.VITE_QUOTE_ENDPOINT;
+
+      if (!endpoint) {
+        throw new Error(
+          "Missing VITE_QUOTE_ENDPOINT in .env"
+        );
+      }
+
+      const formData = {
+        organization: form.organization.trim(),
+        contactName: form.contactName.trim(),
+        email: form.email.trim(),
+        phone: form.phone.trim(),
+        serviceType: form.serviceType,
+        pickupArea: form.pickupArea.trim(),
+        deliveryArea: form.deliveryArea.trim(),
+        frequency: form.frequency,
+        preferredDate: form.preferredDate,
+        details: form.details.trim(),
+      };
+
+      console.log("Sending quote request to Supabase...");
+
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: {
-          "Content-Type":
-            "application/x-www-form-urlencoded",
+          "Content-Type": "application/json",
         },
-        body: formData.toString(),
+        body: JSON.stringify(formData),
       });
 
-      if (!response.ok) {
-        throw new Error("Submission failed");
+      const responseText = await response.text();
+
+      let result;
+
+      try {
+        result = JSON.parse(responseText);
+      } catch {
+        throw new Error(
+          `Unexpected server response (${response.status})`
+        );
+      }
+
+      console.log("Quote response status:", response.status);
+      console.log("Quote response:", result);
+
+      if (!response.ok || result.success !== true) {
+        throw new Error(
+          result.error ||
+          result.message ||
+          `Quote submission failed (${response.status})`
+        );
       }
 
       setSubmitted(true);
       setForm({ ...initialForm });
+
+      console.log("Quote request saved successfully.");
+
     } catch (error) {
-      setError(
-        "We couldn't send your request. Please try again or email maximumcaree@gmail.com."
+      console.error(
+        "Maximum Care quote submission failed:",
+        error
       );
+
+      setError(
+        "We couldn't submit your quote request. Please try again or contact us directly."
+      );
+
     } finally {
       setSubmitting(false);
     }
@@ -306,7 +339,7 @@ function RequestQuote() {
     <div className="min-h-screen bg-[#F3F8FB]">
 
       {/* ====================================== */}
-      {/* NAVBAR                                */}
+      {/* NAVBAR */}
       {/* ====================================== */}
 
       <header
@@ -331,7 +364,7 @@ function RequestQuote() {
             <img
               src={logo}
               alt="Maximum Care LLC"
-              className="h-[90px] lg:h-[90px] w-auto object-contain sm:h-[63px]"
+              className="h-[90px] w-auto object-contain sm:h-[63px] lg:h-[90px]"
             />
           </Link>
 
@@ -385,13 +418,9 @@ function RequestQuote() {
           {/* MOBILE MENU BUTTON */}
           <button
             type="button"
-            onClick={() =>
-              setMenuOpen((open) => !open)
-            }
+            onClick={() => setMenuOpen((open) => !open)}
             aria-label={
-              menuOpen
-                ? "Close menu"
-                : "Open menu"
+              menuOpen ? "Close menu" : "Open menu"
             }
             aria-expanded={menuOpen}
             aria-controls="quote-mobile-navigation"
@@ -441,10 +470,7 @@ function RequestQuote() {
           </button>
         </div>
 
-        {/* ====================================== */}
-        {/* MOBILE NAVIGATION                    */}
-        {/* ====================================== */}
-
+        {/* MOBILE NAVIGATION */}
         <AnimatePresence>
           {menuOpen && (
             <motion.nav
@@ -453,10 +479,7 @@ function RequestQuote() {
               initial={
                 reduceMotion
                   ? false
-                  : {
-                      opacity: 0,
-                      height: 0,
-                    }
+                  : { opacity: 0, height: 0 }
               }
               animate={{
                 opacity: 1,
@@ -467,15 +490,12 @@ function RequestQuote() {
                 height: 0,
               }}
               transition={{
-                duration: reduceMotion
-                  ? 0
-                  : 0.3,
+                duration: reduceMotion ? 0 : 0.3,
                 ease,
               }}
               className="overflow-hidden border-t border-[#E5EDF2] bg-white shadow-xl lg:hidden"
             >
               <div className="space-y-1 px-5 py-5 sm:px-8">
-
                 {navLinks.map((item) => (
                   <Link
                     key={item.to}
@@ -511,14 +531,13 @@ function RequestQuote() {
       </header>
 
       {/* ====================================== */}
-      {/* FULL-WIDTH HERO                       */}
+      {/* FULL-WIDTH HERO */}
       {/* ====================================== */}
 
       <section
         id="quote-hero"
         className="relative isolate flex min-h-[760px] w-full items-center overflow-hidden bg-[#071E34] text-white sm:min-h-[800px] lg:min-h-[850px]"
       >
-
         {/* BACKGROUND IMAGE */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <motion.img
@@ -526,15 +545,11 @@ function RequestQuote() {
             alt="Medical courier transportation for healthcare organizations"
             className="h-full w-full object-cover object-center"
             initial={
-              reduceMotion
-                ? false
-                : { scale: 1.1 }
+              reduceMotion ? false : { scale: 1.1 }
             }
             animate={{ scale: 1 }}
             transition={{
-              duration: reduceMotion
-                ? 0
-                : 1.8,
+              duration: reduceMotion ? 0 : 1.8,
               ease,
             }}
           />
@@ -562,10 +577,7 @@ function RequestQuote() {
           className="pointer-events-none absolute -right-20 top-[23%] z-0 hidden h-[370px] w-[370px] rounded-full border border-white/10 lg:block"
         />
 
-        {/* ====================================== */}
-        {/* HERO CONTENT                         */}
-        {/* ====================================== */}
-
+        {/* HERO CONTENT */}
         <div className="relative z-10 mx-auto grid w-full max-w-[1400px] grid-cols-1 items-center gap-14 px-5 pb-28 pt-40 sm:px-8 sm:pb-32 sm:pt-44 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16 lg:px-12 lg:pt-48">
 
           {/* LEFT CONTENT */}
@@ -683,21 +695,16 @@ function RequestQuote() {
             </motion.div>
           </div>
 
-          {/* ====================================== */}
-          {/* RIGHT — FLOATING GLASS PANEL          */}
-          {/* ====================================== */}
-
+          {/* RIGHT FLOATING GLASS PANEL */}
           <motion.div
             {...reveal(0.42)}
             className="relative mx-auto w-full max-w-[450px] lg:ml-auto"
           >
-            {/* OUTER FRAME */}
             <div
               aria-hidden="true"
               className="pointer-events-none absolute -right-3 -top-3 h-full w-full rounded-[28px] border border-[#6DE0D3]/30 sm:-right-5 sm:-top-5"
             />
 
-            {/* GLASS CARD */}
             <div className="relative overflow-hidden rounded-[28px] border border-white/20 bg-[#092940]/85 p-6 shadow-[0_25px_70px_rgba(0,0,0,0.25)] backdrop-blur-xl sm:p-8">
 
               <div
@@ -800,7 +807,7 @@ function RequestQuote() {
       </section>
 
       {/* ====================================== */}
-      {/* QUOTE FORM SECTION                    */}
+      {/* QUOTE FORM SECTION */}
       {/* ====================================== */}
 
       <section
@@ -809,10 +816,7 @@ function RequestQuote() {
       >
         <div className="mx-auto grid max-w-[1200px] items-start gap-8 lg:grid-cols-[1.5fr_0.85fr] lg:gap-10">
 
-          {/* ====================================== */}
-          {/* LEFT — FORM CARD                     */}
-          {/* ====================================== */}
-
+          {/* LEFT FORM CARD */}
           <motion.div
             {...reveal(0.1)}
             className="-mt-12 rounded-[22px] border border-[#E3EDF2] bg-white p-6 shadow-[0_20px_65px_rgba(16,42,67,0.08)] sm:p-9 lg:p-11"
@@ -824,19 +828,14 @@ function RequestQuote() {
                 initial={
                   reduceMotion
                     ? false
-                    : {
-                        opacity: 0,
-                        scale: 0.95,
-                      }
+                    : { opacity: 0, scale: 0.95 }
                 }
                 animate={{
                   opacity: 1,
                   scale: 1,
                 }}
                 transition={{
-                  duration: reduceMotion
-                    ? 0
-                    : 0.5,
+                  duration: reduceMotion ? 0 : 0.5,
                 }}
                 role="status"
                 className="py-12 text-center"
@@ -871,9 +870,7 @@ function RequestQuote() {
 
                 <button
                   type="button"
-                  onClick={() =>
-                    setSubmitted(false)
-                  }
+                  onClick={() => setSubmitted(false)}
                   className="mt-8 inline-flex min-h-[50px] items-center justify-center rounded-xl bg-[#0C9B97] px-7 text-[14px] font-bold text-white transition-colors hover:bg-[#087F7C]"
                 >
                   Submit Another Request
@@ -902,52 +899,21 @@ function RequestQuote() {
                   </p>
                 </div>
 
+                {/* SUPABASE QUOTE FORM */}
                 <form
-                  name="quote-request"
-                  method="POST"
-                  data-netlify="true"
-                  netlify-honeypot="bot-field"
                   onSubmit={handleSubmit}
                   className="space-y-8"
                 >
 
-                  <input
-                    type="hidden"
-                    name="form-name"
-                    value="quote-request"
-                  />
-
-                  {/* HONEYPOT */}
-                  <div
-                    className="hidden"
-                    aria-hidden="true"
-                  >
-                    <label htmlFor="bot-field">
-                      Do not fill this in
-                    </label>
-
-                    <input
-                      id="bot-field"
-                      name="bot-field"
-                      tabIndex={-1}
-                      autoComplete="off"
-                      value={form["bot-field"]}
-                      onChange={handleChange}
-                    />
-                  </div>
-
                   {/* ================================= */}
-                  {/* 1. CONTACT INFORMATION          */}
+                  {/* 1. CONTACT INFORMATION */}
                   {/* ================================= */}
 
                   <div>
-
                     <h3 className="mb-5 flex items-center gap-3 text-[16px] font-extrabold text-[#102A43]">
-
                       <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#E6F6F5] text-[13px] text-[#0C9B97]">
                         01
                       </span>
-
                       Contact Information
                     </h3>
 
@@ -1000,17 +966,14 @@ function RequestQuote() {
                   <div className="h-px bg-[#E7EEF2]" />
 
                   {/* ================================= */}
-                  {/* 2. DELIVERY DETAILS             */}
+                  {/* 2. DELIVERY DETAILS */}
                   {/* ================================= */}
 
                   <div>
-
                     <h3 className="mb-5 flex items-center gap-3 text-[16px] font-extrabold text-[#102A43]">
-
                       <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#E6F6F5] text-[13px] text-[#0C9B97]">
                         02
                       </span>
-
                       Delivery Details
                     </h3>
 
@@ -1076,17 +1039,14 @@ function RequestQuote() {
                   <div className="h-px bg-[#E7EEF2]" />
 
                   {/* ================================= */}
-                  {/* 3. ADDITIONAL INFORMATION       */}
+                  {/* 3. ADDITIONAL INFORMATION */}
                   {/* ================================= */}
 
                   <div>
-
                     <h3 className="mb-5 flex items-center gap-3 text-[16px] font-extrabold text-[#102A43]">
-
                       <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#E6F6F5] text-[13px] text-[#0C9B97]">
                         03
                       </span>
-
                       Additional Information
                     </h3>
 
@@ -1131,10 +1091,7 @@ function RequestQuote() {
                     whileHover={
                       reduceMotion || submitting
                         ? undefined
-                        : {
-                            y: -3,
-                            scale: 1.01,
-                          }
+                        : { y: -3, scale: 1.01 }
                     }
                     whileTap={
                       reduceMotion || submitting
@@ -1164,14 +1121,13 @@ function RequestQuote() {
           </motion.div>
 
           {/* ====================================== */}
-          {/* RIGHT — INFORMATION PANEL             */}
+          {/* RIGHT INFORMATION PANEL */}
           {/* ====================================== */}
 
           <motion.aside
             {...reveal(0.25)}
             className="space-y-6"
           >
-
             {/* HOW IT WORKS */}
             <div className="rounded-[22px] bg-[#102A43] p-7 text-white sm:p-8">
 
@@ -1184,7 +1140,6 @@ function RequestQuote() {
               </h2>
 
               <div className="mt-8 space-y-7">
-
                 {[
                   {
                     number: "01",
@@ -1245,10 +1200,10 @@ function RequestQuote() {
               </a>
 
               <a
-                href="mailto:maximumcaree@gmail.com"
+                href="mailto:info@maximumcare.net"
                 className="mt-3 block break-all text-[13px] font-semibold text-[#526579] transition-colors duration-300 hover:text-[#0C9B97]"
               >
-                maximumcaree@gmail.com
+                info@maximumcare.net
               </a>
             </div>
 
