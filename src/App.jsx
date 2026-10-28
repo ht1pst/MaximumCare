@@ -1,4 +1,4 @@
-
+import SeoManager from "./SeoManager";
 import {
   BrowserRouter as Router,
   Routes,
@@ -58,7 +58,9 @@ function App() {
       {/* Automatically scroll to top when switching pages */}
       <ScrollToTop />
       <PageLoader />
+ <SeoManager />
 
+ 
       <main>
         <Routes>
           {/* HOMEPAGE */}
