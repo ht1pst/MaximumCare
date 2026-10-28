@@ -16,28 +16,28 @@ const steps = [
     number: "1",
     title: "Request Service",
     description:
-      "Contact us to request a quote or schedule a pickup.",
+      "Contact Maximum Care to discuss your delivery needs, locations, shipment requirements, and preferred schedule.",
     icon: "clipboard",
   },
   {
     number: "2",
     title: "Confirm Details",
     description:
-      "We'll confirm your pickup details, delivery location, and any special instructions.",
+      "We review the requested service, timing, handling requirements, and availability.",
     icon: "document",
   },
   {
     number: "3",
     title: "Pickup & Transportation",
     description:
-      "Our team will pick up your items and transport them safely to their destination.",
+      "Accepted shipments are transported according to agreed instructions and applicable requirements.",
     icon: "truck",
   },
   {
     number: "4",
     title: "Delivery Confirmation",
     description:
-      "We complete the delivery and confirm it has been successfully delivered.",
+      "We document delivery details and required handoff information in accordance with the service arrangement.",
     icon: "check",
   },
 ];

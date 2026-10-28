@@ -34,8 +34,14 @@ function ContactSection2() {
     initial: reduceMotion
       ? false
       : { opacity: 0, y: 30 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, amount: 0.12 },
+    whileInView: {
+      opacity: 1,
+      y: 0,
+    },
+    viewport: {
+      once: true,
+      amount: 0.12,
+    },
     transition: {
       duration: reduceMotion ? 0 : 0.8,
       delay: reduceMotion ? 0 : delay,
@@ -43,7 +49,10 @@ function ContactSection2() {
     },
   });
 
+  // ========================================
   // HANDLE FORM INPUT
+  // ========================================
+
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -53,21 +62,31 @@ function ContactSection2() {
     }));
 
     if (status.message) {
-      setStatus({ type: "", message: "" });
+      setStatus({
+        type: "",
+        message: "",
+      });
     }
   };
 
+  // ========================================
   // SEND FORM TO SUPABASE
+  // ========================================
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (submitting) return;
 
     setSubmitting(true);
-    setStatus({ type: "", message: "" });
+    setStatus({
+      type: "",
+      message: "",
+    });
 
     try {
-      const endpoint = import.meta.env.VITE_CONTACT_ENDPOINT;
+      const endpoint =
+        import.meta.env.VITE_CONTACT_ENDPOINT;
 
       if (!endpoint) {
         throw new Error(
@@ -75,7 +94,9 @@ function ContactSection2() {
         );
       }
 
-      console.log("Sending contact message to Supabase...");
+      console.log(
+        "Sending contact message to Supabase..."
+      );
 
       const response = await fetch(endpoint, {
         method: "POST",
@@ -105,12 +126,17 @@ function ContactSection2() {
         );
       }
 
-      console.log("Supabase response status:", response.status);
+      console.log(
+        "Supabase response status:",
+        response.status
+      );
+
       console.log("Supabase result:", result);
 
       if (!response.ok || result.success !== true) {
         throw new Error(
-          result.error || `Request failed (${response.status})`
+          result.error ||
+          `Request failed (${response.status})`
         );
       }
 
@@ -152,48 +178,21 @@ function ContactSection2() {
 
       <div className="relative z-10 mx-auto max-w-[1320px] px-5 sm:px-8 lg:px-12">
 
+        {/* ====================================== */}
         {/* SECTION HEADER */}
-        <div className="mx-auto mb-14 max-w-[850px] text-center">
+        {/* ====================================== */}
 
-          <motion.div
-            {...reveal(0)}
-            className="mb-5 flex items-center justify-center gap-3"
-          >
-            <span className="h-[2px] w-8 bg-[#0C9B97]" />
-
-            <span className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#0C9B97]">
-              WE'D LOVE TO HEAR FROM YOU
-            </span>
-
-            <span className="h-[2px] w-8 bg-[#0C9B97]" />
-          </motion.div>
-
-          <motion.h2
-            {...reveal(0.1)}
-            className="text-[35px] font-extrabold leading-[1.15] tracking-[-0.035em] text-[#071E34] sm:text-[44px] lg:text-[52px]"
-          >
-            Get in Touch.
-
-            <span className="mt-2 block text-[#0C9B97]">
-              Start the Conversation.
-            </span>
-          </motion.h2>
-
-          <motion.p
-            {...reveal(0.2)}
-            className="mx-auto mt-6 max-w-[750px] text-[15px] leading-[1.9] text-[#617589] sm:text-[17px]"
-          >
-            Have a question about our medical courier
-            services, transportation arrangements, or
-            regional coverage? Send us a message and
-            share how we can help.
-          </motion.p>
-        </div>
-
+        
+        {/* ====================================== */}
         {/* TWO-COLUMN LAYOUT */}
+        {/* ====================================== */}
+
         <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
 
+          {/* ====================================== */}
           {/* LEFT CONTACT INFORMATION */}
+          {/* ====================================== */}
+
           <motion.div
             {...reveal(0.1)}
             className="space-y-7"
@@ -272,7 +271,13 @@ function ContactSection2() {
                   strokeLinejoin="round"
                   aria-hidden="true"
                 >
-                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <rect
+                    x="3"
+                    y="5"
+                    width="18"
+                    height="14"
+                    rx="2"
+                  />
                   <path d="m3 7 9 7 9-7" />
                 </svg>
               </span>
@@ -294,7 +299,6 @@ function ContactSection2() {
 
             {/* LOCATION CARD */}
             <div className="flex items-center gap-4 rounded-2xl border border-[#DFEAEF] bg-[#F8FBFC] p-5">
-
               <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-[#E2F5F2] text-[#0C9B97]">
                 <svg
                   width="26"
@@ -327,16 +331,14 @@ function ContactSection2() {
               </div>
             </div>
 
-            {/* INFORMATION PANEL */}
+            {/* REQUEST QUOTE INFORMATION PANEL */}
             <div className="relative overflow-hidden rounded-[24px] bg-[#071E34] p-6 text-white sm:p-8">
-
               <div
                 aria-hidden="true"
                 className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-[#0C9B97]/20 blur-[70px]"
               />
 
               <div className="relative z-10">
-
                 <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#6DE0D3]">
                   REQUESTING COURIER SERVICE?
                 </p>
@@ -367,16 +369,18 @@ function ContactSection2() {
             </div>
           </motion.div>
 
-          {/* RIGHT FORM PANEL */}
+          {/* ====================================== */}
+          {/* RIGHT CONTACT FORM PANEL */}
+          {/* ====================================== */}
+
           <motion.div
             {...reveal(0.2)}
             className="relative overflow-hidden rounded-[28px] border border-[#E0EBF0] bg-white p-6 shadow-[0_20px_60px_rgba(7,30,52,0.08)] sm:p-9 lg:p-10"
           >
-
+            {/* TOP ACCENT */}
             <div className="absolute left-0 top-0 h-[5px] w-full bg-gradient-to-r from-[#0C9B97] via-[#6DE0D3] to-transparent" />
 
             <div className="mb-9">
-
               <p className="text-[11px] font-extrabold uppercase tracking-[0.15em] text-[#0C9B97]">
                 SEND A MESSAGE
               </p>
@@ -391,22 +395,26 @@ function ContactSection2() {
               </p>
             </div>
 
+            {/* ====================================== */}
             {/* CONTACT FORM */}
+            {/* ====================================== */}
+
             <form
               onSubmit={handleSubmit}
               className="space-y-6"
             >
-
               {/* NAME AND EMAIL */}
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-
+                {/* FULL NAME */}
                 <div>
                   <label
                     htmlFor="contact-fullName"
                     className={labelStyle}
                   >
                     Full Name
-                    <span className="ml-1 text-[#0C9B97]">*</span>
+                    <span className="ml-1 text-[#0C9B97]">
+                      *
+                    </span>
                   </label>
 
                   <input
@@ -423,13 +431,16 @@ function ContactSection2() {
                   />
                 </div>
 
+                {/* EMAIL ADDRESS */}
                 <div>
                   <label
                     htmlFor="contact-email"
                     className={labelStyle}
                   >
                     Email Address
-                    <span className="ml-1 text-[#0C9B97]">*</span>
+                    <span className="ml-1 text-[#0C9B97]">
+                      *
+                    </span>
                   </label>
 
                   <input
@@ -450,6 +461,7 @@ function ContactSection2() {
               {/* PHONE AND ORGANIZATION */}
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
 
+                {/* PHONE NUMBER */}
                 <div>
                   <label
                     htmlFor="contact-phone"
@@ -471,6 +483,7 @@ function ContactSection2() {
                   />
                 </div>
 
+                {/* ORGANIZATION */}
                 <div>
                   <label
                     htmlFor="contact-organization"
@@ -500,7 +513,9 @@ function ContactSection2() {
                   className={labelStyle}
                 >
                   Subject
-                  <span className="ml-1 text-[#0C9B97]">*</span>
+                  <span className="ml-1 text-[#0C9B97]">
+                    *
+                  </span>
                 </label>
 
                 <select
@@ -541,14 +556,16 @@ function ContactSection2() {
                 </select>
               </div>
 
-              {/* MESSAGE */}
+              {/* YOUR MESSAGE */}
               <div>
                 <label
                   htmlFor="contact-message"
                   className={labelStyle}
                 >
                   Your Message
-                  <span className="ml-1 text-[#0C9B97]">*</span>
+                  <span className="ml-1 text-[#0C9B97]">
+                    *
+                  </span>
                 </label>
 
                 <textarea
@@ -567,7 +584,6 @@ function ContactSection2() {
 
               {/* PRIVACY NOTICE */}
               <div className="rounded-xl border border-[#DCECE8] bg-[#F0F9F7] p-4">
-
                 <p className="text-[12px] leading-[1.85] text-[#526579]">
                   Please do not include patient names,
                   medical records, protected health
@@ -576,7 +592,7 @@ function ContactSection2() {
                 </p>
               </div>
 
-              {/* STATUS MESSAGE */}
+              {/* SUBMISSION STATUS */}
               {status.message && (
                 <div
                   role={

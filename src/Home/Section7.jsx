@@ -126,7 +126,7 @@ function Section7() {
           {/* SMALL HEADING */}
           <motion.div
             {...reveal("left", 0)}
-            className="mb-6 flex items-center gap-3"
+            className=" flex items-center gap-3"
           >
             <motion.span
               initial={
@@ -342,62 +342,7 @@ function Section7() {
           {/* ANIMATED TRUST STATEMENT       */}
           {/* =============================== */}
 
-          <motion.div
-            {...reveal("up", 0.5)}
-            className="
-              mt-9 flex items-center gap-3
-              border-t border-white/10 pt-7
-            "
-          >
-            <motion.div
-              whileHover={
-                reduceMotion
-                  ? undefined
-                  : {
-                      rotate: -10,
-                      scale: 1.1,
-                    }
-              }
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 18,
-              }}
-              className="
-                flex h-10 w-10 shrink-0
-                items-center justify-center
-                rounded-full bg-[#0C9B97]/15
-              "
-            >
-              <svg
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#6DE0D3"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
-                <path d="m9 12 2 2 4-4" />
-              </svg>
-            </motion.div>
-
-            <p
-              className="
-                text-[13px] leading-6
-                text-[#CBD5E1]
-              "
-            >
-              Fast. Secure. Reliable.
-
-              <span className="block text-white/60">
-                Professional Medical Courier Services
-              </span>
-            </p>
-          </motion.div>
+      
         </div>
 
         {/* =============================== */}

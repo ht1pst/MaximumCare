@@ -65,47 +65,12 @@ function Section2() {
         <div className="flex flex-col">
 
           {/* SMALL LABEL */}
-          <motion.p
-            {...reveal("up", 0)}
-            className="mb-3 text-[11px] font-bold uppercase tracking-[0.25em] text-[#00ACC1] sm:text-[13px]"
-          >
-            GET TO KNOW US
-          </motion.p>
+         
 
           {/* MAIN HEADING */}
-          <motion.h2
-            {...reveal("up", 0.1)}
-            className="text-[40px] font-extrabold leading-[1.05] tracking-[-0.03em] text-[#0D2137] sm:text-[50px] md:text-[58px] lg:text-[65px]"
-          >
-            WHO WE ARE
-            <motion.span
-              className="inline-block text-[#00ACC1]"
-              animate={
-                reduceMotion
-                  ? undefined
-                  : {
-                      scale: [1, 1.2, 1],
-                    }
-              }
-              transition={{
-                duration: 2.5,
-                repeat: Infinity,
-                repeatDelay: 3,
-                ease: "easeInOut",
-              }}
-            >
-              .
-            </motion.span>
-          </motion.h2>
-
+    
           {/* INTRODUCTION */}
-          <motion.p
-            {...reveal("up", 0.2)}
-            className="mt-5 max-w-[530px] text-[15px] leading-[1.8] text-[#1C3A52] sm:text-[16px]"
-          >
-            We provide courier services to healthcare providers
-            across the healthcare value chain.
-          </motion.p>
+        
 
         </div>
 

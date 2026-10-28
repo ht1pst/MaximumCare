@@ -8,9 +8,9 @@ import img4 from "../assets/img4.webp";
 import img5 from "../assets/img5.webp";
 import img6 from "../assets/img6.webp";
 
-// ===============================
-// CARD DATA
-// ===============================
+// ==========================================
+// HEALTHCARE ORGANIZATIONS
+// ==========================================
 
 const organizations = [
   {
@@ -39,35 +39,35 @@ const organizations = [
   },
 ];
 
+const smoothEase = [0.22, 1, 0.36, 1];
+
+// ==========================================
+// WHO WE SERVE SECTION
+// ==========================================
+
 function Section4() {
   const reduceMotion = useReducedMotion();
 
-  // PREMIUM SMOOTH ANIMATION CURVE
-  const smoothEase = [0.22, 1, 0.36, 1];
-
-  // REUSABLE SCROLL ANIMATION
   const fadeUp = (delay = 0) => ({
     initial: reduceMotion
       ? false
       : {
           opacity: 0,
-          y: 35,
-          filter: "blur(5px)",
+          y: 22,
         },
 
     whileInView: {
       opacity: 1,
       y: 0,
-      filter: "blur(0px)",
     },
 
     viewport: {
-      once: false,
-      amount: 0.2,
+      once: true,
+      amount: 0.15,
     },
 
     transition: {
-      duration: reduceMotion ? 0 : 0.8,
+      duration: reduceMotion ? 0 : 0.6,
       delay: reduceMotion ? 0 : delay,
       ease: smoothEase,
     },
@@ -79,9 +79,9 @@ function Section4() {
       className="
         relative w-full overflow-hidden
         bg-white
-        px-5 py-16
-        sm:px-8 sm:py-20
-        lg:px-12 lg:py-24
+        px-5 py-10
+        sm:px-8 sm:py-12
+        lg:px-12 lg:py-14
         xl:px-16
       "
     >
@@ -90,336 +90,194 @@ function Section4() {
         aria-hidden="true"
         className="
           pointer-events-none absolute
-          -left-[180px] -top-[150px]
-          h-[450px] w-[450px]
+          -left-[150px] -top-[150px]
+          h-[350px] w-[350px]
           rounded-full bg-[#0C9B97]/[0.04]
-          blur-[100px]
+          blur-[90px]
         "
       />
 
       <div className="relative z-10 mx-auto max-w-[1300px]">
 
-        {/* ============================== */}
-        {/* ANIMATED SECTION HEADING       */}
-        {/* ============================== */}
+        {/* ====================================== */}
+        {/* COMPACT SECTION HEADING */}
+        {/* ====================================== */}
 
-        <div className="mx-auto max-w-[950px] text-center">
+        <div className="mx-auto max-w-[800px] text-center">
 
-          {/* SMALL HEADING */}
           <motion.p
             {...fadeUp(0)}
             className="
-              mb-4 text-[12px]
-              font-bold uppercase
-              tracking-[0.25em]
-              text-[#0C9B97]
-              md:text-[14px]
+              text-[11px] font-bold uppercase
+              tracking-[0.22em] text-[#0C9B97]
+              sm:text-[12px]
             "
           >
             WHO WE SERVE
           </motion.p>
 
-          {/* MAIN HEADING */}
           <motion.h2
-            {...fadeUp(0.12)}
+            {...fadeUp(0.08)}
             className="
-              mx-auto max-w-[950px]
-              text-[30px] font-extrabold
-              leading-[1.15]
-              tracking-[-0.03em]
+              mt-3 text-[27px] font-extrabold
+              leading-[1.2] tracking-[-0.03em]
               text-[#102A43]
-              sm:text-[36px]
-              md:text-[42px]
-              lg:text-[48px]
+              sm:text-[33px]
+              lg:text-[38px]
             "
           >
             Supporting the Healthcare Community
           </motion.h2>
 
-          {/* ANIMATED TEAL UNDERLINE */}
+          {/* TEAL UNDERLINE */}
           <motion.div
             initial={
               reduceMotion
                 ? false
-                : {
-                    scaleX: 0,
-                    opacity: 0,
-                  }
+                : { scaleX: 0, opacity: 0 }
             }
             whileInView={{
               scaleX: 1,
               opacity: 1,
             }}
-            viewport={{
-              once: false,
-              amount: 0.5,
-            }}
+            viewport={{ once: true }}
             transition={{
-              duration: reduceMotion ? 0 : 0.9,
-              delay: reduceMotion ? 0 : 0.3,
+              duration: reduceMotion ? 0 : 0.65,
+              delay: reduceMotion ? 0 : 0.15,
               ease: smoothEase,
             }}
             className="
-              mx-auto mt-6
-              h-[3px] w-[75px]
+              mx-auto mt-4 h-[3px] w-[55px]
               origin-center rounded-full
               bg-[#0C9B97]
             "
           />
 
-          {/* DESCRIPTION */}
           <motion.p
-            {...fadeUp(0.25)}
+            {...fadeUp(0.15)}
             className="
-              mx-auto mt-6 max-w-[720px]
-              text-[15px] leading-[1.85]
+              mx-auto mt-4 max-w-[640px]
+              text-[13px] leading-[1.7]
               text-[#526579]
-              sm:text-[16px]
+              sm:text-[14px]
             "
           >
-            We proudly serve a wide range of healthcare
-            organizations throughout Fargo–Moorhead and
-            surrounding communities.
+            Medical courier services for healthcare
+            organizations across Fargo–Moorhead
+            and nearby communities.
           </motion.p>
-
         </div>
 
-        {/* ============================== */}
-        {/* ANIMATED RESPONSIVE CARDS GRID */}
-        {/* ============================== */}
+        {/* ====================================== */}
+        {/* COMPACT SIX-CARD GRID */}
+        {/* ====================================== */}
 
         <div
           className="
-            mt-10 grid grid-cols-2
-            gap-3
-            sm:mt-12 sm:grid-cols-3 sm:gap-5
-            md:gap-6
-            xl:mt-14 xl:grid-cols-6 xl:gap-5
+            mt-7 grid grid-cols-2 gap-3
+            sm:mt-8 sm:grid-cols-3 sm:gap-4
+            xl:grid-cols-6 xl:gap-4
           "
         >
           {organizations.map((organization, index) => (
             <motion.div
               key={organization.title}
-
-              // CARD STARTING POSITION
-              initial={
-                reduceMotion
-                  ? false
-                  : {
-                      opacity: 0,
-                      y: 55,
-                      scale: 0.92,
-                    }
-              }
-
-              // ANIMATE WHEN CARD ENTERS VIEW
-              whileInView={{
-                opacity: 1,
-                y: 0,
-                scale: 1,
-              }}
-
-              // REPLAY WHEN SCROLLING BACK
-              viewport={{
-                once: false,
-                amount: 0.25,
-              }}
-
-              // STAGGERED APPEARANCE
-              transition={{
-                duration: reduceMotion ? 0 : 0.75,
-                delay: reduceMotion
-                  ? 0
-                  : (index % 6) * 0.08,
-                ease: smoothEase,
-              }}
-
-              // PREMIUM HOVER EFFECT
+              {...fadeUp((index % 6) * 0.045)}
               whileHover={
                 reduceMotion
                   ? undefined
                   : {
-                      y: -10,
-                      scale: 1.035,
+                      y: -5,
+                      scale: 1.02,
                       transition: {
                         type: "spring",
                         stiffness: 280,
-                        damping: 20,
+                        damping: 22,
                       },
                     }
               }
-
               className="
                 group relative flex h-full min-w-0
                 flex-col overflow-hidden
-                rounded-[16px]
+                rounded-[14px]
                 border border-[#E3EDF2]
                 bg-white
-
-                shadow-[0_8px_24px_rgba(0,27,59,0.06)]
-
+                shadow-[0_6px_18px_rgba(0,27,59,0.055)]
                 transition-[border-color,box-shadow]
-                duration-300 ease-out
-
+                duration-300
                 hover:border-[#0C9B97]/40
-                hover:shadow-[0_20px_45px_rgba(0,27,59,0.16)]
+                hover:shadow-[0_14px_32px_rgba(0,27,59,0.12)]
               "
             >
-              {/* ============================== */}
-              {/* IMAGE CONTAINER                */}
-              {/* ============================== */}
-
+              {/* SERVICE IMAGE */}
               <div
                 className="
-                  relative h-[120px] w-full
+                  relative h-[95px] w-full
                   shrink-0 overflow-hidden
                   bg-[#E8F2F5]
-
-                  sm:h-[150px]
-                  md:h-[170px]
-                  lg:h-[190px]
-                  xl:h-[145px]
+                  sm:h-[115px]
+                  lg:h-[125px]
+                  xl:h-[110px]
                 "
               >
-                {/* ANIMATED IMAGE */}
-                <motion.img
+                <img
                   src={organization.image}
                   alt={organization.title}
                   loading="lazy"
+                  decoding="async"
                   className="
-                    h-full w-full
-                    object-cover object-center
-                  "
-                  initial={{ scale: 1 }}
-                  whileHover={
-                    reduceMotion
-                      ? undefined
-                      : { scale: 1.12 }
-                  }
-                  transition={{
-                    duration: 0.65,
-                    ease: smoothEase,
-                  }}
-                />
-
-                {/* IMAGE GRADIENT */}
-                <div
-                  className="
-                    pointer-events-none
-                    absolute inset-0
-                    bg-gradient-to-t
-                    from-[#102A43]/20
-                    via-transparent
-                    to-transparent
-
-                    transition-colors duration-300
-                    group-hover:from-[#102A43]/35
+                    h-full w-full object-cover
+                    object-center transition-transform
+                    duration-500
+                    group-hover:scale-[1.07]
                   "
                 />
 
-                {/* SUBTLE TEAL IMAGE ACCENT */}
                 <div
                   className="
-                    pointer-events-none
-                    absolute bottom-0 left-0 right-0
-                    h-[3px] origin-left scale-x-0
-                    bg-[#0C9B97]
-
-                    transition-transform duration-500
-                    ease-out
-                    group-hover:scale-x-100
+                    pointer-events-none absolute inset-0
+                    bg-gradient-to-t from-[#102A43]/20
+                    via-transparent to-transparent
                   "
                 />
 
-                {/* SMALL CORNER ACCENT */}
                 <div
                   className="
-                    pointer-events-none
-                    absolute right-3 top-3
-                    flex h-7 w-7
-                    translate-y-2 items-center
-                    justify-center rounded-full
-                    border border-white/30
-                    bg-[#0C9B97]/90
-                    text-white opacity-0
-                    backdrop-blur-sm
-
-                    transition-all duration-300
-                    group-hover:translate-y-0
-                    group-hover:opacity-100
+                    pointer-events-none absolute
+                    bottom-0 left-0 right-0
+                    h-[3px] bg-[#0C9B97]
                   "
-                >
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
-                </div>
+                />
               </div>
 
-              {/* ============================== */}
-              {/* CARD CONTENT                   */}
-              {/* ============================== */}
-
+              {/* CARD TITLE */}
               <div
                 className="
-                  flex min-h-[100px]
-                  flex-1 items-center
-                  justify-center
-                  px-3 py-5
-
-                  sm:min-h-[105px]
-                  sm:px-4 sm:py-6
-
-                  xl:min-h-[115px]
+                  flex min-h-[68px] flex-1
+                  items-center justify-center
+                  px-2.5 py-3
+                  sm:min-h-[75px] sm:px-3
+                  xl:min-h-[82px]
                 "
               >
-                {/* CARD TITLE */}
                 <h3
                   className="
-                    text-center
-                    text-[13px] font-bold
-                    leading-[1.5]
-                    text-[#001B3B]
-
+                    text-center text-[12px]
+                    font-bold leading-[1.4]
+                    text-[#102A43]
                     transition-colors duration-300
                     group-hover:text-[#0C9B97]
-
-                    sm:text-[15px]
-                    lg:text-[16px]
-                    xl:text-[14px]
+                    sm:text-[13px]
+                    lg:text-[14px]
+                    xl:text-[12px]
                   "
                 >
                   {organization.title}
                 </h3>
               </div>
-
-              {/* ANIMATED BOTTOM LINE */}
-              <div
-                className="
-                  h-[3px] w-full
-                  origin-left scale-x-0
-                  bg-[#0C9B97]
-
-                  transition-transform duration-500
-                  ease-out
-                  group-hover:scale-x-100
-                "
-              />
-
             </motion.div>
           ))}
         </div>
-
       </div>
     </section>
   );

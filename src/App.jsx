@@ -68,10 +68,8 @@ function App() {
                 <Hero />
                 <Section2 />
                 <Section3 />
-                <Section4 />
-                <Section5 />
-                <Section6 />
-                <Section7 />
+                 <Section5 />
+                 <Section7 />
                 <Section8 />
                 <Footer />
               </>
@@ -98,11 +96,8 @@ function App() {
                 <ServicesSection2 />
                 <ServicesSection3 />
                 <Section4 />
-                <ServicesSection5 />
-                <Section6 />
-                <Section5 />
+                  <Section6 />
                 <ServicesSection6 />
-                <Section7 />
                 <Footer />
               </>
             }
@@ -117,9 +112,6 @@ function App() {
                 <AboutSection2 />
                 <AboutSection3 />
                 <AboutSection4 />
-                <AboutSection5 />
-                <AboutSection6 />
-                <AboutSection7 />
                 <Footer />
               </>
             }
@@ -133,9 +125,7 @@ function App() {
                 <AreasHero />
                 <AreasSection2 />
                 <AreasSection3 />
-                <AreasSection4 />
-                <AreasSection5 />
-                <AreasSection6 />
+                
                 <Footer />
               </>
             }
@@ -149,8 +139,7 @@ function App() {
                 <ContactHero />
                 <ContactSection2 />
                 <ContactSection3 />
-                <ContactSection4 />
-                <Footer />
+                   <Footer />
               </>
             }
           />

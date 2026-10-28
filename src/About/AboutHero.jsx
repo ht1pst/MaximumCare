@@ -1,32 +1,30 @@
 
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
   motion,
   AnimatePresence,
   useReducedMotion,
-  useScroll,
-  useSpring,
 } from "motion/react";
-import { Link } from "react-router-dom";
 
 import logo from "../assets/maximumcarelogo.webp";
-
-// CHANGE THIS IF YOUR IMAGE HAS A DIFFERENT NAME
 import heroImg from "../assets/abouthero.webp";
+
+const navLinks = [
+  { name: "Home", path: "/" },
+  { name: "About Us", path: "/about" },
+  { name: "Services", path: "/services" },
+  { name: "Service Areas", path: "/service-areas" },
+  { name: "Contact Us", path: "/contact" },
+];
+
+const ease = [0.22, 1, 0.36, 1];
 
 function AboutHero() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const reduceMotion = useReducedMotion();
-
-  const { scrollYProgress } = useScroll();
-
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 120,
-    damping: 30,
-    restDelta: 0.001,
-  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,216 +43,131 @@ function AboutHero() {
   }, []);
 
   const solidHeader = scrolled || menuOpen;
+  const closeMenu = () => setMenuOpen(false);
 
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
+  const reveal = (delay = 0) => ({
+    initial: reduceMotion
+      ? false
+      : { opacity: 0, y: 24 },
 
-  const ease = [0.22, 1, 0.36, 1];
+    animate: {
+      opacity: 1,
+      y: 0,
+    },
 
-  const desktopLinkClass = `
-    relative text-[13px] font-semibold
-    transition-colors duration-300
-    hover:text-[#0C9B97]
-  `;
-
-  const mobileLinkClass = `
-    block rounded-xl px-4 py-3.5
-    text-[14px] font-semibold
-    text-[#102A43]
-    transition-colors duration-300
-    hover:bg-[#E8F6F4]
-    hover:text-[#0C9B97]
-  `;
+    transition: {
+      duration: reduceMotion ? 0 : 0.7,
+      delay: reduceMotion ? 0 : delay,
+      ease,
+    },
+  });
 
   return (
     <>
-      {/* ========================================= */}
-      {/* NAVIGATION HEADER                         */}
-      {/* ========================================= */}
+      {/* ====================================== */}
+      {/* NAVIGATION HEADER */}
+      {/* ====================================== */}
 
       <header
-        className={`
-          fixed left-0 top-0 z-50 w-full
-          transition-all duration-500
-          ${
-            solidHeader
-              ? "border-b border-[#E5EDF2] bg-white/95 shadow-[0_8px_30px_rgba(7,30,52,0.07)] backdrop-blur-xl"
-              : "border-b border-white/15 bg-transparent"
-          }
-        `}
+        className={`fixed left-0 top-0 z-50 w-full transition-all duration-300 ${
+          solidHeader
+            ? "border-b border-[#E5EDF2] bg-white/95 shadow-[0_8px_30px_rgba(7,30,52,0.07)] backdrop-blur-xl"
+            : "border-b border-white/15 bg-transparent"
+        }`}
       >
-        <div
-          className="
-            mx-auto flex h-[120px] max-w-[1400px]
-            items-center justify-between
-            px-5 sm:px-8 lg:h-[110px] lg:px-12
-          "
-        >
+        <div className="mx-auto flex h-[105px] max-w-[1400px] items-center justify-between gap-5 px-5 sm:px-8 lg:px-12">
           {/* LOGO */}
           <Link
             to="/"
             onClick={closeMenu}
-            className="relative z-10 flex shrink-0 items-center"
+            aria-label="Maximum Care LLC Home"
+            className="relative z-10 shrink-0"
           >
             <img
               src={logo}
               alt="Maximum Care LLC"
-              className="h-[90px] lg:h-[90px] w-auto object-contain sm:h-[63px]"
+              className="h-[85px] w-auto object-contain sm:h-[75px] lg:h-[85px]"
             />
           </Link>
 
-          {/* ================================= */}
-          {/* DESKTOP NAVIGATION                */}
-          {/* ================================= */}
-
+          {/* DESKTOP NAVIGATION */}
           <nav
             aria-label="Main navigation"
-            className={`
-              hidden items-center gap-7 lg:flex xl:gap-9
-              ${
-                solidHeader
-                  ? "text-[#102A43]"
-                  : "text-white"
-              }
-            `}
+            className="hidden items-center gap-7 xl:flex"
           >
-            <Link
-              to="/"
-              className={desktopLinkClass}
-            >
-              Home
-            </Link>
-
-            <Link
-              to="/about"
-              aria-current="page"
-              className={`${desktopLinkClass} !text-[#0C9B97]`}
-            >
-              About Us
-            </Link>
-
-            <Link
-              to="/services"
-              className={desktopLinkClass}
-            >
-              Services
-            </Link>
-
-            <Link
-              to="/service-areas"
-              className={desktopLinkClass}
-            >
-              Service Areas
-            </Link>
-
-            <Link
-              to="/contact"
-              className={desktopLinkClass}
-            >
-              Contact
-            </Link>
+            {navLinks.map((item) => (
+              <Link
+                key={item.path}
+                to={item.path}
+                aria-current={
+                  item.path === "/about"
+                    ? "page"
+                    : undefined
+                }
+                className={`text-[14px] font-semibold transition-colors duration-300 hover:text-[#0C9B97] ${
+                  item.path === "/about"
+                    ? "text-[#0C9B97]"
+                    : solidHeader
+                    ? "text-[#102A43]"
+                    : "text-white"
+                }`}
+              >
+                {item.name}
+              </Link>
+            ))}
           </nav>
 
-          {/* DESKTOP QUOTE BUTTON */}
-          <Link
-            to="/request-quote"
-            className="
-              hidden items-center justify-center
-              gap-2 rounded-xl
-              bg-[#0C9B97]
-              px-5 py-3.5
-              text-[13px] font-bold
-              text-white
-              shadow-[0_10px_25px_rgba(12,155,151,0.18)]
-              transition-all duration-300
-              hover:-translate-y-0.5
-              hover:bg-[#087F7B]
-              lg:inline-flex
-            "
-          >
-            Request a Quote
-
-            <svg
-              width="17"
-              height="17"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
+          {/* RIGHT SIDE */}
+          <div className="flex items-center gap-3">
+            <Link
+              to="/request-quote"
+              className="hidden rounded-xl bg-[#0C9B97] px-5 py-3 text-[13px] font-bold text-white transition-colors hover:bg-[#087F7C] xl:inline-flex"
             >
-              <path d="M5 12h14" />
-              <path d="m12 5 7 7-7 7" />
-            </svg>
-          </Link>
+              Request a Quote
+            </Link>
 
-          {/* ================================= */}
-          {/* MOBILE MENU BUTTON                 */}
-          {/* ================================= */}
-
-          <button
-            type="button"
-            aria-label={
-              menuOpen ? "Close menu" : "Open menu"
-            }
-            aria-expanded={menuOpen}
-            aria-controls="about-mobile-navigation"
-            onClick={() => setMenuOpen(!menuOpen)}
-            className={`
-              relative z-20 flex h-11 w-11
-              items-center justify-center
-              rounded-xl border transition-all
-              duration-300 lg:hidden
-              ${
-                solidHeader
-                  ? "border-[#DFE9EF] text-[#071E34]"
-                  : "border-white/25 text-white"
+            {/* MOBILE MENU BUTTON */}
+            <button
+              type="button"
+              aria-label={
+                menuOpen
+                  ? "Close navigation"
+                  : "Open navigation"
               }
-            `}
-          >
-            {menuOpen ? (
-              <svg
-                width="25"
-                height="25"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M18 6 6 18" />
-                <path d="m6 6 12 12" />
-              </svg>
-            ) : (
-              <svg
-                width="25"
-                height="25"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M4 7h16" />
-                <path d="M4 12h16" />
-                <path d="M4 17h16" />
-              </svg>
-            )}
-          </button>
+              aria-expanded={menuOpen}
+              aria-controls="about-mobile-navigation"
+              onClick={() =>
+                setMenuOpen((previous) => !previous)
+              }
+              className={`flex h-11 w-11 items-center justify-center rounded-xl xl:hidden ${
+                solidHeader
+                  ? "bg-[#F0F8FC] text-[#102A43]"
+                  : "bg-white/15 text-white"
+              }`}
+            >
+              {menuOpen ? (
+                <span className="text-[26px]">×</span>
+              ) : (
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
+            </button>
+          </div>
         </div>
 
-        {/* ================================= */}
-        {/* MOBILE NAVIGATION                  */}
-        {/* ================================= */}
-
-        <AnimatePresence>
+        {/* MOBILE NAVIGATION */}
+        <AnimatePresence initial={false}>
           {menuOpen && (
             <motion.nav
               id="about-mobile-navigation"
@@ -268,582 +181,133 @@ function AboutHero() {
                 opacity: 1,
                 height: "auto",
               }}
-              exit={
-                reduceMotion
-                  ? { opacity: 0 }
-                  : { opacity: 0, height: 0 }
-              }
+              exit={{
+                opacity: 0,
+                height: 0,
+              }}
               transition={{
                 duration: reduceMotion ? 0 : 0.3,
                 ease,
               }}
-              className="
-                overflow-hidden border-t
-                border-[#E5EDF2]
-                bg-white shadow-xl
-                lg:hidden
-              "
+              className="max-h-[calc(100svh-105px)] overflow-y-auto border-t border-[#E5EDF2] bg-white shadow-lg xl:hidden"
             >
-              <div className="space-y-1 px-5 py-5 sm:px-8">
-
-                <Link
-                  to="/"
-                  onClick={closeMenu}
-                  className={mobileLinkClass}
-                >
-                  Home
-                </Link>
-
-                <Link
-                  to="/about"
-                  onClick={closeMenu}
-                  aria-current="page"
-                  className={`${mobileLinkClass} !bg-[#E8F6F4] !text-[#0C9B97]`}
-                >
-                  About Us
-                </Link>
-
-                <Link
-                  to="/services"
-                  onClick={closeMenu}
-                  className={mobileLinkClass}
-                >
-                  Services
-                </Link>
-
-                <Link
-                  to="/service-areas"
-                  onClick={closeMenu}
-                  className={mobileLinkClass}
-                >
-                  Service Areas
-                </Link>
-
-                <Link
-                  to="/contact"
-                  onClick={closeMenu}
-                  className={mobileLinkClass}
-                >
-                  Contact
-                </Link>
+              <div className="flex flex-col px-6 pb-6">
+                {navLinks.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    onClick={closeMenu}
+                    className={`border-b border-[#E3EDF2] py-4 text-[14px] font-semibold transition-colors hover:text-[#0C9B97] ${
+                      item.path === "/about"
+                        ? "text-[#0C9B97]"
+                        : "text-[#102A43]"
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                ))}
 
                 <Link
                   to="/request-quote"
                   onClick={closeMenu}
-                  className="
-                    mt-4 flex items-center
-                    justify-center gap-2
-                    rounded-xl bg-[#0C9B97]
-                    px-5 py-4
-                    text-[14px] font-bold
-                    text-white
-                    transition-colors duration-300
-                    hover:bg-[#087F7B]
-                  "
+                  className="mt-5 rounded-xl bg-[#0C9B97] px-6 py-3.5 text-center text-[14px] font-bold text-white"
                 >
                   Request a Quote
-
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                  </svg>
                 </Link>
               </div>
             </motion.nav>
           )}
         </AnimatePresence>
-
-        {/* SCROLL PROGRESS BAR */}
-        <motion.div
-          style={{
-            scaleX: smoothProgress,
-            transformOrigin: "left",
-          }}
-          className="
-            absolute bottom-0 left-0
-            h-[3px] w-full bg-[#0C9B97]
-          "
-        />
       </header>
 
-      {/* ========================================= */}
-      {/* ABOUT US HERO SECTION                     */}
-      {/* ========================================= */}
+      {/* ====================================== */}
+      {/* COMPACT ABOUT US HERO */}
+      {/* ====================================== */}
 
       <section
         id="about-hero"
-        className="
-          relative isolate flex w-full
-          min-h-[720px] items-center
-          overflow-hidden bg-[#071E34]
-          text-white
-          sm:min-h-[760px]
-          lg:min-h-[800px]
-        "
+        className="relative isolate overflow-hidden bg-[#071E34] text-white"
       >
-        {/* ================================= */}
-        {/* HERO BACKGROUND IMAGE             */}
-        {/* ================================= */}
-
-        <div className="absolute inset-0 -z-20">
-
-          <motion.img
+        {/* HERO BACKGROUND */}
+        <div className="absolute inset-0">
+          <img
             src={heroImg}
-            alt="Healthcare courier transportation in a medical setting"
+            alt=""
+            aria-hidden="true"
             className="h-full w-full object-cover object-center"
-            initial={
-              reduceMotion
-                ? false
-                : { scale: 1.08 }
-            }
-            animate={{ scale: 1 }}
-            transition={{
-              duration: reduceMotion ? 0 : 2,
-              ease,
-            }}
           />
         </div>
 
-        {/* MAIN DARK OVERLAY */}
-        <div
-          className="
-            absolute inset-0 -z-10
-            bg-gradient-to-r
-            from-[#071E34]/95
-            via-[#071E34]/85
-            to-[#071E34]/45
-          "
-        />
+        {/* DARK OVERLAY */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#071E34]/95 via-[#071E34]/85 to-[#071E34]/65" />
 
-        {/* BOTTOM GRADIENT */}
-        <div
-          className="
-            pointer-events-none absolute
-            inset-0 -z-10
-            bg-gradient-to-t
-            from-[#071E34]/75
-            via-transparent
-            to-transparent
-          "
-        />
-
-        {/* TEAL BACKGROUND GLOW */}
+        {/* TEAL GLOW */}
         <div
           aria-hidden="true"
-          className="
-            pointer-events-none absolute
-            -left-40 top-1/3 -z-10
-            h-[500px] w-[500px]
-            rounded-full
-            bg-[#0C9B97]/10
-            blur-[110px]
-          "
+          className="pointer-events-none absolute -left-32 top-0 h-[320px] w-[320px] rounded-full bg-[#0C9B97]/15 blur-[90px]"
         />
 
-        {/* ================================= */}
-        {/* HERO MAIN CONTENT                 */}
-        {/* ================================= */}
-
-        <div
-          className="
-            relative z-10 mx-auto
-            w-full max-w-[1400px]
-            px-5 pb-24 pt-40
-            sm:px-8 sm:pb-28 sm:pt-44
-            lg:px-12 lg:pb-32 lg:pt-48
-          "
-        >
-          <div className="max-w-[850px]">
-
-            {/* ================================= */}
-            {/* SMALL INTRO LABEL                 */}
-            {/* ================================= */}
-
-            <motion.div
-              initial={
-                reduceMotion
-                  ? false
-                  : {
-                      opacity: 0,
-                      x: -30,
-                    }
-              }
-              animate={{
-                opacity: 1,
-                x: 0,
-              }}
-              transition={{
-                duration: reduceMotion ? 0 : 0.7,
-                delay: reduceMotion ? 0 : 0.15,
-                ease,
-              }}
-              className="mb-7 flex items-center gap-3"
+        {/* HERO CONTENT */}
+        <div className="relative z-10 mx-auto max-w-[1200px] px-5 pb-16 pt-[165px] sm:px-8 sm:pb-20 lg:px-12 lg:pb-24">
+          <div className="max-w-[800px]">
+            <motion.p
+              {...reveal(0)}
+              className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#6DE0D3]"
             >
-              <span className="h-[2px] w-10 bg-[#6DE0D3]" />
-
-              <span
-                className="
-                  text-[11px] font-extrabold
-                  uppercase tracking-[0.23em]
-                  text-[#6DE0D3]
-                  sm:text-[12px]
-                "
-              >
-                GET TO KNOW MAXIMUM CARE
-              </span>
-            </motion.div>
-
-            {/* ================================= */}
-            {/* MAIN HEADING                      */}
-            {/* ================================= */}
+              GET TO KNOW US
+            </motion.p>
 
             <motion.h1
-              initial={
-                reduceMotion
-                  ? false
-                  : {
-                      opacity: 0,
-                      y: 40,
-                    }
-              }
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: reduceMotion ? 0 : 0.9,
-                delay: reduceMotion ? 0 : 0.25,
-                ease,
-              }}
-              className="
-                text-[43px]
-                font-extrabold
-                leading-[1.1]
-                tracking-[-0.04em]
-                text-white
-                sm:text-[58px]
-                lg:text-[70px]
-                xl:text-[78px]
-              "
+              {...reveal(0.1)}
+              className="mt-4 text-[38px] font-extrabold leading-[1.1] tracking-[-0.04em] text-white sm:text-[49px] lg:text-[58px]"
             >
-              Driven by Care.
-
-              <span className="mt-2 block text-[#6DE0D3]">
-                Built for Healthcare
-              </span>
-
-              <span className="block text-white">
-                Deliveries.
+              About{" "}
+              <span className="text-[#6DE0D3]">
+                Maximum Care LLC
               </span>
             </motion.h1>
 
-            {/* ================================= */}
-            {/* HERO DESCRIPTION                  */}
-            {/* ================================= */}
+            <motion.h2
+              {...reveal(0.2)}
+              className="mt-5 text-[19px] font-bold leading-snug text-white sm:text-[24px]"
+            >
+              More Than a Delivery.
+              <span className="block text-[#6DE0D3]">
+                A Partner in Healthcare.
+              </span>
+            </motion.h2>
 
             <motion.p
-              initial={
-                reduceMotion
-                  ? false
-                  : {
-                      opacity: 0,
-                      y: 30,
-                    }
-              }
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: reduceMotion ? 0 : 0.8,
-                delay: reduceMotion ? 0 : 0.45,
-                ease,
-              }}
-              className="
-                mt-7 max-w-[670px]
-                text-[15px] leading-[1.95]
-                text-[#D0DFE8]
-                sm:text-[17px]
-                lg:text-[18px]
-              "
+              {...reveal(0.3)}
+              className="mt-4 max-w-[580px] text-[14px] leading-[1.75] text-[#D0DFE8] sm:text-[16px]"
             >
-              Maximum Care LLC is a medical courier startup
-              based in Moorhead, Minnesota, with a clear
-              purpose: to support healthcare organizations
-              through responsible transportation, thoughtful
-              coordination, and attention to every shipment's
-              requirements.
+              A locally owned medical courier company
+              headquartered in Moorhead, Minnesota.
             </motion.p>
-
-            {/* ================================= */}
-            {/* SECONDARY INTRODUCTION            */}
-            {/* ================================= */}
-
-            <motion.p
-              initial={
-                reduceMotion
-                  ? false
-                  : {
-                      opacity: 0,
-                      y: 25,
-                    }
-              }
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: reduceMotion ? 0 : 0.8,
-                delay: reduceMotion ? 0 : 0.55,
-                ease,
-              }}
-              className="
-                mt-4 max-w-[640px]
-                text-[14px] leading-[1.9]
-                text-[#B8CDDA]
-                sm:text-[15px]
-              "
-            >
-              We're building a healthcare-focused transportation
-              company grounded in professionalism, clear
-              communication, and a commitment to handling
-              eligible medical deliveries with care.
-            </motion.p>
-
-            {/* ================================= */}
-            {/* CTA BUTTONS                       */}
-            {/* ================================= */}
 
             <motion.div
-              initial={
-                reduceMotion
-                  ? false
-                  : {
-                      opacity: 0,
-                      y: 25,
-                    }
-              }
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: reduceMotion ? 0 : 0.8,
-                delay: reduceMotion ? 0 : 0.7,
-                ease,
-              }}
-              className="
-                mt-9 flex flex-col gap-4
-                sm:flex-row sm:items-center
-              "
+              {...reveal(0.4)}
+              className="mt-7 flex flex-wrap gap-3"
             >
-
-              {/* PRIMARY BUTTON */}
               <a
                 href="#who-we-are"
-                className="
-                  group inline-flex items-center
-                  justify-center gap-3
-                  rounded-xl
-                  bg-[#0C9B97]
-                  px-7 py-4
-                  text-[14px] font-extrabold
-                  text-white
-                  shadow-[0_15px_35px_rgba(12,155,151,0.2)]
-                  transition-all duration-300
-                  hover:-translate-y-1
-                  hover:bg-[#087F7B]
-                  hover:shadow-[0_20px_40px_rgba(12,155,151,0.3)]
-                "
+                className="inline-flex min-h-[46px] items-center justify-center rounded-xl bg-[#0C9B97] px-6 text-[13px] font-extrabold text-white transition-colors hover:bg-[#087F7C]"
               >
-                Discover Our Story
-
-                <svg
-                  width="19"
-                  height="19"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                  className="transition-transform duration-300 group-hover:translate-y-1"
-                >
-                  <path d="M12 5v14" />
-                  <path d="m5 12 7 7 7-7" />
-                </svg>
+                Learn About Us ↓
               </a>
 
-              {/* SECONDARY BUTTON */}
               <Link
-                to="/services"
-                className="
-                  group inline-flex items-center
-                  justify-center gap-3
-                  rounded-xl border
-                  border-white/35
-                  bg-white/10
-                  px-7 py-4
-                  text-[14px] font-bold
-                  text-white
-                  backdrop-blur-md
-                  transition-all duration-300
-                  hover:border-[#6DE0D3]
-                  hover:bg-white/15
-                "
+                to="/request-quote"
+                className="inline-flex min-h-[46px] items-center justify-center rounded-xl border border-white/30 px-6 text-[13px] font-bold text-white transition-colors hover:bg-white/10"
               >
-                Explore Our Services
-
-                <svg
-                  width="19"
-                  height="19"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                  className="transition-transform duration-300 group-hover:translate-x-1"
-                >
-                  <path d="M5 12h14" />
-                  <path d="m12 5 7 7-7 7" />
-                </svg>
+                Request a Quote
               </Link>
-            </motion.div>
-
-            {/* ================================= */}
-            {/* HERO BOTTOM INFORMATION           */}
-            {/* ================================= */}
-
-            <motion.div
-              initial={
-                reduceMotion
-                  ? false
-                  : {
-                      opacity: 0,
-                      y: 25,
-                    }
-              }
-              animate={{
-                opacity: 1,
-                y: 0,
-              }}
-              transition={{
-                duration: reduceMotion ? 0 : 0.8,
-                delay: reduceMotion ? 0 : 0.9,
-                ease,
-              }}
-              className="
-                mt-11 flex flex-wrap
-                items-center gap-x-7 gap-y-4
-                border-t border-white/20
-                pt-6
-              "
-            >
-
-              {/* LOCATION */}
-              <div className="flex items-center gap-2.5">
-
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                  className="shrink-0 text-[#6DE0D3]"
-                >
-                  <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
-                  <circle cx="12" cy="10" r="2.5" />
-                </svg>
-
-                <span className="text-[12px] font-semibold text-[#D0DFE8] sm:text-[13px]">
-                  Moorhead, Minnesota
-                </span>
-              </div>
-
-              {/* SERVICE FOCUS */}
-              <div className="flex items-center gap-2.5">
-
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                  className="shrink-0 text-[#6DE0D3]"
-                >
-                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z" />
-                  <path d="m9 12 2 2 4-4" />
-                </svg>
-
-                <span className="text-[12px] font-semibold text-[#D0DFE8] sm:text-[13px]">
-                  Healthcare-Focused Logistics
-                </span>
-              </div>
-
-              {/* COMPANY FOCUS */}
-              <div className="flex items-center gap-2.5">
-
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                  className="shrink-0 text-[#6DE0D3]"
-                >
-                  <path d="M3 6h12v12H3z" />
-                  <path d="M15 10h4l3 4v4h-7" />
-                  <circle cx="7.5" cy="18" r="2" />
-                  <circle cx="18.5" cy="18" r="2" />
-                </svg>
-
-                <span className="text-[12px] font-semibold text-[#D0DFE8] sm:text-[13px]">
-                  Responsible Transportation
-                </span>
-              </div>
             </motion.div>
           </div>
         </div>
 
-        {/* ================================= */}
-        {/* HERO BOTTOM ACCENT                */}
-        {/* ================================= */}
-
-        <div
-          className="
-            pointer-events-none absolute
-            bottom-0 left-0 h-[5px] w-full
-            bg-gradient-to-r
-            from-[#0C9B97]
-            via-[#6DE0D3]
-            to-transparent
-          "
-        />
+        {/* BOTTOM ACCENT */}
+        <div className="h-[3px] bg-gradient-to-r from-[#071E34] via-[#0C9B97] to-[#071E34]" />
       </section>
     </>
   );

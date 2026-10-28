@@ -546,13 +546,7 @@ function ServicesHero() {
             {...reveal("up", 0.4)}
             className="mt-7 max-w-[570px] text-[15px] leading-[1.9] text-[#B8CDDA] sm:text-[17px]"
           >
-            From laboratory specimens and pharmacy
-            shipments to medical supplies and
-            scheduled routes, Maximum Care LLC
-            provides professional medical courier
-            solutions designed around the
-            transportation needs of healthcare
-            organizations.
+            Maximum Care LLC offers medical courier solutions for healthcare facilities, laboratories, pharmacies, medical offices, and other organizations requiring dependable transportation of healthcare-related materials.
           </motion.p>
 
           {/* HERO BUTTONS */}
@@ -663,10 +657,10 @@ function ServicesHero() {
           {...reveal("right", 0.2)}
           className="relative w-full"
         >
-          <div className="group relative overflow-hidden rounded-[26px] border border-white/15 bg-[#163D54] shadow-[0_35px_75px_rgba(0,0,0,0.27)]">
+          <div className="group relative overflow-hidden hidden lg:block md:hidden rounded-[26px] border border-white/15 bg-[#163D54] shadow-[0_35px_75px_rgba(0,0,0,0.27)]">
             {/* HERO IMAGE */}
 
-            <div className="relative h-[330px] overflow-hidden sm:h-[430px] lg:h-[470px]">
+            <div className="relative h-[330px] hidden lg:block md:hidden overflow-hidden sm:h-[430px] lg:h-[470px]">
               <motion.img
                 src={heroImg}
                 alt="Medical courier transportation supporting healthcare facilities"

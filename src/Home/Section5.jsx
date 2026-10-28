@@ -6,31 +6,31 @@ const benefits = [
     number: "01",
     title: "Reliable Service",
     description:
-      "Dependable pickup and delivery arrangements designed to support your healthcare operations.",
+      "We understand the importance of dependable pickup and delivery schedules for healthcare operations.",
   },
   {
     number: "02",
     title: "Careful Handling",
     description:
-      "We prioritize responsible custody, appropriate handling, and attention to every medical shipment.",
+      "We prioritize appropriate handling, secure transportation, and responsible custody of medical shipments.",
   },
   {
     number: "03",
     title: "Professional Communication",
     description:
-      "Clear, responsive communication throughout the delivery process to keep your organization informed.",
+      "We believe in keeping clients informed and maintaining clear communication throughout the delivery process.",
   },
   {
     number: "04",
     title: "Local Service",
     description:
-      "Proudly serving Fargo, Moorhead, Dilworth, and surrounding communities.",
+      "As a Moorhead-based company, we focus on building lasting relationships with healthcare organizations throughout the Fargo–Moorhead region.",
   },
   {
     number: "05",
     title: "Flexible Courier Solutions",
     description:
-      "Scheduled and time-sensitive delivery arrangements tailored to your organization's needs.",
+      "We work with clients to understand their transportation needs and explore suitable scheduled or time-sensitive delivery arrangements.",
   },
 ];
 

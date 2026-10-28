@@ -2,11 +2,6 @@
 import { motion, useReducedMotion } from "motion/react";
 import { Link } from "react-router-dom";
 
-// ============================================
-// YOUR SIX SERVICE IMAGES
-// Change the filenames if yours are different.
-// ============================================
-
 import laboratoryImg from "../assets/service1.webp";
 import pharmacyImg from "../assets/service2.webp";
 import suppliesImg from "../assets/service3.webp";
@@ -14,11 +9,9 @@ import documentsImg from "../assets/service4.webp";
 import scheduledImg from "../assets/service5.webp";
 import statImg from "../assets/service6.webp";
 
-const smoothEase = [0.22, 1, 0.36, 1];
-
-// ============================================
-// SERVICE CONTENT
-// ============================================
+// ==========================================
+// SIX MEDICAL COURIER SERVICES
+// ==========================================
 
 const services = [
   {
@@ -277,9 +270,22 @@ const services = [
   },
 ];
 
-// ============================================
-// SECTION COMPONENT
-// ============================================
+// ==========================================
+// SHORT CARD SUMMARIES
+// ==========================================
+
+const summaries = [
+  "Properly packaged specimens between authorized collection sites, labs and healthcare facilities.",
+  "Eligible pharmacy shipments with coordinated pickups and authorized delivery arrangements.",
+  "Packaged medical supplies and suitable equipment delivered between healthcare locations.",
+  "Sealed healthcare documents transported with attention to confidentiality and handoffs.",
+  "Recurring pickups and delivery routes planned around agreed schedules and destinations.",
+  "Urgent and STAT requests reviewed individually for timing, suitability and availability.",
+];
+
+// ==========================================
+// SERVICES SECTION
+// ==========================================
 
 function ServicesSection3() {
   const reduceMotion = useReducedMotion();
@@ -287,514 +293,144 @@ function ServicesSection3() {
   return (
     <section
       id="our-services"
-      className="relative isolate w-full overflow-hidden bg-white py-20 sm:py-24 lg:py-32"
+      className="scroll-mt-28 bg-white py-14 sm:py-16 lg:py-20"
     >
-      {/* ===================================== */}
-      {/* BACKGROUND DETAILS                    */}
-      {/* ===================================== */}
+      <div className="mx-auto max-w-[1280px] px-5 sm:px-8 lg:px-12">
+        {/* SECTION HEADING */}
+        <div className="mb-8 max-w-[780px] sm:mb-10">
+          <p className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#0C9B97]">
+            WHAT WE DELIVER
+          </p>
 
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-40 top-40 h-[500px] w-[500px] rounded-full bg-[#0C9B97]/5 blur-[110px]"
-      />
+          <h2 className="mt-3 text-[30px] font-extrabold leading-tight tracking-[-0.035em] text-[#102A43] sm:text-[40px]">
+            Our Medical Courier Services
+          </h2>
 
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-40 bottom-40 h-[500px] w-[500px] rounded-full bg-[#071E34]/5 blur-[110px]"
-      />
-
-      <div className="relative z-10 mx-auto max-w-[1380px] px-5 sm:px-8 lg:px-12">
-
-        {/* ===================================== */}
-        {/* SECTION HEADER                       */}
-        {/* ===================================== */}
-
-        <div className="mx-auto mb-14 max-w-[850px] text-center sm:mb-18">
-
-          {/* EYEBROW */}
-          <motion.div
-            initial={
-              reduceMotion
-                ? false
-                : { opacity: 0, y: 20 }
-            }
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{ once: true }}
-            transition={{
-              duration: reduceMotion ? 0 : 0.6,
-            }}
-            className="mb-5 flex items-center justify-center gap-3"
-          >
-            <span className="h-[2px] w-8 bg-[#0C9B97]" />
-
-            <span className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[#0C9B97] sm:text-[12px]">
-              WHAT WE DELIVER
-            </span>
-
-            <span className="h-[2px] w-8 bg-[#0C9B97]" />
-          </motion.div>
-
-          {/* HEADING */}
-          <motion.h2
-            initial={
-              reduceMotion
-                ? false
-                : { opacity: 0, y: 28 }
-            }
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{ once: true }}
-            transition={{
-              duration: reduceMotion ? 0 : 0.75,
-              delay: reduceMotion ? 0 : 0.1,
-              ease: smoothEase,
-            }}
-            className="text-[35px] font-extrabold leading-[1.15] tracking-[-0.035em] text-[#071E34] sm:text-[44px] lg:text-[54px]"
-          >
-            Medical Courier Services
-            <span className="mt-2 block text-[#0C9B97]">
-              Built Around Your Needs.
-            </span>
-          </motion.h2>
-
-          {/* DESCRIPTION */}
-          <motion.p
-            initial={
-              reduceMotion
-                ? false
-                : { opacity: 0, y: 22 }
-            }
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
-            viewport={{ once: true }}
-            transition={{
-              duration: reduceMotion ? 0 : 0.75,
-              delay: reduceMotion ? 0 : 0.2,
-              ease: smoothEase,
-            }}
-            className="mx-auto mt-6 max-w-[760px] text-[15px] leading-[1.9] text-[#617589] sm:text-[17px]"
-          >
-            From laboratory specimens and pharmacy shipments
-            to medical supplies, confidential documents,
-            scheduled routes, and urgent requests, Maximum Care
-            LLC provides healthcare-focused courier solutions
-            built around responsible handling and clear
-            transportation coordination.
-          </motion.p>
-
-          {/* SMALL SECTION DIVIDER */}
-          <motion.div
-            initial={
-              reduceMotion
-                ? false
-                : { opacity: 0, scaleX: 0 }
-            }
-            whileInView={{
-              opacity: 1,
-              scaleX: 1,
-            }}
-            viewport={{ once: true }}
-            transition={{
-              duration: reduceMotion ? 0 : 0.8,
-              delay: reduceMotion ? 0 : 0.3,
-            }}
-            className="mx-auto mt-8 h-[3px] w-20 origin-center rounded-full bg-[#0C9B97]"
-          />
+          <p className="mt-3 text-[14px] leading-[1.75] text-[#526579] sm:text-[15px]">
+            Six practical services for healthcare organizations.
+            Select "View details" to explore handling
+            considerations for each.
+          </p>
         </div>
 
-        {/* ===================================== */}
-        {/* SIX SERVICES GRID                    */}
-        {/* ===================================== */}
-
-        <div className="grid grid-cols-1 items-stretch gap-7 md:grid-cols-2 xl:grid-cols-3 xl:gap-8">
-
+        {/* SIX COMPACT SERVICE CARDS */}
+        <div className="grid grid-cols-1 items-start gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service, index) => (
-
             <motion.article
               key={service.number}
               initial={
                 reduceMotion
                   ? false
-                  : {
-                      opacity: 0,
-                      y: 45,
-                    }
+                  : { opacity: 0, y: 22 }
               }
-              whileInView={{
-                opacity: 1,
-                y: 0,
-              }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{
                 once: true,
-                amount: 0.08,
+                amount: 0.1,
               }}
               transition={{
-                duration: reduceMotion ? 0 : 0.75,
+                duration: reduceMotion ? 0 : 0.55,
                 delay: reduceMotion
                   ? 0
-                  : (index % 3) * 0.12,
-                ease: smoothEase,
+                  : (index % 3) * 0.06,
               }}
-              whileHover={
-                reduceMotion
-                  ? undefined
-                  : { y: -7 }
-              }
-              className="
-                group flex h-full flex-col
-                overflow-hidden
-                rounded-[24px]
-                border border-[#E3EBF0]
-                bg-white
-                shadow-[0_12px_40px_rgba(7,30,52,0.055)]
-                transition-[border-color,box-shadow]
-                duration-300
-                hover:border-[#0C9B97]/35
-                hover:shadow-[0_25px_65px_rgba(7,30,52,0.12)]
-              "
+              className="group overflow-hidden rounded-[19px] border border-[#DEEAF0] bg-white shadow-[0_10px_28px_rgba(7,30,52,0.055)]"
             >
-
-              {/* ================================= */}
-              {/* CARD IMAGE                        */}
-              {/* ================================= */}
-
-              <div className="relative h-[240px] shrink-0 overflow-hidden bg-[#DDEBEF] sm:h-[260px]">
-
-                <motion.img
+              {/* SERVICE IMAGE */}
+              <div className="relative h-[135px] overflow-hidden bg-[#DCE8EF] sm:h-[155px]">
+                <img
                   src={service.image}
                   alt={service.alt}
                   loading="lazy"
                   decoding="async"
-                  className="h-full w-full object-cover"
-                  whileHover={
-                    reduceMotion
-                      ? undefined
-                      : { scale: 1.075 }
-                  }
-                  transition={{
-                    duration: 0.8,
-                    ease: smoothEase,
-                  }}
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                 />
 
-                {/* IMAGE GRADIENT */}
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#071E34]/65 via-[#071E34]/5 to-transparent" />
+                <span className="absolute left-4 top-3 rounded-lg bg-[#071E34]/85 px-2.5 py-1 text-[10px] font-extrabold tracking-[0.1em] text-white">
+                  {service.number}
+                </span>
+              </div>
 
-                {/* SERVICE NUMBER */}
-                <div className="absolute left-5 top-5 rounded-full border border-white/30 bg-[#071E34]/80 px-4 py-2 text-[11px] font-bold tracking-[0.12em] text-white backdrop-blur-md">
-                  SERVICE {service.number}
-                </div>
+              {/* SERVICE CONTENT */}
+              <div className="p-5">
+                <div className="flex items-center gap-2 text-[#0C9B97]">
+                  <span aria-hidden="true">
+                    {service.icon}
+                  </span>
 
-                {/* BOTTOM IMAGE LABEL */}
-                <div className="absolute bottom-5 left-5 right-5">
-                  <span className="inline-flex max-w-full rounded-full border border-white/20 bg-white/15 px-4 py-2 text-[10px] font-bold tracking-[0.08em] text-white backdrop-blur-md sm:text-[11px]">
+                  <span className="text-[10px] font-extrabold uppercase tracking-[0.12em]">
                     {service.category}
                   </span>
                 </div>
-              </div>
 
-              {/* ================================= */}
-              {/* CARD CONTENT                      */}
-              {/* ================================= */}
-
-              <div className="relative flex flex-1 flex-col px-6 pb-7 pt-9 sm:px-7 sm:pb-8 sm:pt-10">
-
-                {/* ICON */}
-                <div
-                  className="
-                    absolute -top-7 right-6
-                    flex h-14 w-14
-                    items-center justify-center
-                    rounded-2xl
-                    border-4 border-white
-                    bg-[#0C9B97]
-                    text-white
-                    shadow-[0_10px_25px_rgba(12,155,151,0.2)]
-                    transition-transform duration-300
-                    group-hover:-rotate-6
-                  "
-                >
-                  {service.icon}
-                </div>
-
-                {/* TITLE */}
-                <h3 className="max-w-[320px] text-[23px] font-extrabold leading-[1.3] tracking-[-0.025em] text-[#102A43] sm:text-[25px]">
+                <h3 className="mt-3 min-h-[43px] text-[17px] font-extrabold leading-[1.3] text-[#102A43]">
                   {service.title}
                 </h3>
 
-                {/* TITLE ACCENT */}
-                <div className="mb-6 mt-5 h-[3px] w-12 rounded-full bg-[#0C9B97]" />
-
-                {/* FIRST PARAGRAPH */}
-                <p className="text-[14px] leading-[1.9] text-[#526579]">
-                  {service.description}
+                <p className="mt-2 text-[13px] leading-[1.65] text-[#526579]">
+                  {summaries[index]}
                 </p>
 
-                {/* SECOND PARAGRAPH */}
-                <p className="mt-4 text-[14px] leading-[1.9] text-[#526579]">
-                  {service.description2}
-                </p>
+                {/* EXPANDABLE FULL DETAILS */}
+                <details className="group/details mt-4 border-t border-[#E5EDF2] pt-3">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-2 text-[12px] font-extrabold text-[#0C9B97] marker:hidden focus-visible:rounded focus-visible:outline-2 focus-visible:outline-[#0C9B97] [&::-webkit-details-marker]:hidden">
+                    View full service details
 
-                {/* DIVIDER */}
-                <div className="my-7 h-px w-full bg-[#E5EDF2]" />
-
-                {/* SERVICE DETAILS HEADING */}
-                <div className="mb-5 flex items-center gap-2">
-                  <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-[#E6F7F5] text-[#0C9B97]">
-                    <svg
-                      width="17"
-                      height="17"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
+                    <span
                       aria-hidden="true"
+                      className="text-[17px] transition-transform group-open/details:rotate-45"
                     >
-                      <path d="M9 11l3 3L22 4" />
-                      <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
-                    </svg>
-                  </div>
+                      +
+                    </span>
+                  </summary>
 
-                  <h4 className="text-[13px] font-extrabold uppercase tracking-[0.08em] text-[#102A43]">
-                    Service Details
-                  </h4>
-                </div>
+                  <div className="mt-4 space-y-3 text-[12px] leading-[1.7] text-[#526579]">
+                    <p>{service.description}</p>
 
-                {/* FOUR DETAILED POINTS */}
-                <ul className="space-y-4">
-                  {service.highlights.map((highlight, i) => (
-                    <li
-                      key={i}
-                      className="flex items-start gap-3"
-                    >
-                      <div className="mt-1 flex h-[19px] w-[19px] shrink-0 items-center justify-center rounded-full bg-[#E6F7F5] text-[#0C9B97]">
-                        <svg
-                          width="12"
-                          height="12"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          aria-hidden="true"
-                        >
-                          <path d="m5 12 4 4L19 6" />
-                        </svg>
-                      </div>
+                    <p>{service.description2}</p>
 
-                      <span className="text-[13px] leading-[1.8] text-[#526579]">
-                        {highlight}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* ================================= */}
-                {/* COORDINATION INFORMATION          */}
-                {/* ================================= */}
-
-                <div className="mt-8 rounded-2xl border border-[#D7EEEC] bg-[#F0FAF9] p-5">
-
-                  <div className="mb-3 flex items-center gap-2 text-[#0A827E]">
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.8"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden="true"
-                    >
-                      <circle cx="12" cy="12" r="10" />
-                      <path d="M12 16v-4" />
-                      <path d="M12 8h.01" />
-                    </svg>
-
-                    <h4 className="text-[12px] font-extrabold uppercase tracking-[0.07em]">
-                      Important Coordination Notes
+                    <h4 className="font-extrabold text-[#102A43]">
+                      Service considerations
                     </h4>
+
+                    <ul className="list-disc space-y-1.5 pl-5">
+                      {service.highlights.map((item) => (
+                        <li key={item}>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <p className="rounded-xl bg-[#EAF7F5] p-3 text-[#315B5F]">
+                      {service.coordination}
+                    </p>
                   </div>
-
-                  <p className="text-[12px] leading-[1.9] text-[#45666B]">
-                    {service.coordination}
-                  </p>
-                </div>
-
-                {/* ================================= */}
-                {/* REQUEST SERVICE BUTTON            */}
-                {/* ================================= */}
-
-                <div className="mt-auto pt-8">
-
-                  <Link
-                    to="/request-quote"
-                    aria-label={`Request a quote for ${service.title}`}
-                    className="
-                      group/btn flex w-full
-                      items-center justify-between
-                      gap-3 rounded-xl
-                      bg-[#071E34]
-                      px-5 py-4
-                      text-[13px] font-bold
-                      text-white
-                      transition-all duration-300
-                      hover:bg-[#0C9B97]
-                      focus-visible:outline-2
-                      focus-visible:outline-offset-2
-                      focus-visible:outline-[#0C9B97]
-                    "
-                  >
-                    <span>Request This Service</span>
-
-                    <svg
-                      width="19"
-                      height="19"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden="true"
-                      className="transition-transform duration-300 group-hover/btn:translate-x-1"
-                    >
-                      <path d="M5 12h14" />
-                      <path d="m12 5 7 7-7 7" />
-                    </svg>
-                  </Link>
-
-                </div>
+                </details>
               </div>
             </motion.article>
           ))}
         </div>
 
-        {/* ===================================== */}
-        {/* BOTTOM SERVICE INFORMATION            */}
-        {/* ===================================== */}
+        {/* QUOTE CTA */}
+        <div className="mt-9 flex flex-col items-start justify-between gap-4 rounded-[18px] bg-[#071E34] px-6 py-6 text-white sm:flex-row sm:items-center sm:px-8">
+          <div>
+            <h3 className="text-[19px] font-extrabold">
+              Need a medical courier arrangement?
+            </h3>
 
-        <motion.div
-          initial={
-            reduceMotion
-              ? false
-              : {
-                  opacity: 0,
-                  y: 35,
-                }
-          }
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-            amount: 0.15,
-          }}
-          transition={{
-            duration: reduceMotion ? 0 : 0.8,
-            ease: smoothEase,
-          }}
-          className="
-            relative mt-16 overflow-hidden
-            rounded-[26px]
-            bg-[#071E34]
-            px-6 py-10
-            text-white
-            sm:mt-20
-            sm:px-10
-            lg:px-14
-          "
-        >
-
-          {/* BACKGROUND GLOW */}
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-[#0C9B97]/20 blur-[90px]"
-          />
-
-          <div className="relative z-10 flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
-
-            <div className="max-w-[780px]">
-
-              <div className="mb-4 flex items-center gap-3">
-                <span className="h-[2px] w-8 bg-[#6DE0D3]" />
-
-                <span className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#6DE0D3]">
-                  SERVICE AVAILABILITY
-                </span>
-              </div>
-
-              <h3 className="text-[25px] font-extrabold leading-[1.25] sm:text-[30px]">
-                Need a Transportation Solution
-                for Your Healthcare Facility?
-              </h3>
-
-              <p className="mt-4 text-[14px] leading-[1.9] text-[#BDD0DD] sm:text-[15px]">
-                Tell us what needs to be transported, where
-                it needs to go, and when it is required.
-                Our team can review your request and discuss
-                suitable service arrangements.
-              </p>
-
-              <p className="mt-3 text-[12px] leading-[1.8] text-[#A8C0D0]">
-                All services are subject to operational readiness,
-                applicable transportation requirements,
-                appropriate packaging, client-specific handling
-                instructions, and confirmed availability.
-              </p>
-            </div>
-
-            {/* CTA */}
-            <Link
-              to="/request-quote"
-              className="
-                inline-flex shrink-0
-                items-center justify-center
-                gap-3 self-start
-                rounded-xl
-                bg-[#0C9B97]
-                px-7 py-4
-                text-[14px] font-extrabold
-                text-white
-                transition-all duration-300
-                hover:-translate-y-1
-                hover:bg-[#0A8581]
-                hover:shadow-[0_12px_30px_rgba(12,155,151,0.3)]
-                lg:self-center
-              "
-            >
-              Request a Quote
-
-              <svg
-                width="19"
-                height="19"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M5 12h14" />
-                <path d="m12 5 7 7-7 7" />
-              </svg>
-            </Link>
-
+            <p className="mt-1 text-[13px] leading-6 text-[#C6D8E1]">
+              Tell us about your route, shipment and timing.
+              We'll review your request.
+            </p>
           </div>
-        </motion.div>
+
+          <Link
+            to="/request-quote"
+            className="inline-flex min-h-[44px] shrink-0 items-center justify-center rounded-xl bg-[#0C9B97] px-6 text-[13px] font-extrabold text-white transition-colors hover:bg-[#087F7C]"
+          >
+            Request a Quote →
+          </Link>
+        </div>
       </div>
     </section>
   );
