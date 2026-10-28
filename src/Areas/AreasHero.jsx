@@ -203,9 +203,13 @@ function AreasHero() {
           {...reveal(0.2)}
           className="mx-auto mt-5 max-w-[610px] text-[14px] leading-[1.75] text-[#C5D7E2] sm:text-[16px]"
         >
-          Serving Fargo–Moorhead and surrounding
-          communities with coordinated medical deliveries.
+          Proudly Serving Minnesota & North Dakota
         </motion.p>
+
+        <motion.p
+         {...reveal(0.2)}
+          className="mx-auto  max-w-[610px] text-[14px] leading-[1.75] text-[#C5D7E2] sm:text-[16px]"
+        >Maximum Care LLC is based in Moorhead, Minnesota, and focuses on supporting healthcare organizations throughout the Fargo–Moorhead metropolitan area and surrounding communities.</motion.p>
 
         <motion.div
           {...reveal(0.3)}

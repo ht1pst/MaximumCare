@@ -27,6 +27,7 @@ import ServicesSection2 from "./Services/ServicesSection2";
 import ServicesSection3 from "./Services/ServicesSection3";
 import ServicesSection5 from "./Services/ServicesSection5";
 import ServicesSection6 from "./Services/ServicesSection6";
+import ServicesSection4 from "./Services/ServicesSection4";
 
 // ABOUT PAGE
 import AboutHero from "./About/AboutHero";
@@ -95,7 +96,8 @@ function App() {
                 <ServicesHero />
                 <ServicesSection2 />
                 <ServicesSection3 />
-                <Section4 />
+                <ServicesSection4 />
+                
                   <Section6 />
                 <ServicesSection6 />
                 <Footer />

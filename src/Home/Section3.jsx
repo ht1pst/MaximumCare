@@ -1,9 +1,10 @@
 
 import { motion, useReducedMotion } from "motion/react";
+import { Link } from "react-router-dom";
 
-// ===============================
-// SERVICES DATA + ORIGINAL ICONS
-// ===============================
+// ==========================================
+// SERVICES DATA — ORIGINAL SVG ICONS
+// ==========================================
 
 const services = [
   {
@@ -194,9 +195,9 @@ const services = [
   },
 ];
 
-// ===============================
-// REUSABLE SVG ICON COMPONENT
-// ===============================
+// ==========================================
+// REUSABLE SERVICE ICON
+// ==========================================
 
 function ServiceIcon({ children }) {
   return (
@@ -215,41 +216,33 @@ function ServiceIcon({ children }) {
   );
 }
 
-// ===============================
-// ANIMATED SERVICES SECTION
-// ===============================
+// ==========================================
+// SECTION 3 — OUR SERVICES
+// ==========================================
 
 function Section3() {
   const reduceMotion = useReducedMotion();
+  const ease = [0.22, 1, 0.36, 1];
 
-  // Premium animation easing
-  const smoothEase = [0.22, 1, 0.36, 1];
-
-  // Reusable animation for headings and text
   const fadeUp = (delay = 0) => ({
     initial: reduceMotion
       ? false
-      : {
-          opacity: 0,
-          y: 35,
-          filter: "blur(5px)",
-        },
+      : { opacity: 0, y: 25 },
 
     whileInView: {
       opacity: 1,
       y: 0,
-      filter: "blur(0px)",
     },
 
     viewport: {
-      once: false,
-      amount: 0.2,
+      once: true,
+      amount: 0.12,
     },
 
     transition: {
-      duration: reduceMotion ? 0 : 0.8,
+      duration: reduceMotion ? 0 : 0.65,
       delay: reduceMotion ? 0 : delay,
-      ease: smoothEase,
+      ease,
     },
   });
 
@@ -259,102 +252,72 @@ function Section3() {
       className="
         relative w-full overflow-hidden
         bg-[#F3F7F9]
-        px-5 py-16
-        sm:px-8 sm:py-20
-        lg:px-12 lg:py-24
+        px-5 py-14
+        sm:px-8 sm:py-16
+        lg:px-12 lg:py-20
         xl:px-16
       "
     >
-      {/* BACKGROUND DECORATION */}
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none absolute
-          -right-[180px] -top-[150px]
-          h-[450px] w-[450px]
-          rounded-full bg-[#0C9B97]/[0.05]
-          blur-[100px]
-        "
-      />
+      <div className="mx-auto max-w-[1300px]">
 
-      <div className="relative z-10 mx-auto max-w-[1300px]">
-
-        {/* ============================== */}
-        {/* ANIMATED SECTION HEADING       */}
-        {/* ============================== */}
+        {/* ====================================== */}
+        {/* SECTION HEADING */}
+        {/* ====================================== */}
 
         <div className="mx-auto max-w-[950px] text-center">
-
-          {/* SMALL HEADING */}
           <motion.p
             {...fadeUp(0)}
             className="
-              mb-4 text-[12px] font-bold
-              uppercase tracking-[0.25em]
+              text-[11px] font-extrabold
+              uppercase tracking-[0.2em]
               text-[#0C9B97]
-              md:text-[14px]
             "
           >
             OUR SERVICES
           </motion.p>
 
-          {/* MAIN HEADING */}
           <motion.h2
-            {...fadeUp(0.12)}
+            {...fadeUp(0.1)}
             className="
-              mx-auto max-w-[950px]
+              mx-auto mt-3 max-w-[850px]
               text-[30px] font-extrabold
-              leading-[1.15] tracking-[-0.03em]
+              leading-[1.15]
+              tracking-[-0.03em]
               text-[#102A43]
-
               sm:text-[36px]
               md:text-[42px]
-              lg:text-[48px]
+              lg:text-[46px]
             "
           >
             Comprehensive Medical Courier Services
           </motion.h2>
 
-          {/* ANIMATED TEAL UNDERLINE */}
           <motion.div
             initial={
               reduceMotion
                 ? false
-                : {
-                    scaleX: 0,
-                    opacity: 0,
-                  }
+                : { scaleX: 0 }
             }
-            whileInView={{
-              scaleX: 1,
-              opacity: 1,
-            }}
-            viewport={{
-              once: false,
-              amount: 0.5,
-            }}
+            whileInView={{ scaleX: 1 }}
+            viewport={{ once: true }}
             transition={{
-              duration: reduceMotion ? 0 : 0.9,
-              delay: reduceMotion ? 0 : 0.3,
-              ease: smoothEase,
+              duration: reduceMotion ? 0 : 0.6,
+              ease,
             }}
             className="
-              mx-auto mt-6
-              h-[3px] w-[75px]
-              origin-center rounded-full
-              bg-[#0C9B97]
+              mx-auto mt-5 h-[3px]
+              w-[65px] origin-center
+              rounded-full bg-[#0C9B97]
             "
           />
 
-          {/* DESCRIPTION */}
           <motion.p
-            {...fadeUp(0.25)}
+            {...fadeUp(0.2)}
             className="
-              mx-auto mt-6 max-w-[720px]
-              text-[15px] leading-[1.85]
+              mx-auto mt-5 max-w-[720px]
+              text-[14px] leading-[1.85]
               text-[#526579]
-
-              sm:text-[16px]
+              sm:text-[15px]
             "
           >
             From routine deliveries to time-sensitive
@@ -363,150 +326,101 @@ function Section3() {
             to support the daily operations of healthcare
             organizations.
           </motion.p>
-
         </div>
 
-        {/* ============================== */}
-        {/* ANIMATED SERVICES GRID         */}
-        {/* ============================== */}
+        {/* ====================================== */}
+        {/* SIX SERVICE CARDS */}
+        {/* ====================================== */}
 
         <div
           className="
-            mt-12 grid grid-cols-1
-            gap-5
-
-            md:mt-14 md:grid-cols-2
-            md:gap-6
-
-            xl:mt-16 xl:grid-cols-3
-            xl:gap-7
+            mt-10 grid grid-cols-1 gap-5
+            md:grid-cols-2 md:gap-6
+            xl:grid-cols-3
           "
         >
           {services.map((service, index) => (
-
             <motion.article
               key={service.title}
-
-              // CARD STARTING POSITION
               initial={
                 reduceMotion
                   ? false
                   : {
                       opacity: 0,
-                      y: 55,
-                      scale: 0.94,
+                      y: 30,
+                      scale: 0.97,
                     }
               }
-
-              // CARD ENTERS THE SCREEN
               whileInView={{
                 opacity: 1,
                 y: 0,
                 scale: 1,
               }}
-
-              // REPLAY WHEN SCROLLING BACK
               viewport={{
-                once: false,
-                amount: 0.2,
+                once: true,
+                amount: 0.12,
               }}
-
-              // SMOOTH STAGGERED ENTRY
               transition={{
-                duration: reduceMotion ? 0 : 0.75,
+                duration: reduceMotion ? 0 : 0.65,
                 delay: reduceMotion
                   ? 0
-                  : (index % 3) * 0.12,
-                ease: smoothEase,
+                  : (index % 3) * 0.09,
+                ease,
               }}
-
-              // PREMIUM HOVER EFFECT
               whileHover={
                 reduceMotion
                   ? undefined
                   : {
-                      y: -9,
-                      scale: 1.02,
+                      y: -6,
                       transition: {
-                        type: "spring",
-                        stiffness: 280,
-                        damping: 20,
+                        duration: 0.25,
                       },
                     }
               }
-
               className="
                 group relative flex h-full
                 min-w-0 items-start gap-4
                 overflow-hidden rounded-[18px]
                 border border-[#E3EDF2]
                 bg-white p-5
-
                 shadow-[0_8px_24px_rgba(0,27,59,0.05)]
-
-                transition-[border-color,box-shadow,background-color]
-                duration-300 ease-out
-
+                transition-[border-color,box-shadow]
+                duration-300
                 hover:border-[#0C9B97]/40
-                hover:shadow-[0_20px_45px_rgba(0,27,59,0.13)]
-
+                hover:shadow-[0_18px_40px_rgba(0,27,59,0.11)]
                 sm:gap-5 sm:p-6
               "
             >
-
-              {/* ANIMATED LEFT TEAL BORDER */}
+              {/* LEFT TEAL HOVER BORDER */}
               <div
                 className="
                   absolute left-0 top-0
                   h-full w-[3px]
                   origin-bottom scale-y-0
                   bg-[#0C9B97]
-
                   transition-transform duration-500
-                  ease-out group-hover:scale-y-100
+                  group-hover:scale-y-100
                 "
               />
 
-              {/* HOVER TOP ACCENT */}
-              <div
-                className="
-                  absolute left-5 right-5 top-0
-                  h-[2px] origin-center
-                  scale-x-0 bg-gradient-to-r
-                  from-transparent via-[#0C9B97]
-                  to-transparent
-
-                  transition-transform duration-500
-                  group-hover:scale-x-100
-                "
-              />
-
-              {/* ============================== */}
-              {/* ANIMATED SERVICE ICON          */}
-              {/* ============================== */}
-
+              {/* SERVICE ICON */}
               <motion.div
                 whileHover={
                   reduceMotion
                     ? undefined
                     : {
-                        rotate: -6,
-                        scale: 1.1,
+                        rotate: -5,
+                        scale: 1.06,
                       }
                 }
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 17,
-                }}
                 className="
                   flex h-[58px] w-[58px]
-                  shrink-0 items-center justify-center
-                  rounded-[14px] bg-[#EDF8F8]
-
+                  shrink-0 items-center
+                  justify-center
+                  rounded-[14px]
+                  bg-[#EDF8F8]
                   transition-colors duration-300
                   group-hover:bg-[#DDF3F2]
-
                   sm:h-[68px] sm:w-[68px]
                   lg:h-[72px] lg:w-[72px]
                 "
@@ -516,30 +430,21 @@ function Section3() {
                 </ServiceIcon>
               </motion.div>
 
-              {/* ============================== */}
-              {/* SERVICE CONTENT                */}
-              {/* ============================== */}
-
+              {/* SERVICE TEXT */}
               <div className="min-w-0 flex-1">
-
-                {/* SERVICE TITLE */}
                 <h3
                   className="
                     text-[17px] font-extrabold
                     leading-[1.35] text-[#102A43]
-
                     transition-colors duration-300
                     group-hover:text-[#0C9B97]
-
                     sm:text-[18px]
-                    lg:text-[19px]
                     xl:text-[20px]
                   "
                 >
                   {service.title}
                 </h3>
 
-                {/* SERVICE DESCRIPTION */}
                 <p
                   className="
                     mt-3 text-[14px]
@@ -549,22 +454,73 @@ function Section3() {
                 >
                   {service.description}
                 </p>
-
               </div>
-
             </motion.article>
           ))}
         </div>
 
-        {/* ============================== */}
-        {/* ANIMATED BOTTOM CTA            */}
-        {/* ============================== */}
+        {/* ====================================== */}
+        {/* CLIENT'S SERVICE REQUIREMENTS NOTICE */}
+        {/* ====================================== */}
 
         <motion.div
           {...fadeUp(0.1)}
-          className="mt-12 text-center md:mt-14"
+          className="
+            mx-auto mt-8 max-w-[900px]
+            rounded-xl
+            border border-[#DCE9EE]
+            bg-white/80
+            px-5 py-4
+            sm:px-7
+          "
         >
-          {/* SUPPORT TEXT */}
+          <div
+            className="
+              flex items-start
+              justify-center gap-3
+            "
+          >
+            {/* INFORMATION ICON */}
+            <svg
+              width="19"
+              height="19"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#0C9B97"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+              className="mt-0.5 shrink-0"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 11v5" />
+              <path d="M12 8h.01" />
+            </svg>
+
+            <p
+              className="
+                text-[12px] leading-[1.8]
+                text-[#526579]
+                sm:text-[13px]
+              "
+            >
+              All services are subject to operational
+              readiness, applicable transportation
+              requirements, and client-specific handling
+              instructions.
+            </p>
+          </div>
+        </motion.div>
+
+        {/* ====================================== */}
+        {/* BOTTOM CALL TO ACTION */}
+        {/* ====================================== */}
+
+        <motion.div
+          {...fadeUp(0.15)}
+          className="mt-9 text-center"
+        >
           <p
             className="
               mx-auto max-w-[650px]
@@ -577,42 +533,18 @@ function Section3() {
             organization's needs? We're here to help.
           </p>
 
-          {/* CTA BUTTON */}
-          <motion.a
-             href="/request-quote"
-
-            whileHover={
-              reduceMotion
-                ? undefined
-                : {
-                    y: -5,
-                    scale: 1.04,
-                  }
-            }
-
-            whileTap={
-              reduceMotion
-                ? undefined
-                : {
-                    scale: 0.96,
-                  }
-            }
-
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 20,
-            }}
-
+          <Link
+            to="/request-quote"
             className="
-              group mt-6 inline-flex
-              min-h-[52px] items-center
+              group mt-5 inline-flex
+              min-h-[49px] items-center
               justify-center gap-3
               rounded-xl bg-[#102A43]
               px-7 py-3
-              text-[14px] font-bold text-white
-
-              transition-colors duration-300
+              text-[13px] font-bold
+              text-white
+              transition-all duration-300
+              hover:-translate-y-0.5
               hover:bg-[#0C9B97]
               hover:shadow-[0_12px_30px_rgba(12,155,151,0.20)]
             "
@@ -637,8 +569,7 @@ function Section3() {
               <path d="M5 12h14" />
               <path d="m12 5 7 7-7 7" />
             </svg>
-
-          </motion.a>
+          </Link>
         </motion.div>
 
       </div>

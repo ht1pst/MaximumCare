@@ -1,490 +1,297 @@
 
 import { motion, useReducedMotion } from "motion/react";
+import { Link } from "react-router-dom";
+
 import img from "../assets/section2img.webp";
 
+const ease = [0.22, 1, 0.36, 1];
+
 const features = [
-  "Fast and dependable deliveries",
-  "Careful and secure handling",
-  "Serving Fargo, Moorhead and Dilworth",
+  "Locally Owned",
+  "Healthcare-Focused",
+  "Reliable Transportation",
 ];
 
 function Section2() {
   const reduceMotion = useReducedMotion();
 
-  // Smooth, premium animation curve
-  const smoothEase = [0.22, 1, 0.36, 1];
+  const reveal = (delay = 0) => ({
+    initial: reduceMotion
+      ? false
+      : { opacity: 0, y: 20 },
 
-  // Reusable scroll animation
-  const reveal = (direction = "up", delay = 0) => {
-    const distance = 45;
+    whileInView: {
+      opacity: 1,
+      y: 0,
+    },
 
-    return {
-      initial: reduceMotion
-        ? false
-        : {
-            opacity: 0,
-            x:
-              direction === "left"
-                ? -distance
-                : direction === "right"
-                ? distance
-                : 0,
-            y: direction === "up" ? 35 : 0,
-          },
+    viewport: {
+      once: true,
+      amount: 0.1,
+    },
 
-      whileInView: {
-        opacity: 1,
-        x: 0,
-        y: 0,
-      },
-
-      viewport: {
-        once: false,
-        amount: 0.15,
-      },
-
-      transition: {
-        duration: reduceMotion ? 0 : 0.8,
-        delay: reduceMotion ? 0 : delay,
-        ease: smoothEase,
-      },
-    };
-  };
+    transition: {
+      duration: reduceMotion ? 0 : 0.65,
+      delay: reduceMotion ? 0 : delay,
+      ease,
+    },
+  });
 
   return (
     <section
       id="about"
-      className="w-full overflow-hidden bg-[#F7FAFC] px-5 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24 xl:px-20"
+      className="
+        w-full overflow-hidden
+        bg-[#F7FAFC]
+        px-5 py-12
+        sm:px-8 sm:py-14
+        lg:px-12 lg:py-16
+      "
     >
-      <div className="mx-auto max-w-[1300px]">
+      <div className="mx-auto max-w-[1200px]">
 
-        {/* =============================== */}
-        {/* ANIMATED SECTION HEADING        */}
-        {/* =============================== */}
+        {/* ====================================== */}
+        {/* MAIN TWO-COLUMN LAYOUT */}
+        {/* ====================================== */}
 
-        <div className="flex flex-col">
+        <div
+          className="
+            grid grid-cols-1
+            items-center gap-8
+            lg:grid-cols-[0.9fr_1.1fr]
+            lg:gap-12
+          "
+        >
 
-          {/* SMALL LABEL */}
-         
+          {/* ====================================== */}
+          {/* LEFT — IMAGE */}
+          {/* ====================================== */}
 
-          {/* MAIN HEADING */}
-    
-          {/* INTRODUCTION */}
-        
-
-        </div>
-
-        {/* =============================== */}
-        {/* MAIN CONTENT GRID               */}
-        {/* =============================== */}
-
-        <div className="mt-12 grid grid-cols-1 items-center gap-12 sm:mt-14 lg:mt-16 lg:grid-cols-2 lg:gap-12 xl:gap-20">
-
-          {/* =============================== */}
-          {/* LEFT SIDE - ANIMATED IMAGE      */}
-          {/* =============================== */}
-
-          <div className="relative w-full">
-
-            {/* ANIMATED DECORATIVE CORNER */}
-            <motion.div
-              initial={
-                reduceMotion
-                  ? false
-                  : {
-                      opacity: 0,
-                      scale: 0.5,
-                    }
-              }
-              whileInView={{
-                opacity: 1,
-                scale: 1,
-              }}
-              viewport={{
-                once: false,
-                amount: 0.2,
-              }}
-              transition={{
-                duration: reduceMotion ? 0 : 0.8,
-                delay: reduceMotion ? 0 : 0.2,
-                ease: smoothEase,
-              }}
+          <motion.div
+            {...reveal(0)}
+            className="
+              relative overflow-hidden
+              rounded-[20px]
+              bg-[#DCECF3]
+              shadow-[0_15px_40px_rgba(7,30,52,0.10)]
+            "
+          >
+            <img
+              src={img}
+              alt="Maximum Care LLC medical courier services"
+              loading="lazy"
+              decoding="async"
               className="
-                absolute -left-2 -top-2 z-0
-                h-20 w-20 origin-top-left
-                rounded-tl-2xl
-                border-l-4 border-t-4
-                border-[#00ACC1]
-
-                sm:-left-4 sm:-top-4
-                sm:h-28 sm:w-28
+                h-[260px] w-full
+                object-cover object-center
+                sm:h-[340px]
+                lg:h-[410px]
               "
             />
 
-            {/* IMAGE REVEAL */}
-            <motion.div
-              {...reveal("left", 0.1)}
+            {/* IMAGE GRADIENT */}
+            <div
               className="
-                relative z-10
-                h-[290px] w-full
-                overflow-hidden rounded-2xl
-                shadow-[0_20px_50px_rgba(13,33,55,0.12)]
+                pointer-events-none
+                absolute inset-0
+                bg-gradient-to-t
+                from-[#071E34]/70
+                via-transparent
+                to-transparent
+              "
+            />
 
-                sm:h-[380px]
-                md:h-[450px]
-                lg:h-[470px]
-                xl:h-[500px]
+            {/* IMAGE BOTTOM TEXT */}
+            <div
+              className="
+                absolute bottom-5
+                left-5 right-5
+                sm:bottom-6 sm:left-6
               "
             >
-              <motion.img
-                src={img}
-                alt="Maximum Care medical courier services"
-                loading="lazy"
-                initial={{ scale: 1 }}
-                whileHover={
-                  reduceMotion
-                    ? undefined
-                    : { scale: 1.07 }
-                }
-                transition={{
-                  duration: 0.8,
-                  ease: smoothEase,
-                }}
-                className="h-full w-full object-cover object-center"
-              />
-            </motion.div>
+              <p
+                className="
+                  text-[11px] font-bold
+                  uppercase tracking-[0.17em]
+                  text-[#6DE0D3]
+                "
+              >
+                MAXIMUM CARE LLC
+              </p>
 
-            {/* =============================== */}
-            {/* ANIMATED FLOATING CARD          */}
-            {/* =============================== */}
+              <h3
+                className="
+                  mt-2 text-[20px]
+                  font-extrabold leading-[1.25]
+                  text-white sm:text-[24px]
+                "
+              >
+                Delivering Care
+                <span className="block text-[#6DE0D3]">
+                  With Precision.
+                </span>
+              </h3>
+            </div>
+          </motion.div>
 
-            <motion.div
-              initial={
-                reduceMotion
-                  ? false
-                  : {
-                      opacity: 0,
-                      y: 60,
-                      scale: 0.9,
-                    }
-              }
-              whileInView={{
-                opacity: 1,
-                y: 0,
-                scale: 1,
-              }}
-              viewport={{
-                once: false,
-                amount: 0.2,
-              }}
-              transition={{
-                duration: reduceMotion ? 0 : 0.9,
-                delay: reduceMotion ? 0 : 0.3,
-                ease: smoothEase,
-              }}
-              whileHover={
-                reduceMotion
-                  ? undefined
-                  : {
-                      y: -7,
-                      scale: 1.03,
-                      transition: {
-                        type: "spring",
-                        stiffness: 250,
-                        damping: 20,
-                      },
-                    }
-              }
+          {/* ====================================== */}
+          {/* RIGHT — COMPANY INTRODUCTION */}
+          {/* ====================================== */}
+
+          <motion.div
+            {...reveal(0.1)}
+            className="flex flex-col"
+          >
+            {/* SMALL LABEL */}
+            <p
               className="
-                relative z-20
-                -mt-12 ml-auto mr-2
-                w-[min(90%,280px)]
-                rounded-2xl
-                border border-[#E3EDF2]
-                bg-white p-5
-                shadow-[0_15px_40px_rgba(13,33,55,0.12)]
-
-                sm:-bottom-5 sm:-right-4
-                sm:absolute sm:mt-0
-                sm:w-[265px]
-
-                lg:-bottom-7 lg:-right-3
-                xl:-right-7
+                text-[11px] font-extrabold
+                uppercase tracking-[0.2em]
+                text-[#0C9B97]
               "
             >
-              <div className="mb-3 flex items-center gap-3">
+              WELCOME TO MAXIMUM CARE
+            </p>
 
-                {/* ANIMATED SHIELD ICON */}
-                <motion.div
-                  whileHover={
-                    reduceMotion
-                      ? undefined
-                      : { rotate: -8, scale: 1.1 }
-                  }
-                  transition={{
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 15,
-                  }}
-                  className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[#E6F9FB]"
+            {/* MAIN HEADING */}
+            <h2
+              className="
+                mt-3 text-[29px]
+                font-extrabold leading-[1.15]
+                tracking-[-0.035em]
+                text-[#102A43]
+                sm:text-[37px]
+                lg:text-[40px]
+              "
+            >
+              Your Trusted Partner
+              <span className="block text-[#0C9B97]">
+                in Medical Transportation.
+              </span>
+            </h2>
+
+            {/* CLIENT'S APPROVED CONTENT */}
+            <div
+              className="
+                mt-5 space-y-3
+                text-[14px] leading-[1.8]
+                text-[#526579]
+                sm:text-[15px]
+              "
+            >
+              <p>
+                Maximum Care LLC is a locally owned
+                medical courier company based in Moorhead,
+                Minnesota, serving healthcare organizations
+                across Minnesota and North Dakota.
+              </p>
+
+              <p>
+                We recognize the importance of timely
+                deliveries in the healthcare industry.
+                Our business is built around
+                professionalism, reliability,
+                accountability, and respect for the
+                sensitive nature of medical shipments.
+              </p>
+
+              <p>
+                Whether your organization needs scheduled
+                deliveries, time-sensitive transportation,
+                or an additional courier partner,
+                Maximum Care is committed to providing
+                responsive and dependable service.
+              </p>
+            </div>
+
+            {/* ====================================== */}
+            {/* SHORT HIGHLIGHTS */}
+            {/* ====================================== */}
+
+            <div
+              className="
+                mt-5 flex flex-wrap
+                gap-2
+              "
+            >
+              {features.map((feature) => (
+                <span
+                  key={feature}
+                  className="
+                    inline-flex items-center gap-2
+                    rounded-lg
+                    border border-[#D4EBE8]
+                    bg-[#EAF7F5]
+                    px-3 py-2
+                    text-[11px] font-bold
+                    text-[#28736F]
+                  "
                 >
                   <svg
-                    width="25"
-                    height="25"
+                    width="13"
+                    height="13"
                     viewBox="0 0 24 24"
                     fill="none"
-                    stroke="#00ACC1"
-                    strokeWidth="1.8"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     aria-hidden="true"
                   >
-                    <path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z" />
-                    <path d="m9 12 2 2 4-4" />
+                    <path d="m5 12 4 4L19 6" />
                   </svg>
-                </motion.div>
 
-                {/* CARD HEADING */}
-                <h3 className="text-[14px] font-extrabold leading-5 text-[#0D2137]">
-                  Care in Every Delivery
-                </h3>
-
-              </div>
-
-              {/* CARD DESCRIPTION */}
-              <p className="text-[12px] leading-[1.8] text-[#64748B]">
-                Reliable logistics with a focus on secure
-                handling and dependable service.
-              </p>
-
-            </motion.div>
-
-          </div>
-
-          {/* =============================== */}
-          {/* RIGHT SIDE - ANIMATED CONTENT  */}
-          {/* =============================== */}
-
-          <div className="flex w-full flex-col lg:pl-2">
-
-            {/* SMALL SECTION LABEL */}
-            <motion.div
-              {...reveal("right", 0.1)}
-              className="flex items-center gap-3"
-            >
-              <motion.span
-                initial={
-                  reduceMotion
-                    ? false
-                    : { scaleX: 0 }
-                }
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: false }}
-                transition={{
-                  duration: reduceMotion ? 0 : 0.7,
-                  delay: reduceMotion ? 0 : 0.2,
-                }}
-                className="h-[2px] w-8 shrink-0 origin-left bg-[#00ACC1]"
-              />
-
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#00ACC1] sm:text-[12px] sm:tracking-[0.2em]">
-                RELIABLE MEDICAL COURIER
-              </p>
-            </motion.div>
-
-            {/* CONTENT HEADING */}
-            <motion.h3
-              {...reveal("right", 0.2)}
-              className="
-                mt-5 max-w-[600px]
-                text-[30px] font-extrabold
-                leading-[1.18] tracking-[-0.025em]
-                text-[#0D2137]
-
-                sm:text-[38px]
-                md:text-[42px]
-                lg:text-[38px]
-                xl:text-[46px]
-              "
-            >
-              Reliable Medical Courier Services You Can Trust
-            </motion.h3>
-
-            {/* DESCRIPTION */}
-            <motion.p
-              {...reveal("right", 0.3)}
-              className="
-                mt-6 max-w-[570px]
-                text-[15px] leading-[1.9]
-                text-[#526579]
-                sm:text-[16px]
-              "
-            >
-              We provide reliable medical courier services,
-              ensuring fast deliveries, secure handling,
-              and dependable logistics for healthcare
-              providers.
-            </motion.p>
-
-            {/* =============================== */}
-            {/* STAGGERED FEATURE POINTS        */}
-            {/* =============================== */}
-
-            <div className="mt-8 flex flex-col gap-5">
-
-              {features.map((feature, index) => (
-                <motion.div
-                  key={index}
-                  initial={
-                    reduceMotion
-                      ? false
-                      : {
-                          opacity: 0,
-                          x: 40,
-                        }
-                  }
-                  whileInView={{
-                    opacity: 1,
-                    x: 0,
-                  }}
-                  viewport={{
-                    once: false,
-                    amount: 0.5,
-                  }}
-                  transition={{
-                    duration: reduceMotion ? 0 : 0.65,
-                    delay: reduceMotion
-                      ? 0
-                      : index * 0.15,
-                    ease: smoothEase,
-                  }}
-                  className="group flex items-start gap-4"
-                >
-
-                  {/* CHECK ICON */}
-                  <motion.div
-                    whileHover={
-                      reduceMotion
-                        ? undefined
-                        : {
-                            scale: 1.18,
-                            rotate: 10,
-                          }
-                    }
-                    transition={{
-                      type: "spring",
-                      stiffness: 300,
-                      damping: 15,
-                    }}
-                    className="
-                      mt-[2px] flex h-7 w-7
-                      shrink-0 items-center justify-center
-                      rounded-full bg-[#DDF7F8]
-                      text-[#00ACC1]
-                    "
-                  >
-                    <svg
-                      width="15"
-                      height="15"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden="true"
-                    >
-                      <path d="m5 12 4 4L19 6" />
-                    </svg>
-                  </motion.div>
-
-                  {/* FEATURE TEXT */}
-                  <p className="text-[14px] font-semibold leading-7 text-[#1C3A52] transition-colors duration-300 group-hover:text-[#00ACC1] sm:text-[15px]">
-                    {feature}
-                  </p>
-
-                </motion.div>
+                  {feature}
+                </span>
               ))}
-
             </div>
 
-            {/* =============================== */}
-            {/* ANIMATED BUTTON                */}
-            {/* =============================== */}
+            {/* ====================================== */}
+            {/* ABOUT BUTTON */}
+            {/* ====================================== */}
 
-            <motion.div
-              {...reveal("up", 0.3)}
-              className="mt-9"
-            >
-              <motion.a
-                href="/about"
-                whileHover={
-                  reduceMotion
-                    ? undefined
-                    : {
-                        y: -5,
-                        scale: 1.04,
-                      }
-                }
-                whileTap={
-                  reduceMotion
-                    ? undefined
-                    : { scale: 0.96 }
-                }
-                transition={{
-                  type: "spring",
-                  stiffness: 300,
-                  damping: 20,
-                }}
+            <div className="mt-6">
+              <Link
+                to="/about"
                 className="
-                  group inline-flex min-h-[54px]
-                  w-full items-center justify-center
-                  gap-4 rounded-xl
-                  bg-[#0D2137] px-7 py-4
-                  text-[12px] font-bold
-                  tracking-[0.05em] text-white
-
-                  transition-colors duration-300
-                  hover:bg-[#00ACC1]
-                  hover:shadow-[0_12px_30px_rgba(0,172,193,0.20)]
-
-                  sm:w-auto sm:text-[13px]
+                  group inline-flex
+                  min-h-[46px]
+                  items-center justify-center
+                  gap-3 rounded-xl
+                  bg-[#102A43]
+                  px-6 text-[13px]
+                  font-bold text-white
+                  transition-all duration-300
+                  hover:-translate-y-0.5
+                  hover:bg-[#0C9B97]
                 "
               >
-                ABOUT MAXIMUM CARE
+                More About Maximum Care
 
-                {/* ANIMATED ARROW */}
-                <motion.svg
-                  width="18"
-                  height="18"
+                <svg
+                  width="17"
+                  height="17"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  whileHover={
-                    reduceMotion
-                      ? undefined
-                      : { x: 5 }
-                  }
-                  transition={{
-                    duration: 0.2,
-                  }}
-                  className="transition-transform duration-300 group-hover:translate-x-1"
                   aria-hidden="true"
+                  className="
+                    transition-transform
+                    duration-300
+                    group-hover:translate-x-1
+                  "
                 >
                   <path d="M5 12h14" />
                   <path d="m12 5 7 7-7 7" />
-                </motion.svg>
+                </svg>
+              </Link>
+            </div>
 
-              </motion.a>
-            </motion.div>
-
-          </div>
-
+          </motion.div>
         </div>
-
       </div>
     </section>
   );
