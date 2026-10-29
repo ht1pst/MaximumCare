@@ -25,7 +25,7 @@ function ServicesSection2() {
   return (
     <section
       id="services-overview"
-      className="bg-[#F3F8FB] py-12 sm:py-14 lg:py-16"
+      className="bg-[#F3F8FB]  absolute py-12 sm:py-14 lg:py-16"
     >
       <div className="mx-auto grid max-w-[1280px] items-center gap-8 px-5 sm:px-8 md:grid-cols-[0.85fr_1.15fr] lg:gap-12 lg:px-12">
         {/* IMAGE */}

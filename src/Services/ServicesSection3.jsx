@@ -325,7 +325,7 @@ function ServicesSection3() {
                   className="
                     h-full w-full object-cover
                     transition-transform duration-500
-                    group-hover:scale-[1.04]
+                    group-hover:scale-[1.04] relative
                   "
                 />
 

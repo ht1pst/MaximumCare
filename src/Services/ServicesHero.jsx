@@ -91,7 +91,7 @@ function ServicesHero() {
   return (
     <section
       id="services-hero"
-      className="relative isolate w-full overflow-hidden bg-[#071E34] text-white"
+      className="relative  w-full overflow-hidden bg-[#071E34] text-white"
     >
       {/* ===================================== */}
       {/* HEADER */}
