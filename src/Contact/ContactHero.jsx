@@ -334,13 +334,7 @@ function ContactHero() {
                 sm:text-[16px]
               "
             >
-              Are you a healthcare facility, laboratory,
-              pharmacy, or medical organization looking
-              for a reliable courier partner? We welcome
-              inquiries about scheduled courier services,
-              medical deliveries, time-sensitive
-              transportation, and potential business
-              partnerships.
+            We welcome inquiries about scheduled courier services, medical deliveries, time-sensitive transportation, and potential business partnerships.
             </motion.p>
 
             {/* HERO BUTTONS */}

@@ -114,7 +114,7 @@ function App() {
                 <AboutHero />
                 <AboutSection2 />
                 <AboutSection3 />
-                <AboutSection4 />
+                
                 <Footer />
               </>
             }
