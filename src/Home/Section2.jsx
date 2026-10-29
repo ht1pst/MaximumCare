@@ -180,10 +180,15 @@ function Section2() {
               "
             >
               <p>
-                Maximum Care LLC is a locally owned
-                medical courier company based in Moorhead,
-                Minnesota, serving healthcare organizations
-                across Minnesota and North Dakota.
+                
+<p>
+  Maximum Care LLC is a locally owned medical
+  courier company based in Moorhead, Minnesota,
+  serving healthcare organizations in the
+  Fargo–Moorhead region and surrounding
+  Minnesota and North Dakota communities.
+</p>
+
               </p>
 
               <p>

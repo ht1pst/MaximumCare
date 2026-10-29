@@ -52,6 +52,8 @@ import ContactSection2 from "./Contact/ContactSection2";
 import ContactSection3 from "./Contact/ContactSection3";
 import ContactSection4 from "./Contact/ContactSection4";
 
+
+import PrivacyPolicy from "./PrivacyPolicy";
 function App() {
   return (
     <Router>
@@ -60,7 +62,7 @@ function App() {
       <PageLoader />
  <SeoManager />
 
- 
+
       <main>
         <Routes>
           {/* HOMEPAGE */}
@@ -147,6 +149,12 @@ function App() {
               </>
             }
           />
+
+<Route
+  path="/privacy-policy"
+  element={<PrivacyPolicy />}
+/>
+
         </Routes>
       </main>
     </Router>
