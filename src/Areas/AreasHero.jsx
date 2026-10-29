@@ -55,7 +55,7 @@ function AreasHero() {
   return (
     <section
       id="service-areas-hero"
-      className="relative isolate overflow-hidden bg-[#071E34] text-white"
+      className="relative  overflow-hidden bg-[#071E34] text-white"
     >
       {/* NAVIGATION HEADER */}
       <header
