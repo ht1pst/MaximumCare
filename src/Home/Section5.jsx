@@ -1,263 +1,225 @@
 
 import { motion, useReducedMotion } from "motion/react";
+import { Link } from "react-router-dom";
 
-const benefits = [
-  {
-    number: "01",
-    title: "Reliable Service",
-    description:
-      "We understand the importance of dependable pickup and delivery schedules for healthcare operations.",
-  },
-  {
-    number: "02",
-    title: "Careful Handling",
-    description:
-      "We prioritize appropriate handling, secure transportation, and responsible custody of medical shipments.",
-  },
-  {
-    number: "03",
-    title: "Professional Communication",
-    description:
-      "We believe in keeping clients informed and maintaining clear communication throughout the delivery process.",
-  },
-  {
-    number: "04",
-    title: "Local Service",
-    description:
-      "As a Moorhead-based company, we focus on building lasting relationships with healthcare organizations throughout the Fargo–Moorhead region.",
-  },
-  {
-    number: "05",
-    title: "Flexible Courier Solutions",
-    description:
-      "We work with clients to understand their transportation needs and explore suitable scheduled or time-sensitive delivery arrangements.",
-  },
+const locations = [
+  { city: "Moorhead", state: "MN" },
+  { city: "Dilworth", state: "MN" },
+  { city: "Fargo", state: "ND" },
+  { city: "West Fargo", state: "ND" },
 ];
-
-const smoothEase = [0.22, 1, 0.36, 1];
 
 function Section5() {
   const reduceMotion = useReducedMotion();
 
-  // Section heading animation
-  const headingReveal = (delay = 0) => ({
+  const reveal = (delay = 0) => ({
     initial: reduceMotion
       ? false
-      : {
-          opacity: 0,
-          y: 30,
-          filter: "blur(5px)",
-        },
+      : { opacity: 0, y: 18 },
 
     whileInView: {
       opacity: 1,
       y: 0,
-      filter: "blur(0px)",
     },
 
     viewport: {
-      once: false,
-      amount: 0.3,
+      once: true,
+      amount: 0.2,
     },
 
     transition: {
-      duration: reduceMotion ? 0 : 0.8,
+      duration: reduceMotion ? 0 : 0.55,
       delay: reduceMotion ? 0 : delay,
-      ease: smoothEase,
+      ease: [0.22, 1, 0.36, 1],
     },
   });
-
-  // Alternating timeline text animation
-  const textReveal = (isLeft) => ({
-    hidden: {
-      opacity: 0,
-      x: isLeft ? -55 : 55,
-      filter: "blur(6px)",
-    },
-
-    visible: {
-      opacity: 1,
-      x: 0,
-      filter: "blur(0px)",
-
-      transition: {
-        duration: 0.85,
-        ease: smoothEase,
-        staggerChildren: 0.12,
-      },
-    },
-  });
-
-  // Title and description appear one after another
-  const childReveal = {
-    hidden: {
-      opacity: 0,
-      y: 15,
-    },
-
-    visible: {
-      opacity: 1,
-      y: 0,
-
-      transition: {
-        duration: 0.65,
-        ease: smoothEase,
-      },
-    },
-  };
 
   return (
     <section
-      id="why-choose-us"
-      className="h-auto overflow-hidden bg-[#F4F7FB] px-5 pb-10 pt-10"
+      id="service-areas"
+      className="
+        w-full overflow-hidden
+        bg-[#071E34]
+        px-5 py-12
+        sm:px-8 sm:py-14
+        lg:px-12 lg:py-16
+      "
     >
-      <div className="mx-auto max-w-6xl">
+      <div
+        className="
+          mx-auto grid max-w-[1200px]
+          grid-cols-1 gap-9
+          lg:grid-cols-[1fr_1fr]
+          lg:items-center lg:gap-16
+        "
+      >
 
-        {/* =============================== */}
-        {/* ANIMATED SECTION HEADING        */}
-        {/* =============================== */}
+        {/* LEFT — INTRODUCTION */}
+        <motion.div {...reveal(0)}>
 
-        <div className="mx-auto w-full max-w-[1200px] px-5 pt-8">
-
-          {/* SMALL HEADING */}
-          <motion.p
-            {...headingReveal(0)}
-            className="mb-4 text-center text-[12px] font-bold uppercase tracking-[0.25em] text-[#0C9B97] md:text-[14px]"
+          <p
+            className="
+              text-[11px] font-extrabold
+              uppercase tracking-[0.2em]
+              text-[#6DE0D3]
+            "
           >
-            WHY CHOOSE US
-          </motion.p>
+            OUR COVERAGE
+          </p>
 
-          {/* MAIN HEADING */}
-          <motion.h2
-            {...headingReveal(0.12)}
-            className="mx-auto mb-5 max-w-[950px] text-center text-[30px] font-extrabold leading-[1.15] tracking-[-0.03em] text-[#102A43] sm:text-[36px] md:text-[45px]"
+          <h2
+            className="
+              mt-3 max-w-[520px]
+              text-[30px] font-extrabold
+              leading-[1.15]
+              tracking-[-0.035em]
+              text-white
+              sm:text-[38px]
+              lg:text-[42px]
+            "
           >
-            Why Healthcare Organizations Choose Maximum Care
-          </motion.h2>
+            Serving Fargo–Moorhead
+            <span className="block text-[#6DE0D3]">
+              & Beyond.
+            </span>
+          </h2>
 
-          {/* DESCRIPTION */}
-          <motion.p
-            {...headingReveal(0.25)}
-            className="mx-auto max-w-[720px] text-center text-[15px] leading-[1.8] text-[#526579] md:text-[16px]"
+          <p
+            className="
+              mt-4 max-w-[470px]
+              text-[14px] leading-[1.8]
+              text-[#C9DCE5]
+              sm:text-[15px]
+            "
           >
-            We go beyond delivery we're a trusted partner in
-            your healthcare mission.
-          </motion.p>
+            Based in Moorhead, Minnesota,
+            Maximum Care LLC provides medical
+            courier solutions for healthcare
+            organizations across the
+            Fargo–Moorhead region and
+            surrounding communities.
+          </p>
 
-        </div>
+          <Link
+            to="/service-areas"
+            className="
+              group mt-6 inline-flex
+              items-center gap-2
+              text-[13px] font-bold
+              text-[#6DE0D3]
+              transition-colors
+              hover:text-white
+            "
+          >
+            Explore Service Areas
 
-        {/* =============================== */}
-        {/* TIMELINE                        */}
-        {/* =============================== */}
+            <span
+              aria-hidden="true"
+              className="
+                transition-transform duration-300
+                group-hover:translate-x-1
+              "
+            >
+              →
+            </span>
+          </Link>
+        </motion.div>
 
-        <div className="relative mx-auto mt-10 max-w-[900px]">
+        {/* RIGHT — COMPACT LOCATION LIST */}
+        <motion.div
+          {...reveal(0.1)}
+          className="w-full"
+        >
 
-          {/* VERTICAL LINE - NO ANIMATION */}
-          <div
-            aria-hidden="true"
-            className="absolute bottom-9 top-9 left-[36px] w-[2px] -translate-x-1/2 bg-[#23B5C6] md:left-1/2"
-          />
+          <p
+            className="
+              mb-3 text-[11px] font-extrabold
+              uppercase tracking-[0.17em]
+              text-[#6DE0D3]
+            "
+          >
+            PRIMARY SERVICE AREAS
+          </p>
 
-          {benefits.map((item, index) => {
-            const isLeft = index % 2 === 0;
+          <div className="border-t border-white/20">
 
-            return (
-              <div
-                key={item.number}
-                className="relative grid min-h-[155px] grid-cols-[72px_minmax(0,1fr)] items-center gap-x-5 pb-10 last:pb-0 md:grid-cols-[minmax(0,1fr)_90px_minmax(0,1fr)] md:gap-x-6 md:pb-12"
+            {locations.map((location, index) => (
+              <motion.div
+                key={location.city}
+                initial={
+                  reduceMotion
+                    ? false
+                    : { opacity: 0, x: 15 }
+                }
+                whileInView={{
+                  opacity: 1,
+                  x: 0,
+                }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: reduceMotion ? 0 : 0.45,
+                  delay: reduceMotion
+                    ? 0
+                    : index * 0.07,
+                }}
+                className="
+                  flex items-center
+                  justify-between gap-4
+                  border-b border-white/20
+                  py-3.5
+                "
               >
 
-                {/* =============================== */}
-                {/* ANIMATED TEXT ONLY              */}
-                {/* =============================== */}
+                <div className="flex items-center gap-3">
 
-                <motion.div
-                  variants={
-                    reduceMotion
-                      ? undefined
-                      : textReveal(isLeft)
-                  }
-                  initial={
-                    reduceMotion ? undefined : "hidden"
-                  }
-                  whileInView={
-                    reduceMotion ? undefined : "visible"
-                  }
-                  viewport={{
-                    once: false,
-                    amount: 0.35,
-                  }}
-                  className={`
-                    col-start-2 row-start-1
-                    max-w-[350px]
+                  <span
+                    className="
+                      h-[6px] w-[6px]
+                      shrink-0 rounded-full
+                      bg-[#6DE0D3]
+                    "
+                  />
 
-                    ${
-                      isLeft
-                        ? "md:col-start-1 md:justify-self-end md:text-right"
-                        : "md:col-start-3 md:justify-self-start md:text-left"
-                    }
-                  `}
-                >
-
-                  {/* ANIMATED BENEFIT TITLE */}
-                  <motion.h3
-                    variants={
-                      reduceMotion
-                        ? undefined
-                        : childReveal
-                    }
-                    className="mb-2 text-[20px] font-extrabold text-[#0D223B]"
-                  >
-                    {item.title}
-                  </motion.h3>
-
-                  {/* ANIMATED BENEFIT DESCRIPTION */}
-                  <motion.p
-                    variants={
-                      reduceMotion
-                        ? undefined
-                        : childReveal
-                    }
-                    className="text-[14px] leading-[1.8] text-[#496178]"
-                  >
-                    {item.description}
-                  </motion.p>
-
-                </motion.div>
-
-                {/* =============================== */}
-                {/* NUMBER CIRCLE - NO ANIMATION    */}
-                {/* =============================== */}
-
-                <div className="relative z-10 col-start-1 row-start-1 flex justify-self-center md:col-start-2">
-
-                  <div
-                    className={`
-                      flex h-[72px] w-[72px]
-                      items-center justify-center
-                      rounded-full border-[5px]
-                      border-white
-                      text-[20px] font-extrabold
+                  <h3
+                    className="
+                      text-[16px] font-bold
                       text-white
-                      shadow-[0_10px_24px_rgba(13,34,59,0.13)]
-
-                      ${
-                        isLeft
-                          ? "bg-[#0D223B]"
-                          : "bg-[#00A9BC]"
-                      }
-                    `}
+                      sm:text-[18px]
+                    "
                   >
-                    {item.number}
-                  </div>
-
+                    {location.city}
+                  </h3>
                 </div>
 
-              </div>
-            );
-          })}
+                <span
+                  className="
+                    text-[11px] font-extrabold
+                    tracking-[0.1em]
+                    text-[#6DE0D3]
+                  "
+                >
+                  {location.state}
+                </span>
+              </motion.div>
+            ))}
+          </div>
 
-        </div>
+          {/* SMALL COVERAGE NOTE */}
+          <p
+            className="
+              mt-4 max-w-[550px]
+              text-[12px] leading-[1.75]
+              text-[#B7CBD5]
+            "
+          >
+            Surrounding communities are also served.
+            Additional routes throughout Minnesota
+            and North Dakota may be considered
+            based on scheduling, requirements,
+            and availability.
+          </p>
+
+        </motion.div>
       </div>
     </section>
   );

@@ -71,11 +71,11 @@ function App() {
             element={
               <>
                 <Hero />
-                <Section2 />
+              
                 <Section3 />
+                 <Section4 />
                  <Section5 />
-                 <Section7 />
-                <Section8 />
+                <Section6 />
                 <Footer />
               </>
             }
@@ -98,12 +98,9 @@ function App() {
             element={
               <>
                 <ServicesHero />
-                <ServicesSection2 />
-                <ServicesSection3 />
-                <ServicesSection4 />
                 
-                  <Section6 />
-                <ServicesSection6 />
+                <ServicesSection3 />
+               
                 <Footer />
               </>
             }
@@ -130,7 +127,7 @@ function App() {
               <>
                 <AreasHero />
                 <AreasSection2 />
-                <AreasSection3 />
+                
                 
                 <Footer />
               </>

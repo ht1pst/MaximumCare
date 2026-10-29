@@ -1,60 +1,58 @@
 
 import { motion, useReducedMotion } from "motion/react";
 
-import img1 from "../assets/img1.webp";
-import img2 from "../assets/img2.webp";
-import img3 from "../assets/img3.webp";
-import img4 from "../assets/img4.webp";
-import img5 from "../assets/img5.webp";
-import img6 from "../assets/img6.webp";
+// EXISTING IMAGE
+import whyChooseImg from "../assets/service5.webp";
 
-// ==========================================
-// HEALTHCARE ORGANIZATIONS
-// ==========================================
+const ease = [0.22, 1, 0.36, 1];
 
-const organizations = [
+// THREE BENEFITS BASED ON CLIENT BRIEF
+const benefits = [
   {
-    image: img1,
-    title: "Hospitals & Health Systems",
+    number: "01",
+    title: "Reliable Service",
+    description:
+      "Dependable pickup and delivery schedules supported by clear, professional communication.",
+    icon: (
+      <>
+        <circle cx="24" cy="24" r="17" />
+        <path d="M24 14v11l8 5" />
+      </>
+    ),
   },
   {
-    image: img2,
-    title: "Medical Clinics & Physician Offices",
+    number: "02",
+    title: "Careful Handling",
+    description:
+      "Appropriate handling, secure transportation, and responsible custody of medical shipments.",
+    icon: (
+      <>
+        <path d="M24 4 40 10v12c0 11-7 18-16 22C15 40 8 33 8 22V10Z" />
+        <path d="m16 24 5 5 11-11" />
+      </>
+    ),
   },
   {
-    image: img3,
-    title: "Diagnostic & Clinical Laboratories",
-  },
-  {
-    image: img4,
-    title: "Pharmacies",
-  },
-  {
-    image: img5,
-    title: "Nursing Homes & Long-Term Care Facilities",
-  },
-  {
-    image: img6,
-    title: "Medical Supply Companies",
+    number: "03",
+    title: "Local & Flexible Service",
+    description:
+      "Moorhead-based courier solutions tailored to scheduled and time-sensitive transportation needs.",
+    icon: (
+      <>
+        <path d="M39 20c0 11-15 24-15 24S9 31 9 20a15 15 0 0 1 30 0Z" />
+        <circle cx="24" cy="20" r="5" />
+      </>
+    ),
   },
 ];
-
-const smoothEase = [0.22, 1, 0.36, 1];
-
-// ==========================================
-// WHO WE SERVE SECTION
-// ==========================================
 
 function Section4() {
   const reduceMotion = useReducedMotion();
 
-  const fadeUp = (delay = 0) => ({
+  const reveal = (delay = 0) => ({
     initial: reduceMotion
       ? false
-      : {
-          opacity: 0,
-          y: 22,
-        },
+      : { opacity: 0, y: 20 },
 
     whileInView: {
       opacity: 1,
@@ -69,214 +67,268 @@ function Section4() {
     transition: {
       duration: reduceMotion ? 0 : 0.6,
       delay: reduceMotion ? 0 : delay,
-      ease: smoothEase,
+      ease,
     },
   });
 
   return (
     <section
-      id="who-we-serve"
+      id="why-choose-us"
       className="
-        relative w-full overflow-hidden
-        bg-white
-        px-5 py-10
-        sm:px-8 sm:py-12
-        lg:px-12 lg:py-14
-        xl:px-16
+        w-full overflow-hidden
+        bg-[#F3F8FB]
+        px-5 py-12
+        sm:px-8 sm:py-14
+        lg:px-12 lg:py-16
       "
     >
-      {/* SUBTLE BACKGROUND GLOW */}
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none absolute
-          -left-[150px] -top-[150px]
-          h-[350px] w-[350px]
-          rounded-full bg-[#0C9B97]/[0.04]
-          blur-[90px]
-        "
-      />
-
-      <div className="relative z-10 mx-auto max-w-[1300px]">
+      <div className="mx-auto max-w-[1200px]">
 
         {/* ====================================== */}
-        {/* COMPACT SECTION HEADING */}
+        {/* SECTION HEADING */}
         {/* ====================================== */}
 
-        <div className="mx-auto max-w-[800px] text-center">
-
-          <motion.p
-            {...fadeUp(0)}
+        <motion.div
+          {...reveal(0)}
+          className="mx-auto max-w-[760px] text-center"
+        >
+          <p
             className="
-              text-[11px] font-bold uppercase
-              tracking-[0.22em] text-[#0C9B97]
-              sm:text-[12px]
+              text-[11px] font-extrabold
+              uppercase tracking-[0.2em]
+              text-[#0C9B97]
             "
           >
-            WHO WE SERVE
-          </motion.p>
+            WHY CHOOSE US
+          </p>
 
-          <motion.h2
-            {...fadeUp(0.08)}
+          <h2
             className="
-              mt-3 text-[27px] font-extrabold
-              leading-[1.2] tracking-[-0.03em]
+              mt-3 text-[29px]
+              font-extrabold leading-[1.2]
+              tracking-[-0.035em]
               text-[#102A43]
-              sm:text-[33px]
-              lg:text-[38px]
+              sm:text-[38px]
             "
           >
-            Supporting the Healthcare Community
-          </motion.h2>
+            Why Choose Maximum Care?
+          </h2>
 
-          {/* TEAL UNDERLINE */}
-          <motion.div
-            initial={
-              reduceMotion
-                ? false
-                : { scaleX: 0, opacity: 0 }
-            }
-            whileInView={{
-              scaleX: 1,
-              opacity: 1,
-            }}
-            viewport={{ once: true }}
-            transition={{
-              duration: reduceMotion ? 0 : 0.65,
-              delay: reduceMotion ? 0 : 0.15,
-              ease: smoothEase,
-            }}
+          <p
             className="
-              mx-auto mt-4 h-[3px] w-[55px]
-              origin-center rounded-full
-              bg-[#0C9B97]
-            "
-          />
-
-          <motion.p
-            {...fadeUp(0.15)}
-            className="
-              mx-auto mt-4 max-w-[640px]
-              text-[13px] leading-[1.7]
+              mx-auto mt-3 max-w-[600px]
+              text-[14px] leading-[1.75]
               text-[#526579]
-              sm:text-[14px]
             "
           >
-            Medical courier services for healthcare
-            organizations across Fargo–Moorhead
-            and nearby communities.
-          </motion.p>
-        </div>
+            Professional medical courier solutions
+            built on reliability, careful handling,
+            and client-focused service.
+          </p>
+        </motion.div>
 
         {/* ====================================== */}
-        {/* COMPACT SIX-CARD GRID */}
+        {/* IMAGE + THREE CARDS LAYOUT */}
         {/* ====================================== */}
 
         <div
           className="
-            mt-7 grid grid-cols-2 gap-3
-            sm:mt-8 sm:grid-cols-3 sm:gap-4
-            xl:grid-cols-6 xl:gap-4
+            mt-8 grid grid-cols-1
+            items-stretch gap-5
+            lg:grid-cols-[0.95fr_1.05fr]
+            lg:gap-7
           "
         >
-          {organizations.map((organization, index) => (
-            <motion.div
-              key={organization.title}
-              {...fadeUp((index % 6) * 0.045)}
-              whileHover={
-                reduceMotion
-                  ? undefined
-                  : {
-                      y: -5,
-                      scale: 1.02,
-                      transition: {
-                        type: "spring",
-                        stiffness: 280,
-                        damping: 22,
-                      },
-                    }
-              }
+
+          {/* ================================== */}
+          {/* LEFT IMAGE ON LAPTOP */}
+          {/* TOP IMAGE ON MOBILE */}
+          {/* ================================== */}
+
+          <motion.div
+            {...reveal(0.05)}
+            className="
+              group relative
+              min-h-[240px]
+              overflow-hidden
+              rounded-[18px]
+              bg-[#DCEAF0]
+              shadow-[0_10px_30px_rgba(7,30,52,0.08)]
+              sm:min-h-[320px]
+              lg:min-h-[430px]
+            "
+          >
+            <img
+              src={whyChooseImg}
+              alt="Maximum Care medical courier transportation"
+              loading="lazy"
+              decoding="async"
               className="
-                group relative flex h-full min-w-0
-                flex-col overflow-hidden
-                rounded-[14px]
-                border border-[#E3EDF2]
-                bg-white
-                shadow-[0_6px_18px_rgba(0,27,59,0.055)]
-                transition-[border-color,box-shadow]
-                duration-300
-                hover:border-[#0C9B97]/40
-                hover:shadow-[0_14px_32px_rgba(0,27,59,0.12)]
+                absolute inset-0
+                h-full w-full
+                object-cover object-center
+                transition-transform duration-700
+                group-hover:scale-[1.04]
+              "
+            />
+
+            {/* IMAGE OVERLAY */}
+            <div
+              className="
+                pointer-events-none
+                absolute inset-0
+                bg-gradient-to-t
+                from-[#071E34]/80
+                via-[#071E34]/10
+                to-transparent
+              "
+            />
+
+            {/* IMAGE TEXT */}
+            <div
+              className="
+                absolute bottom-5
+                left-5 right-5
+                sm:bottom-7 sm:left-7
               "
             >
-              {/* SERVICE IMAGE */}
-              <div
+              <p
                 className="
-                  relative h-[95px] w-full
-                  shrink-0 overflow-hidden
-                  bg-[#E8F2F5]
-                  sm:h-[115px]
-                  lg:h-[125px]
-                  xl:h-[110px]
+                  text-[11px] font-bold
+                  uppercase tracking-[0.17em]
+                  text-[#6DE0D3]
                 "
               >
-                <img
-                  src={organization.image}
-                  alt={organization.title}
-                  loading="lazy"
-                  decoding="async"
-                  className="
-                    h-full w-full object-cover
-                    object-center transition-transform
-                    duration-500
-                    group-hover:scale-[1.07]
-                  "
-                />
+                MAXIMUM CARE LLC
+              </p>
 
-                <div
-                  className="
-                    pointer-events-none absolute inset-0
-                    bg-gradient-to-t from-[#102A43]/20
-                    via-transparent to-transparent
-                  "
-                />
-
-                <div
-                  className="
-                    pointer-events-none absolute
-                    bottom-0 left-0 right-0
-                    h-[3px] bg-[#0C9B97]
-                  "
-                />
-              </div>
-
-              {/* CARD TITLE */}
-              <div
+              <h3
                 className="
-                  flex min-h-[68px] flex-1
-                  items-center justify-center
-                  px-2.5 py-3
-                  sm:min-h-[75px] sm:px-3
-                  xl:min-h-[82px]
+                  mt-2 max-w-[380px]
+                  text-[23px] font-extrabold
+                  leading-[1.2] text-white
+                  sm:text-[30px]
                 "
               >
-                <h3
+                Delivering Care
+                <span className="block text-[#6DE0D3]">
+                  With Precision.
+                </span>
+              </h3>
+            </div>
+          </motion.div>
+
+          {/* ================================== */}
+          {/* RIGHT THREE CARDS ON LAPTOP */}
+          {/* BELOW IMAGE ON MOBILE */}
+          {/* ================================== */}
+
+          <div className="grid grid-cols-1 gap-4">
+
+            {benefits.map((benefit, index) => (
+              <motion.article
+                key={benefit.number}
+                {...reveal(
+                  reduceMotion ? 0 : 0.1 + index * 0.08
+                )}
+                whileHover={
+                  reduceMotion
+                    ? undefined
+                    : {
+                        x: 4,
+                        transition: {
+                          duration: 0.25,
+                        },
+                      }
+                }
+                className="
+                  group flex h-full
+                  items-start gap-4
+                  rounded-[16px]
+                  border border-[#E0EAF0]
+                  bg-white p-5
+                  shadow-[0_6px_20px_rgba(7,30,52,0.05)]
+                  transition-[border-color,box-shadow]
+                  duration-300
+                  hover:border-[#0C9B97]/40
+                  hover:shadow-[0_12px_28px_rgba(7,30,52,0.09)]
+                  sm:items-center sm:p-6
+                "
+              >
+
+                {/* BENEFIT ICON */}
+                <div
                   className="
-                    text-center text-[12px]
-                    font-bold leading-[1.4]
-                    text-[#102A43]
+                    flex h-[52px] w-[52px]
+                    shrink-0 items-center
+                    justify-center
+                    rounded-[13px]
+                    bg-[#EAF7F5]
+                    text-[#0C9B97]
                     transition-colors duration-300
-                    group-hover:text-[#0C9B97]
-                    sm:text-[13px]
-                    lg:text-[14px]
-                    xl:text-[12px]
+                    group-hover:bg-[#0C9B97]
+                    group-hover:text-white
                   "
                 >
-                  {organization.title}
-                </h3>
-              </div>
-            </motion.div>
-          ))}
+                  <svg
+                    width="29"
+                    height="29"
+                    viewBox="0 0 48 48"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    {benefit.icon}
+                  </svg>
+                </div>
+
+                {/* BENEFIT TEXT */}
+                <div className="min-w-0 flex-1">
+
+                  <div
+                    className="
+                      flex flex-wrap items-center
+                      justify-between gap-2
+                    "
+                  >
+                    <h3
+                      className="
+                        text-[17px] font-extrabold
+                        leading-[1.35]
+                        text-[#102A43]
+                        sm:text-[19px]
+                      "
+                    >
+                      {benefit.title}
+                    </h3>
+
+                    <span
+                      className="
+                        text-[11px] font-extrabold
+                        text-[#B8CAD3]
+                      "
+                    >
+                      {benefit.number}
+                    </span>
+                  </div>
+
+                  <p
+                    className="
+                      mt-2 text-[13px]
+                      leading-[1.7]
+                      text-[#526579]
+                      sm:text-[14px]
+                    "
+                  >
+                    {benefit.description}
+                  </p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
         </div>
       </div>
     </section>
